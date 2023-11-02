@@ -1,12 +1,6 @@
+import { Button, ButtonGroup, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import {
-  Card,
-  CardBody,
-  CardFooter,
-  Heading,
-  Stack,
-  Text,
-  Button,
-  Image,
+  Input,
   Box,
   Modal,
   ModalOverlay,
@@ -17,74 +11,38 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Input } from "antd";
-import { useNavigate } from "react-router-dom";
-const CardDaiDoi = (props) => {
-  const navigate = useNavigate();
-  const handleOnclick = () => {
-    navigate("/home/156");
-  };
+import anh1 from '../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg'
+const ClassComponent = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
     onOpen: onEditModalOpen,
     onClose: onEditModalClose,
   } = useDisclosure();
-
   return (
-    <Box margin={"20px 0px 20px 0px"}>
-      <Card
-        // _hover={{
-        //   bg:"rgb(190,190,190)"
-        // }}
-        border={"1px solid rgb(190,190,190)"}
-        boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
-        // bg={"gray"}
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        variant="outline"
-      >
-        <Image
-          // borderRadius={"100%"}
-          bgSize={"cover"}
-          maxW={{ base: "100%", sm: "220px" }}
-          src={props.img}
-        />
-
-        <Stack fontFamily={"cursive"} height={"200px"}>
-          <CardBody>
-            <Heading
-              size="md"
-              fontFamily={"cursive"}
-              onClick={handleOnclick}
-              _hover={{ color: "brown" }}
-              cursor={"pointer"}
-            >
-              {props.name}
-            </Heading>
-            <Text>Đại đội trưởng: {props.DaiDoiTruong}</Text>
+    <>
+      <Card maxW="260px" float={"left"} marginLeft={"14.5px"} boxShadow={"0px 1px 1px 1px rgb(190,190,190)"}
+       marginRight={"10px"} marginTop={"20px"} fontFamily={"cursive"}>
+        <CardBody>
+          <Image src={anh1} borderRadius="lg" />
+          <Stack mt="6" spacing="3">
+            <Heading size="md" fontFamily={"cursive"} _hover={{color:"brown"}}>{props.name}</Heading>
             <Text>Quân số: {props.QuanSo}</Text>
-          </CardBody>
-          <CardFooter position={"relative"} top={"-15px"}>
-            <Button
-              onClick={onOpen}
-              variant="solid"
-              colorScheme="blue"
-              marginRight={"10px"}
-              bg={"rgb(243,66,33)"}
-            >
-              Xóa đại đội
+          </Stack>
+        </CardBody>
+        {/* <Divider />*/}
+        <CardFooter>
+          <ButtonGroup spacing="1">
+            <Button variant="solid" bg="rgb(243,66,33)" color={"white"} onClick={onOpen}>
+              Xóa lớp
             </Button>
-            <Button
-              variant="solid"
-              colorScheme="blue"
-              onClick={onEditModalOpen}
-            >
+            <Button variant="solid" colorScheme="blue" onClick={onEditModalOpen}>
               Sửa thông tin
             </Button>
-          </CardFooter>
-        </Stack>
+          </ButtonGroup>
+        </CardFooter>
       </Card>
+
       <Modal
         isCentered
         onClose={onClose}
@@ -121,8 +79,8 @@ const CardDaiDoi = (props) => {
           <ModalCloseButton />
           <ModalBody>
             <Box><Input type="text" placeholder={props.name} ></Input></Box>
-            <Box margin={"10px 0px 10px 0px"}><Input type="text" placeholder={props.DaiDoiTruong}></Input></Box>
-            <Box><Input type="text" placeholder={props.QuanSo}></Input></Box>
+            <Box margin={"10px 0px 10px 0px"}><Input type="text" placeholder={props.QuanSo}></Input></Box>
+            {/* <Box><Input type="text" placeholder={props.QuanSo}></Input></Box> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>
@@ -134,7 +92,7 @@ const CardDaiDoi = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </>
   );
 };
-export default CardDaiDoi;
+export default ClassComponent
