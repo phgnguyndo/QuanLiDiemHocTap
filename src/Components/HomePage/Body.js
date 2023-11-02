@@ -1,8 +1,9 @@
 
 import { Box } from "@chakra-ui/react";
 import anh1 from "../../Image/Logo.png";
-import CardTieuDoan from "./CardDaiDoi";
+import CardDaiDoi from "./CardDaiDoi";
 const BodyHomePage = (props) => {
+  var i=156;
   return (
     <Box position={"relative"} w={"70%"} left={"15%"}>
       <Box
@@ -17,13 +18,13 @@ const BodyHomePage = (props) => {
         color={"brown"}
         fontFamily={"cursive"}
       >
-        Danh sach cac tieu doan
+        Danh sách các đại đội
       </Box>
 
-      <CardTieuDoan img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90}/>
-      <CardTieuDoan img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90}/>
-      <CardTieuDoan img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90}/>
-      <CardTieuDoan img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90}/>
+      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={i}/>
+      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
+      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
+      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
     </Box>
   );
 };
