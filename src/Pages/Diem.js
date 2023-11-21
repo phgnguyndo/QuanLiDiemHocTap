@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Header from "../Components/Header"
+import Header from "../Components/Bar/Header"
 import DiemHocVien from '../Components/HocVienPage/DiemHocVien';
 
 const Diem = () => {

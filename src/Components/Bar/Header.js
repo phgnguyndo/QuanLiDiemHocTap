@@ -1,7 +1,7 @@
-import { Form, InputGroup, ListGroup, Container, Navbar, Nav, Button } from "react-bootstrap";
+import { Form, InputGroup, ListGroup, Container, Navbar, Nav} from "react-bootstrap";
 import { useState } from "react";
 import { Box, Image } from "@chakra-ui/react";
-import logo from "../Image/Logo.png";
+import logo from "../../Image/Logo.png";
 
 function Header() {
   const [searchText, setSearchText] = useState("");

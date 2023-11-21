@@ -1,9 +1,51 @@
-
-import { Box } from "@chakra-ui/react";
 import anh1 from "../../Image/Logo.png";
 import CardDaiDoi from "./CardDaiDoi";
+import { useEffect, useState } from "react";
+import daidoiAPI from "../../api/daidoiAPI";
+import React from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 const BodyHomePage = (props) => {
-  var i=156;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [dsDaiDoi, setdsDaiDoi] = useState([]);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  useEffect(() => {
+    fetchDaiDoi();
+  }, []);
+  const fetchDaiDoi = async () => {
+    setdsDaiDoi(await daidoiAPI.getAll());
+  };
+  var i = 155;
+  const handleSubmit = async () => {
+    try {
+      const tenDaiDoi = initialRef.current.value; 
+      const daiDoiTruong = finalRef.current.value; 
+      const quanSo = document.getElementById("quanSoInput").value; 
+      const formData = {
+        tenDaiDoi,
+        daiDoiTruong,
+        quanSo
+      };
+      await daidoiAPI.create(formData);
+      onClose();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   return (
     <Box position={"relative"} w={"70%"} left={"15%"}>
       <Box
@@ -20,11 +62,64 @@ const BodyHomePage = (props) => {
       >
         Danh sách các đại đội
       </Box>
+      <Button
+        variant="solid"
+        bg="rgb(26,132,74)"
+        color={"white"}
+        left={"2%"}
+        onClick={onOpen}
+      >
+        Thêm đại đội
+      </Button>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thêm đại đội</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Tên đại đội</FormLabel>
+              <Input ref={initialRef} placeholder="tên đại đội" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Đại đội trưởng</FormLabel>
+              <Input ref={finalRef} placeholder="đại đội trưởng" />
+            </FormControl>
 
-      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={i}/>
-      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
-      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
-      <CardDaiDoi img={anh1} name={"Đại đội 156"} DaiDoiTruong={"Bùi Xuân Long"} QuanSo={90} id={++i}/>
+            <FormControl mt={4}>
+              <FormLabel>Quân số</FormLabel>
+              <Input placeholder="quân số" id="quanSoInput"/>
+            </FormControl>
+            {/* <FormControl mt={4}>
+              <FormLabel>Ảnh</FormLabel>
+              <Input type="file" />
+            </FormControl> */}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {dsDaiDoi?.map((item) => (
+        <CardDaiDoi
+          key={++i}
+          maDaiDoi={item.maDaiDoi}
+          img={anh1}
+          name={item.tenDaiDoi}
+          DaiDoiTruong={item.daiDoiTruong}
+          QuanSo={item.quanSo}
+          // id={++i}
+        />
+      ))}
     </Box>
   );
 };

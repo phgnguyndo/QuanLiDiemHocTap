@@ -1,4 +1,14 @@
-import { Button, ButtonGroup, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  Heading,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import {
   Input,
   Box,
@@ -11,32 +21,86 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
-import anh1 from '../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg'
+import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
+import lopcnAPI from "../../api/lopcnAPI";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 const ClassComponent = (props) => {
+  const { id } = useParams();
+  const maLCN = props.maLCN;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
     onOpen: onEditModalOpen,
     onClose: onEditModalClose,
   } = useDisclosure();
+  const handleXoaLop = async () => {
+    try {
+      await lopcnAPI.delete(maLCN);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const [tenLopChuyenNganh, setTenLopChuyenNganh] = useState(props.name || "");
+  const [soHV, setSoHV] = useState(props.QuanSo || 0);
+  const SuaThongTin = async () => {
+    try {
+      const daiDoiId = id;
+      const lopcnId=props.maLCN;
+      const formData = {
+        daiDoiId,
+        tenLopChuyenNganh,
+        soHV,
+      };
+      // console.log(formData)
+      await lopcnAPI.update(lopcnId,formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   return (
     <>
-      <Card maxW="260px" float={"left"} marginLeft={"14.5px"} boxShadow={"0px 1px 1px 1px rgb(190,190,190)"}
-       marginRight={"10px"} marginTop={"20px"} fontFamily={"cursive"}>
+      <Card
+        maxW="260px"
+        float={"left"}
+        marginLeft={"14.5px"}
+        boxShadow={"0px 1px 1px 1px rgb(190,190,190)"}
+        marginRight={"10px"}
+        marginTop={"20px"}
+        fontFamily={"cursive"}
+      >
         <CardBody>
           <Image src={anh1} borderRadius="lg" />
           <Stack mt="6" spacing="3">
-            <Heading size="md" fontFamily={"cursive"} _hover={{color:"brown"}}>{props.name}</Heading>
+            <Heading
+              size="md"
+              fontFamily={"cursive"}
+              _hover={{ color: "brown" }}
+            >
+              {props.name}
+            </Heading>
             <Text>Quân số: {props.QuanSo}</Text>
           </Stack>
         </CardBody>
-        {/* <Divider />*/}
         <CardFooter>
           <ButtonGroup spacing="1">
-            <Button variant="solid" bg="rgb(243,66,33)" color={"white"} onClick={onOpen}>
+            <Button
+              variant="solid"
+              bg="rgb(243,66,33)"
+              color={"white"}
+              onClick={onOpen}
+            >
               Xóa lớp
             </Button>
-            <Button variant="solid" colorScheme="blue" onClick={onEditModalOpen}>
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              onClick={onEditModalOpen}
+            >
               Sửa thông tin
             </Button>
           </ButtonGroup>
@@ -60,7 +124,12 @@ const ClassComponent = (props) => {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="blue" bg={"rgb(243,66,33)"} color={"white"}>
+            <Button
+              colorScheme="blue"
+              bg={"rgb(243,66,33)"}
+              color={"white"}
+              onClick={handleXoaLop}
+            >
               Xóa
             </Button>
           </ModalFooter>
@@ -78,15 +147,37 @@ const ClassComponent = (props) => {
           <ModalHeader>Sửa thông tin</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box><Input type="text" placeholder={props.name} ></Input></Box>
-            <Box margin={"10px 0px 10px 0px"}><Input type="text" placeholder={props.QuanSo}></Input></Box>
+            <Box>
+              <Input
+                type="text"
+                defaultValue={props.name}
+                onChange={(e) => {
+                  setTenLopChuyenNganh(e.target.value);
+                }}
+              ></Input>
+            </Box>
+            <Box margin={"10px 0px 10px 0px"}>
+              <Input
+                type="text"
+                defaultValue={props.QuanSo}
+                onChange={(e) => {
+                  setSoHV(parseInt(e.target.value));
+                }}
+              ></Input>
+            </Box>
             {/* <Box><Input type="text" placeholder={props.QuanSo}></Input></Box> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>
               Close
             </Button>
-            <Button colorScheme="blue" mr={3} bg={"rgb(243,66,33)"} color={"white"}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              bg={"rgb(243,66,33)"}
+              color={"white"}
+              onClick={SuaThongTin}
+            >
               Lưu
             </Button>
           </ModalFooter>
@@ -95,4 +186,4 @@ const ClassComponent = (props) => {
     </>
   );
 };
-export default ClassComponent
+export default ClassComponent;

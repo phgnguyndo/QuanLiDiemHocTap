@@ -15,7 +15,7 @@ function App() {
         <Route index element={<Login />} />
         {/* <Route index element={<Home />} /> */}
         <Route path="/home" element={<Home />} />
-        <Route path="/home/:number" element={<ListClass />} />
+        <Route path="/home/:id" element={<ListClass />} />
         <Route path="/product" element={<Product/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/HocVien" element={<HocVien />} />
