@@ -18,7 +18,7 @@ const bomonAPI= {
         return axiosClient.patch(url, data);
     },
     delete(id){
-        const urll= `/bomon/${id}`
+        const url= `/bomon/${id}`
     }
 }
 
