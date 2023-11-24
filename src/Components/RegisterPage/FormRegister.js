@@ -1,71 +1,9 @@
-import React, { useState } from 'react';
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Card,
-  Typography
-} from 'antd';
+import React from "react";
+import MTA from '../../Image/MTA.jpg'
+import { Button, Col, Form, Select, Input, Row, Card, Typography } from "antd";
+import { Box } from "@chakra-ui/react";
+import axios from "axios";
 const { Option } = Select;
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -78,89 +16,64 @@ const tailFormItemLayout = {
     },
   },
 };
-const Login = () => {
+const Register = () => {
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="84">+84</Option>
-        {/* <Option value="87">+87</Option> */}
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  // const onWebsiteChange = (value) => {
-  //   if (!value) {
-  //     setAutoCompleteResult([]);
-  //   } else {
-  //     setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-  //   }
-  // };
-  // const websiteOptions = autoCompleteResult.map((website) => ({
-  //   label: website,
-  //   value: website,
-  // }));
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Card style={{ maxWidth: 600, width: '100%' }}>
-        <Typography.Title level={3} style={{ textAlign: 'center' }}>
-          Register
-        </Typography.Title>
-        <Form.Item
-            name="Username"
-            label="Username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Username!',
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+  const onFinish =async (values) => {
+    // console.log(values)
+    try {
+      const dataToSend = {
+        code: values.Username,
+        password: values.password,
+        role: values.role,
+      };
+     // Gửi yêu cầu POST đến backend sử dụng Axios
+      const response = await axios.post('https://localhost:7278/api/Authorize/Register', dataToSend);
+      
+      // Xử lý kết quả từ backend
+      console.log('Response from backend:', response.data);
 
+    } catch (error) {
+      console.error('Error sending POST request:', error);
+    }
+  };
+  return (
+    <Box
+        bgImage={MTA}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        height={"100vh"}
+    >
+      <Card style={{ maxWidth: 600, width: "100%" }}>
         <Form
           form={form}
           name="register"
           onFinish={onFinish}
           initialValues={{
-            residence: ['zhejiang', 'hangzhou', 'xihu'],
-            prefix: '86',
+            residence: ["zhejiang", "hangzhou", "xihu"],
+            prefix: "86",
           }}
           style={{
             maxWidth: 600,
           }}
           scrollToFirstError
         >
-          <Row>
-            <Col span={24}>
-              <Form.Item
-                name="email"
-                label="E-mail"
-                rules={[
-                  {
-                    type: 'email',
-                    message: 'The input is not a valid E-mail!',
-                  },
-                  {
-                    required: true,
-                    message: 'Please input your E-mail!',
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-
+          <Typography.Title level={3} style={{ textAlign: "center" }}>
+            Register
+          </Typography.Title>
+          <Form.Item
+            name="Username"
+            label="Username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
@@ -169,31 +82,33 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your password!',
+                    message: "Please input your password!",
                   },
                 ]}
                 hasFeedback
               >
-                <Input.Password />
+                <Input.Password style={{left:"4px", width:"150px"}} />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
                 name="confirm"
                 label="Confirm Password"
-                dependencies={['password']}
+                dependencies={["password"]}
                 hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: 'Please confirm your password!',
+                    message: "Please confirm your password!",
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
+                      if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('The passwords do not match!'));
+                      return Promise.reject(
+                        new Error("The passwords do not match!")
+                      );
                     },
                   }),
                 ]}
@@ -206,78 +121,23 @@ const Login = () => {
           <Row>
             <Col span={24}>
               <Form.Item
-                name="residence"
-                label="Habitual Residence"
-                rules={[
-                  {
-                    type: 'array',
-                    required: true,
-                    message: 'Please select your habitual residence!',
-                  },
-                ]}
-              >
-                <Cascader options={residences} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col span={24}>
-              <Form.Item
-                name="phone"
-                label="Phone Number"
+                name="role"
+                label="Role"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your phone number!',
+                    message: "Please select a role!",
                   },
                 ]}
               >
-                <Input
-                  addonBefore={prefixSelector}
-                  style={{
-                    width: '100%',
-                  }}
-                />
+                <Select placeholder="Select a role" style={{left:"34px", width: '150px' }}>
+                  <Option value="admin">admin</Option>
+                  <Option value="user1">user1</Option>
+                  <Option value="user2">user2</Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>
-
-         
-
-          <Form.Item
-            name="gender"
-            label="Gender"
-            rules={[
-              {
-                required: true,
-                message: 'Please select gender!',
-              },
-            ]}
-          >
-            <Select placeholder="Select your gender">
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
-              <Option value="other">Other</Option>
-            </Select>
-          </Form.Item>
-
-          {/* <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value ? Promise.resolve() : Promise.reject(new Error('You should accept the agreement')),
-              },
-            ]}
-            {...tailFormItemLayout}
-          >
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>
-          </Form.Item> */}
-
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               Register
@@ -285,7 +145,7 @@ const Login = () => {
           </Form.Item>
         </Form>
       </Card>
-    </div>
+    </Box>
   );
 };
-export default Login;
+export default Register;

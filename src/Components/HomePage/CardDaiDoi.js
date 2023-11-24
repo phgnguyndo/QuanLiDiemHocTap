@@ -19,10 +19,40 @@ import {
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import daidoiAPI from "../../api/daidoiAPI";
+import { useState } from "react";
 const CardDaiDoi = (props) => {
   const navigate = useNavigate();
   const handleOnclick = () => {
-    navigate("/home/156");
+    navigate(`/home/${props.maDaiDoi}`);
+  };
+  var maDaiDoi = props.maDaiDoi;
+  const handleDelete = async () => {
+    try {
+      await daidoiAPI.delete(maDaiDoi);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const [tenDaiDoi, setTenDaiDoi] = useState(props.name || "");
+  const [daiDoiTruong, setTenDDTruong] = useState(props.DaiDoiTruong || "");
+  const [quanSo, setQuanSo] = useState(props.QuanSo || 0);
+  const formData = {
+    tenDaiDoi,
+    daiDoiTruong,
+    quanSo,
+  };
+  const SuaThongTin = async () => {
+    try {
+      console.log(formData);
+      await daidoiAPI.update(maDaiDoi, formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating DaiDoi:", error);
+    }
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -46,6 +76,7 @@ const CardDaiDoi = (props) => {
       >
         <Image
           // borderRadius={"100%"}
+          // onClick={handleHEHE}
           bgSize={"cover"}
           maxW={{ base: "100%", sm: "220px" }}
           src={props.img}
@@ -102,7 +133,12 @@ const CardDaiDoi = (props) => {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="blue" bg={"rgb(243,66,33)"} color={"white"}>
+            <Button
+              colorScheme="blue"
+              bg={"rgb(243,66,33)"}
+              color={"white"}
+              onClick={handleDelete}
+            >
               Xóa
             </Button>
           </ModalFooter>
@@ -120,15 +156,39 @@ const CardDaiDoi = (props) => {
           <ModalHeader>Sửa thông tin</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box><Input type="text" placeholder={props.name} ></Input></Box>
-            <Box margin={"10px 0px 10px 0px"}><Input type="text" placeholder={props.DaiDoiTruong}></Input></Box>
-            <Box><Input type="text" placeholder={props.QuanSo}></Input></Box>
+            <Box>
+              <Input
+                type="text"
+                defaultValue={props.name}
+                onChange={(e) => setTenDaiDoi(e.target.value)}
+              ></Input>
+            </Box>
+            <Box margin={"10px 0px 10px 0px"}>
+              <Input
+                type="text"
+                defaultValue={props.DaiDoiTruong}
+                onChange={(e) => setTenDDTruong(e.target.value)}
+              ></Input>
+            </Box>
+            <Box>
+              <Input
+                type="text"
+                defaultValue={props.QuanSo}
+                onChange={(e) => setQuanSo(parseInt(e.target.value))}
+              ></Input>
+            </Box>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>
               Close
             </Button>
-            <Button colorScheme="blue" mr={3} bg={"rgb(243,66,33)"} color={"white"}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              bg={"rgb(243,66,33)"}
+              color={"white"}
+              onClick={SuaThongTin}
+            >
               Lưu
             </Button>
           </ModalFooter>

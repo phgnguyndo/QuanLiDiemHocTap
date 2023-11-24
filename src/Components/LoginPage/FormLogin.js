@@ -1,35 +1,44 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input, Card, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import MTA from '../../Image/MTA.jpg'
-import { Box } from '@chakra-ui/react';
-const onFinish = (values) => {
-  console.log('Success:', values);
-  
+import React from "react";
+import { Button, Checkbox, Form, Input, Card, Typography } from "antd";
+import MTA from "../../Image/MTA.jpg";
+import { Box } from "@chakra-ui/react";
+import axios from "axios";
+const onFinish =async (values) => {
+  try {
+    const dataToSend = {
+      "username": values.username,
+      "password": values.password
+    }
+   // Gửi yêu cầu POST đến backend sử dụng Axios
+    const response = await axios.post('https://localhost:7278/api/Authorize/Login', dataToSend);
+    
+    // Xử lý kết quả từ backend
+    console.log('Response from backend:', response.data);
+
+  } catch (error) {
+    console.error('Error sending POST request:', error);
+  }
 };
 
 const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
+  console.log("Failed:", errorInfo);
 };
 
-
 const FormLogin = (props) => {
-
-  const navigate = useNavigate();
-  const handleLogin = () =>  {
-      navigate("/home");
+  const handleSubmit = () => {
+    alert(1);
   };
   return (
-          <Box
-       display={"flex"}
-       justifyContent={"center"}
-       alignItems={"center"}
-       height={"100vh"}
-       bgImage={MTA}
-       bgSize={"cover"}
-      >
-      <Card style={{ maxWidth: 600, width: '100%' }}>
-        <Typography.Title level={3} style={{ textAlign: 'center' }}>
+    <Box
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      height={"100vh"}
+      bgImage={MTA}
+      bgSize={"cover"}
+    >
+      <Card style={{ maxWidth: 600, width: "100%" }}>
+        <Typography.Title level={3} style={{ textAlign: "center" }}>
           Login
         </Typography.Title>
 
@@ -47,14 +56,15 @@ const FormLogin = (props) => {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          onSubmit={handleSubmit}
         >
           <Form.Item
-            label="User ID:"
-            name="ID"
+            label="Username:"
+            name="username"
             rules={[
               {
                 required: true,
-                message: 'Please input your username!',
+                message: "Please input your username!",
               },
             ]}
           >
@@ -67,7 +77,7 @@ const FormLogin = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: "Please input your password!",
               },
             ]}
           >
@@ -91,13 +101,13 @@ const FormLogin = (props) => {
               span: 16,
             }}
           >
-            <Button type="primary" htmlType="submit" onClick = {handleLogin}>
+            <Button type="primary" htmlType="submit">
               Login
             </Button>
           </Form.Item>
         </Form>
       </Card>
-      </Box>
+    </Box>
   );
 };
 
