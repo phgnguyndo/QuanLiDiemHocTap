@@ -35,56 +35,39 @@ const ListHocVienTable = (props) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
+        minHeight: "50vh",
       }}
     >
-      <div style={{ fontFamily: "cursive", fontSize: "40px", color: "Red" }}>
-        Danh sách học viên lớp {LopChuyenNganh}
+      <h1 style={{color:"GrayText"}}>Lớp {LopChuyenNganh}</h1>
+      <div style={{ fontFamily: "inherit", fontSize: "40px", color: "Red" , marginBottom:"30px"} }>
+        Danh sách học viên 
       </div>
-      <TableContainer w={"70%"}>
+      <TableContainer w={"100%"}>
         <Table variant="striped" colorScheme="teal" size="sm">
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
           <Thead>
             <Tr bg={""}>
-              <Th w={"9%"} textAlign={"center"}>
-                MaHV
+              <Th w={"10%"} textAlign={"center"}>
+                Mã HV
               </Th>
-              {/* <Th w={"10%"} bg={"gray"} textAlign={"center"}>
-                MaLCN
-              </Th> */}
-              <Th w={"15%"} textAlign={"center"}>
-                TenHV
+              <Th w={"18%"} textAlign={"center"}>
+                Họ tên
               </Th>
               <Th w={"10%"} textAlign={"center"}>
-                NgaySinh
+                Ngày sinh
               </Th>
               <Th w={"4%"} textAlign={"center"}>
-                GioiTinh
+                Giới tính
               </Th>
               <Th w={"10%"} textAlign={"center"}>
-                QueQuan
+                Quê quán
               </Th>
               <Th w={"8%"} textAlign={"center"}>
-                CapBac
+                Cấp bậc
               </Th>
             </Tr>
-            {/* </Thead> */}
-            {/* <Tr alignItems={"center"}>
-                  {Object.keys(students[0].attributes).map((attribute) => (
-                    <Th key={attribute}>{attribute}</Th>
-                  ))}
-                </Tr> */}
           </Thead>
           <HocVien />
-          {/* <Tbody>
-                {students.map((student) => (
-                  <Tr key={student.id} alignItems={"center"}>
-                    {Object.values(student.attributes).map((value, index) => (
-                      <Td key={index}>{value}</Td>
-                    ))}
-                  </Tr>
-                ))}
-              </Tbody> */}
         </Table>
       </TableContainer>
     </div>
