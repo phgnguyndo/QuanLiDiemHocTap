@@ -9,7 +9,6 @@ const ListClass=()=>{
         <>
         
         <Header/>
-        {/* <Box>aaaaaaaaaa{id}</Box> */}
         <ListClassComponent/>
         </>
     )

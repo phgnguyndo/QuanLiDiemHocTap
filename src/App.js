@@ -19,6 +19,8 @@ function App() {
         <Route path="/product" element={<Product/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/home/:id/:idHV" element={<HocVien />} />
+        <Route path="/HocVien" element={<HocVien />} />
+
         <Route path="/Diem" element={<Diem/>} />
       </Routes>
     </BrowserRouter>
