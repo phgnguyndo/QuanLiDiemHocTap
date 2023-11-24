@@ -1,26 +1,26 @@
 import axiosClient, { axiosFormData } from "./axiosClient";
 
-const lopcnAPI= {
+const hocvienAPI= {
     getAll(params) {
-        const url='/LopCn';
+        const url='/HocVien';
         return axiosClient.get(url, {params})
     },
     get(id) {
-        const url=`/LopCn/${id}`;
+        const url=`/HocVien/${id}`;
         return axiosClient.get(url);
     },
     create(data){
-        const url='/LopCn';
+        const url='/HocVien';
         return axiosFormData.post(url,data)
     },
     update(id,data){
-        const url=`/LopCn/${id}`;
+        const url=`/HocVien/${id}`;
         return axiosFormData.put(url, data);
     },
     delete(id){
-        const url= `/LopCn/${id}`;
-        return axiosClient.delete(url);
+        const url= `/HocVien/${id}`
+        return axiosClient.delete(url)
     }
 }
 
-export default lopcnAPI 
+export default hocvienAPI 

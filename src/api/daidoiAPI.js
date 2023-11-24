@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import axiosClient, { axiosFormData } from "./axiosClient";
 
 const daidoiAPI= {
     getAll(params) {
@@ -11,11 +11,11 @@ const daidoiAPI= {
     },
     create(data){
         const url='/DaiDoi';
-        return axiosClient.post(url,data)
+        return axiosFormData.post(url,data)
     },
     update(id,data){
         const url=`/DaiDoi/${id}`;
-        return axiosClient.put(url, data);
+        return axiosFormData.put(url, data);
     },
     delete(id){
         const url= `/DaiDoi/${id}`

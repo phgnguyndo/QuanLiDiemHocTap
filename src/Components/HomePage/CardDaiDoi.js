@@ -39,15 +39,21 @@ const CardDaiDoi = (props) => {
   const [tenDaiDoi, setTenDaiDoi] = useState(props.name || "");
   const [daiDoiTruong, setTenDDTruong] = useState(props.DaiDoiTruong || "");
   const [quanSo, setQuanSo] = useState(props.QuanSo || 0);
-  const formData = {
-    tenDaiDoi,
-    daiDoiTruong,
-    quanSo,
-  };
+  const [imageDaiDoi, setImageDaiDoi] = useState("");
+
+  // const formData = {
+  //   tenDaiDoi,
+  //   daiDoiTruong,
+  //   quanSo,
+  // };
   const SuaThongTin = async () => {
     try {
-      console.log(formData);
-      await daidoiAPI.update(maDaiDoi, formData);
+      const formdata = new FormData();
+      formdata.append("tenDaiDoi", tenDaiDoi);
+      formdata.append("daiDoiTruong", daiDoiTruong);
+      formdata.append("quanSo", quanSo);
+      formdata.append("file", imageDaiDoi);
+      await daidoiAPI.update(maDaiDoi, formdata);
       onClose();
       window.location.reload();
     } catch (error) {
@@ -63,10 +69,7 @@ const CardDaiDoi = (props) => {
 
   return (
     <Box margin={"20px 0px 20px 0px"}>
-      <Card
-        // _hover={{
-        //   bg:"rgb(190,190,190)"
-        // }}
+      <Card w={"100%"} height={"220px"}
         border={"1px solid rgb(190,190,190)"}
         boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
         // bg={"gray"}
@@ -75,11 +78,11 @@ const CardDaiDoi = (props) => {
         variant="outline"
       >
         <Image
-          // borderRadius={"100%"}
-          // onClick={handleHEHE}
+          w={"220px"}
+          height={"220px"}
           bgSize={"cover"}
           maxW={{ base: "100%", sm: "220px" }}
-          src={props.img}
+          src={`https://localhost:7278/${props.img}`}
         />
 
         <Stack fontFamily={"cursive"} height={"200px"}>
@@ -175,6 +178,14 @@ const CardDaiDoi = (props) => {
                 type="text"
                 defaultValue={props.QuanSo}
                 onChange={(e) => setQuanSo(parseInt(e.target.value, 10))}
+              ></Input>
+            </Box>
+            <Box>
+              <Input
+                type="file"
+                onChange={(e) => {
+                  setImageDaiDoi(e.target.files[0]);
+                }}
               ></Input>
             </Box>
           </ModalBody>
