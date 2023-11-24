@@ -1,6 +1,19 @@
-import { Box} from "@chakra-ui/react";
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
-import React from "react"
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import React from "react";
 import ClassComponent from "./ClassComponent";
 import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
 const ListClassComponent = () => {
@@ -8,9 +21,9 @@ const ListClassComponent = () => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   var i = 156;
-//   const handleOnclick = () => {
-//     <ModalAddClass />;
-//   };
+  //   const handleOnclick = () => {
+  //     <ModalAddClass />;
+  //   };
   return (
     <Box position={"relative"} w={"75%"} left={"12.5%"}>
       <Box
@@ -29,7 +42,7 @@ const ListClassComponent = () => {
       </Box>
       {/* <ButtonGroup spacing="2"> */}
       <Button
-        variant="solid"
+        variant="ghost"
         bg="rgb(26,132,74)"
         color={"white"}
         left={"2%"}
@@ -38,40 +51,39 @@ const ListClassComponent = () => {
         Thêm lớp
       </Button>
       <Modal
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              isOpen={isOpen}
-              onClose={onClose}
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Create your account</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel>Tên lớp</FormLabel>
-                    <Input ref={initialRef} placeholder='ten lop chuyen nganh' />
-                  </FormControl>
-      
-                  <FormControl mt={4}>
-                    <FormLabel>Quân số</FormLabel>
-                    <Input placeholder='quan so lop' />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Ảnh</FormLabel>
-                    <Input type="file"/>
-                  </FormControl>
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create your account</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Tên lớp</FormLabel>
+              <Input ref={initialRef} placeholder="Tên lớp chuyên ngành" />
+            </FormControl>
 
-                </ModalBody>
-      
-                <ModalFooter>
-                  <Button colorScheme='blue' mr={3}>
-                    Save
-                  </Button>
-                  <Button onClick={onClose}>Cancel</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+            <FormControl mt={4}>
+              <FormLabel>Quân số</FormLabel>
+              <Input placeholder="Quân số lớp" />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Ảnh</FormLabel>
+              <Input type="file" />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={2}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       {/* <Button variant="solid" colorScheme="blue">
               Sửa thông tin
             </Button> */}
