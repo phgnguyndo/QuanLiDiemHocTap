@@ -51,18 +51,29 @@ const ClassComponent = (props) => {
   };
   const [tenLopChuyenNganh, setTenLopChuyenNganh] = useState(props.name || "");
   const [soHV, setSoHV] = useState(props.QuanSo || 0);
+  const [imageLop, setImageLop] = useState("");
+
   const SuaThongTin = async () => {
     try {
       const lopcnId = props.maLCN;
-      const formData = {
-        daiDoiId,
-        tenLopChuyenNganh,
-        soHV,
-      };
-      // console.log(formData)
-      await lopcnAPI.update(lopcnId, formData);
+      const formdata = new FormData();
+      formdata.append("daiDoiId", daiDoiId);
+      formdata.append("tenLopChuyenNganh", tenLopChuyenNganh);
+      formdata.append("soHV", soHV);
+      formdata.append("file", imageLop);
+      await lopcnAPI.update(lopcnId, formdata);
       onClose();
       window.location.reload();
+      
+      // const formData = {
+      //   daiDoiId,
+      //   tenLopChuyenNganh,
+      //   soHV,
+      // };
+      // // console.log(formData)
+      // await lopcnAPI.update(lopcnId, formData);
+      // onClose();
+      // window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -172,7 +183,15 @@ const ClassComponent = (props) => {
                 }}
               ></Input>
             </Box>
-            {/* <Box><Input type="text" placeholder={props.QuanSo}></Input></Box> */}
+            <Box margin={"10px 0px 10px 0px"}>
+              <Input
+                type="file"
+                onChange={(e) => {
+                  setImageLop(e.target.files[0]);
+                }}
+              ></Input>
+            </Box>
+            
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>
