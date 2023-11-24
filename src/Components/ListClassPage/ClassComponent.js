@@ -21,12 +21,17 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
+// import { useNavigate  } from "react-router-dom";
 import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
 import lopcnAPI from "../../api/lopcnAPI";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 const ClassComponent = (props) => {
   const { id } = useParams();
+  const idLop=props.maLCN;
+  const nav=useNavigate(); 
+  // const lopId=idHV;
+  const daiDoiId = id;
   const maLCN = props.maLCN;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -38,6 +43,7 @@ const ClassComponent = (props) => {
     try {
       await lopcnAPI.delete(maLCN);
       onClose();
+      // nav(`/home/${id}#`)
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -47,15 +53,14 @@ const ClassComponent = (props) => {
   const [soHV, setSoHV] = useState(props.QuanSo || 0);
   const SuaThongTin = async () => {
     try {
-      const daiDoiId = id;
-      const lopcnId=props.maLCN;
+      const lopcnId = props.maLCN;
       const formData = {
         daiDoiId,
         tenLopChuyenNganh,
         soHV,
       };
       // console.log(formData)
-      await lopcnAPI.update(lopcnId,formData);
+      await lopcnAPI.update(lopcnId, formData);
       onClose();
       window.location.reload();
     } catch (error) {
@@ -80,6 +85,8 @@ const ClassComponent = (props) => {
               size="md"
               fontFamily={"cursive"}
               _hover={{ color: "brown" }}
+              onClick={()=>{nav(`/home/${daiDoiId}/${idLop}`)}}
+              // onClick={()=>{console.log(lopId)}}
             >
               {props.name}
             </Heading>

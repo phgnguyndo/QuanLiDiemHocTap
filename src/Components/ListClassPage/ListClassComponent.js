@@ -24,17 +24,13 @@ const ListClassComponent = () => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   // var i = 156;
-  //   const handleOnclick = () => {
-  //     <ModalAddClass />;
-  //   };
   // const [daiDoiId,setDaiDoiId]=useState("");
   //   const [tenLopChuyenNganh,setTenLopChuyenNganh]=useState("");
   //   const [soHV,setSoHV]=useState(0);
   const [soHV, setSoHV]=useState(0)
   const handleAddClass= async ()=>{
     try {
-      // const daiDoiId = initialRef.current.value; 
-      const daiDoiId = id; 
+      const daiDoiId = id;
       const tenLopChuyenNganh = finalRef.current.value; 
       
       const formData = {
@@ -125,22 +121,14 @@ const ListClassComponent = () => {
       <br />
       {dsLopCn?.map((item) => (
         <ClassComponent
+        key={item.maLopChuyenNganh}
         img={anh1}
         maLCN={item.maLopChuyenNganh}
         name={item.tenLopChuyenNganh}
         DaiDoiTruong={"Bùi Xuân Long"}
         QuanSo={item.soHV}
-        // id={++i}
       />
       ))}
-      
-      {/* <ClassComponent
-        img={anh1}
-        name={"Bảo đảm an toàn thông tin"}
-        DaiDoiTruong={"Bùi Xuân Long"}
-        QuanSo={90}
-        id={++i}
-      /> */}
       <br />
     </Box>
   );
