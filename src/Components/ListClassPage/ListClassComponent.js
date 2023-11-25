@@ -19,7 +19,7 @@ import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg"
 import { useParams } from "react-router-dom";
 import lopcnAPI from "../../api/lopcnAPI";
 const ListClassComponent = () => {
-  const {id}=useParams()
+  const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -27,24 +27,24 @@ const ListClassComponent = () => {
   // const [daiDoiId,setDaiDoiId]=useState("");
   //   const [tenLopChuyenNganh,setTenLopChuyenNganh]=useState("");
   //   const [soHV,setSoHV]=useState(0);
-  const [soHV, setSoHV]=useState(0)
-  const handleAddClass= async ()=>{
+  const [soHV, setSoHV] = useState(0);
+  const [imageLop, setImageLop] = useState("");
+  const handleAddClass = async () => {
     try {
       const daiDoiId = id;
-      const tenLopChuyenNganh = finalRef.current.value; 
-      
-      const formData = {
-        daiDoiId,
-        tenLopChuyenNganh,
-        soHV
-      };
-      await lopcnAPI.create(formData);
+      const tenLopChuyenNganh = finalRef.current.value;
+      const formdata = new FormData();
+      formdata.append("daiDoiId", daiDoiId);
+      formdata.append("tenLopChuyenNganh", tenLopChuyenNganh);
+      formdata.append("soHV", soHV);
+      formdata.append("file", imageLop);
+      await lopcnAPI.create(formdata);
       onClose();
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-  }
+  };
   const [dsLopCn, setdsLopCn] = useState([]);
   useEffect(() => {
     fetchLopCN();
@@ -102,12 +102,27 @@ const ListClassComponent = () => {
 
             <FormControl mt={4}>
               <FormLabel>Quân số</FormLabel>
-              <Input placeholder="quan so lop" onChange={(e)=>{setSoHV(e.target.value)}}/>
-</FormControl>
-            {/* <FormControl mt={4}>
+              <Input
+                placeholder="quan so lop"
+                onChange={(e) => {
+                  setSoHV(e.target.value);
+                }}
+              />
+              {/* <FormControl mt={4}>
               <FormLabel>Ảnh</FormLabel>
               <Input type="file" />
             </FormControl> */}
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Ảnh lớp</FormLabel>
+              <Input
+                type="file"
+                name="file"
+                onChange={(e) => {
+                  setImageLop(e.target.files[0]);
+                }}
+              />
+            </FormControl>
           </ModalBody>
 
           <ModalFooter>
@@ -121,13 +136,13 @@ const ListClassComponent = () => {
       <br />
       {dsLopCn?.map((item) => (
         <ClassComponent
-        key={item.maLopChuyenNganh}
-        img={anh1}
-        maLCN={item.maLopChuyenNganh}
-        name={item.tenLopChuyenNganh}
-        DaiDoiTruong={"Bùi Xuân Long"}
-        QuanSo={item.soHV}
-      />
+          key={item.maLopChuyenNganh}
+          img={anh1}
+          maLCN={item.maLopChuyenNganh}
+          name={item.tenLopChuyenNganh}
+          DaiDoiTruong={"Bùi Xuân Long"}
+          QuanSo={item.soHV}
+        />
       ))}
       <br />
     </Box>

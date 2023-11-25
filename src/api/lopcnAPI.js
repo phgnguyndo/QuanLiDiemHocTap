@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import axiosClient, { axiosFormData } from "./axiosClient";
 
 const lopcnAPI= {
     getAll(params) {
@@ -11,11 +11,11 @@ const lopcnAPI= {
     },
     create(data){
         const url='/LopCn';
-        return axiosClient.post(url,data)
+        return axiosFormData.post(url,data)
     },
     update(id,data){
         const url=`/LopCn/${id}`;
-        return axiosClient.put(url, data);
+        return axiosFormData.put(url, data);
     },
     delete(id){
         const url= `/LopCn/${id}`;

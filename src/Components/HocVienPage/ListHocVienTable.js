@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   Thead,
   Tbody,
@@ -7,27 +8,70 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  ModalFooter,
+  Select,
 } from "@chakra-ui/react";
+import { Input } from "antd";
 import HocVien from "./HocVienComponent";
-// import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import hocVienAPI from "../../api/hocVienAPI";
+import React, { useState, useEffect } from "react";
+import hocvienAPI from "../../api/hocVienAPI";
+
 
 const ListHocVienTable = (props) => {
   var LopChuyenNganh = "Bảo đảm An toàn thông tin";
+  const { idLop } = useParams();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
-  const students = [
-    {
-      id: 1,
-      attributes: {
-        MaHV: "HV001",
-        MaLCN: "CS101",
-        TenHV: "John Doe",
-        NgaySinh: "1990-01-01",
-        GioiTinh: "Male",
-        QueQuan: "New York",
-        CapBac: "Undergraduate",
-      },
-    },
-  ];
+  const [maHV, setMaHV] = useState("");
+  const [hoTen, setHoTen] = useState("");
+  const [ngaySinh, setNgaySinh] = useState("");
+  const [gioiTinh, setGioiTinh] = useState(true);
+  const [queQuan, setQueQuan] = useState("");
+  const [capBac, setCapBac] = useState("");
+  const [imageHV, setImageHV] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      const lcnId = idLop;
+      // const maHV= initialRef.current.value;
+      // const tenHV = finalRef.current.value;
+      const formdata = new FormData();
+      formdata.append("maHV", maHV);
+      formdata.append("lopChuyenNganhId", lcnId);
+      formdata.append("tenHV", hoTen);
+      formdata.append("ngaySinh", ngaySinh);
+      formdata.append("gioiTinh", gioiTinh);
+      formdata.append("queQuan", queQuan);
+      formdata.append("capBac", capBac);
+      formdata.append("file", imageHV);
+      await hocVienAPI.create(formdata);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const [dsHV, setdsHV] = useState([]);
+  useEffect(() => {
+    fetchDsHV();
+  }, []);
+  const fetchDsHV = async () => {
+    setdsHV(await hocvienAPI.get(idLop));
+  };
+  console.log(dsHV);
   return (
     <div
       style={{
@@ -35,7 +79,7 @@ const ListHocVienTable = (props) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "50vh",
+        minHeight: "40vh",
       }}
     >
       <h1 style={{ color: "GrayText" }}>Lớp {LopChuyenNganh}</h1>
@@ -44,12 +88,113 @@ const ListHocVienTable = (props) => {
           fontSize: "50px",
           fontFamily: "inherit",
           fontWeight: "bold",
-          marginBottom: "40px",
+          marginBottom: "80px",
           color: "rgb(91, 138, 114)",
         }}
       >
         Danh sách học viên
       </div>
+      <Button
+        marginTop={"30px"}
+        variant="solid"
+        bg="rgb(26,132,74)"
+        color={"white"}
+        left={"170px"}
+        onClick={onOpen}
+        position={"absolute"}
+      >
+        Thêm
+      </Button>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thêm học viên</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Mã học viên</FormLabel>
+              <Input
+                ref={initialRef}
+                type="text"
+                placeholder="Mã HV"
+                onChange={(e)=>{setMaHV(e.target.value)}}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Tên học viên</FormLabel>
+              <Input
+                ref={finalRef}
+                type="text"
+                placeholder="Tên học viên"
+                onChange={(e)=>{setHoTen(e.target.value)}}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Ngày sinh</FormLabel>
+              <Input
+                placeholder="Ngày sinh"
+                id="ngaySinhInput"
+                onChange={(e) => {
+                  setNgaySinh(e.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Giới tính</FormLabel>
+              <Select
+                id="gioiTinhInput"
+                onChange={(e) => {
+                  setGioiTinh(e.target.value);
+                }}
+              >
+                <option value={true}>Nam</option>
+                <option value={false}>Nữ</option>
+              </Select>
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Quê quán</FormLabel>
+              <Input
+                placeholder="Quê quán"
+                id="queQuanInput"
+                onChange={(e) => {
+                  setQueQuan(e.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Cấp bậc</FormLabel>
+              <Input
+                placeholder="Cấp bậc"
+                id="capBacInput"
+                onChange={(e) => {
+                  setCapBac(e.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Ảnh</FormLabel>
+              <Input
+                type="file"
+                name="file"
+                onChange={(e) => {
+                  setImageHV(e.target.files[0]);
+                }}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <TableContainer w={"150vh"}>
         <Table variant="simple" size="sm">
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -77,7 +222,20 @@ const ListHocVienTable = (props) => {
               <Th w={"5%"}></Th>
             </Tr>
           </Thead>
-          <HocVien name={"Nghĩa"}/>
+          <br />
+      {dsHV?.map((item) => (
+        <HocVien
+          key={item.maHV}
+          maHV={item.maHV}
+          hoTen={item.tenHV}
+          img={item.anhHV}
+          ngaySinh={item.ngaySinh}
+          gioiTinh={item.gioiTinh}
+          queQuan={item.queQuan}
+          capBac={item.capBac}
+        />
+      ))}
+      <br />
         </Table>
       </TableContainer>
     </div>

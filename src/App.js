@@ -19,9 +19,9 @@ function App() {
         <Route path="/home/:id" element={<ListClass />} />
         <Route path="/product" element={<Product/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home/:id/:idHV" element={<HocVien />} />
+        <Route path="/home/:id/:idLop" element={<HocVien />} />
+        <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
         <Route path="/HocVien" element={<HocVien />} />
-
         <Route path="/Diem" element={<Diem/>} />
       </Routes>
     </BrowserRouter>

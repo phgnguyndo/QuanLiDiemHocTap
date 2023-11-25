@@ -1,4 +1,4 @@
-import anh1 from "../../Image/Logo.png";
+// import anh1 from "../../Image/Logo.png";
 import CardDaiDoi from "./CardDaiDoi";
 import { useEffect, useState } from "react";
 import daidoiAPI from "../../api/daidoiAPI";
@@ -21,6 +21,8 @@ import {
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
+  const [imageDaiDoi, setImageDaiDoi] = useState("");
+  const [quanSo, setQuanSo] = useState(0);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   useEffect(() => {
@@ -32,16 +34,17 @@ const BodyHomePage = (props) => {
   var i = 155;
   const handleSubmit = async () => {
     try {
-      const tenDaiDoi = initialRef.current.value; 
-      const daiDoiTruong = finalRef.current.value; 
-      const quanSo = document.getElementById("quanSoInput").value; 
-      const formData = {
-        tenDaiDoi,
-        daiDoiTruong,
-        quanSo
-      };
-      await daidoiAPI.create(formData);
+      const tenDaiDoi = initialRef.current.value;
+      const daiDoiTruong = finalRef.current.value;
+      // const quanSo = document.getElementById("quanSoInput").value;
+      const formdata = new FormData();
+      formdata.append("tenDaiDoi", tenDaiDoi);
+      formdata.append("daiDoiTruong", daiDoiTruong);
+      formdata.append("quanSo", quanSo);
+      formdata.append("file", imageDaiDoi);
+      await daidoiAPI.create(formdata);
       onClose();
+      window.location.reload()
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -84,21 +87,33 @@ const BodyHomePage = (props) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Tên đại đội</FormLabel>
-              <Input ref={initialRef} placeholder="tên đại đội" />
+              <Input ref={initialRef} type="text" placeholder="tên đại đội" />
             </FormControl>
             <FormControl>
               <FormLabel>Đại đội trưởng</FormLabel>
-              <Input ref={finalRef} placeholder="đại đội trưởng" />
+              <Input ref={finalRef} type="text" placeholder="đại đội trưởng" />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Quân số</FormLabel>
-              <Input placeholder="quân số" id="quanSoInput"/>
+              <Input
+                placeholder="quân số"
+                id="quanSoInput"
+                onChange={(e) => {
+                  setQuanSo(parseInt(e.target.value));
+                }}
+              />
             </FormControl>
-            {/* <FormControl mt={4}>
+            <FormControl mt={4}>
               <FormLabel>Ảnh</FormLabel>
-              <Input type="file" />
-            </FormControl> */}
+              <Input
+                type="file"
+                name="file"
+                onChange={(e) => {
+                  setImageDaiDoi(e.target.files[0]);
+                }}
+              />
+            </FormControl>
           </ModalBody>
 
           <ModalFooter>
@@ -113,7 +128,7 @@ const BodyHomePage = (props) => {
         <CardDaiDoi
           key={++i}
           maDaiDoi={item.maDaiDoi}
-          img={anh1}
+          img={item.anhDaiDoi}
           name={item.tenDaiDoi}
           DaiDoiTruong={item.daiDoiTruong}
           QuanSo={item.quanSo}

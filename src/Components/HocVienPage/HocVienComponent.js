@@ -1,7 +1,3 @@
-import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { Input } from "@chakra-ui/input";
 import {
   Modal,
   ModalBody,
@@ -11,73 +7,96 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { Tbody, Td, Tr } from "@chakra-ui/table";
-import React from "react";
-import { useState } from "react";
+import { useState, React } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import hocvienAPI from "../../api/hocVienAPI";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Tbody,
+  Td,
+  Tr,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 const HocVien = (props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
-  const handleSubmit = () => {};
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // const {
+  //   isOpen: isEditModalOpen,
+  //   onOpen: onEditModalOpen,
+  //   onClose: onEditModalClose,
+  // } = useDisclosure();
 
-  const [showModal1, setShowModal1] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
-  const [formData1, setFormData1] = useState({});
-  const [formData2, setFormData2] = useState({});
+  // const [gioiTinh, setGioiTinh] = useState(props.gioiTinh || true);
+  // const [queQuan, setQueQuan] = useState(props.queQuan || "");
+  // const [capBac, setCapBac] = useState(props.capBac || "");
+  // const [imageHV, setImageHV] = useState("");
 
-  const handleCloseModal1 = () => setShowModal1(false);
-  const handleShowModal1 = () => setShowModal1(true);
+  // const initialRef = React.useRef(null);
+  // const finalRef = React.useRef(null);
 
-  const handleCloseModal2 = () => setShowModal2(false);
-  const handleShowModal2 = () => setShowModal2(true);
+  // const { idLop } = useParams();
+  // const lcnId = idLop;
 
-  const handleFormSubmit1 = (e) => {
-    e.preventDefault();
-    console.log("Form 1 submitted:", formData1);
-    handleCloseModal1();
-  };
-
-  const handleFormSubmit2 = (e) => {
-    e.preventDefault();
-    console.log("Form 2 submitted:", formData2);
-    handleCloseModal2();
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData1({ ...formData1, [name]: value });
-  };
+  // const handleSuaHV = async () => {};
+  // const handleXoaHV = async () => {
+  //   try {
+  //     const idHV = props.maHV;
+  //     const formdata = new FormData();
+  //     formdata.append("maHV", maHV);
+  //     formdata.append("lopChuyenNganhId", lcnId);
+  //     formdata.append("tenHV", hoTen);
+  //     formdata.append("ngaySinh", ngaySinh);
+  //     formdata.append("gioiTinh", gioiTinh);
+  //     formdata.append("queQuan", queQuan);
+  //     formdata.append("capBac", capBac);
+  //     formdata.append("file", imageHV);
+  //     await hocvienAPI.update(idHV, formdata);
+  //     onClose();
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //   }
+  // };
+  const { id } = useParams();
+  const {idLop}=useParams();
+  const idHV=props.maHV
+  const nav= useNavigate()
+  const handleOnClick=()=>{
+      nav(`/home/${id}/${idLop}/${idHV}`)
+  }
 
   return (
     <>
       <Tbody>
         <Tr>
           <Td position={"relative"} textAlign={"center"}>
-            0123456789
+            {props.maHV}
+          </Td>
+          <Td position={"relative"} textAlign={"center"} cursor={"pointer"} onClick={handleOnClick}>
+            {props.hoTen}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            Nguyễn Văn Nghĩa
+            {props.ngaySinh}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            21/02/2002
+            {props.gioiTinh}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            Nam
+            {props.queQuan}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            Nghệ An
+            {props.capBac}
           </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            Thượng sĩ
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            <Button onClick={handleShowModal1}>Sửa</Button>
+          {/* <Td position={"relative"} textAlign={"center"}>
+            <Button onClick={onOpen}>Sửa</Button>
             <Modal
               initialFocusRef={initialRef}
               finalFocusRef={finalRef}
-              isOpen={showModal1}
-              onClose={handleCloseModal1}
+              isOpen={isOpen}
+              onClose={onClose}
             >
               <ModalOverlay />
               <ModalContent>
@@ -86,87 +105,87 @@ const HocVien = (props) => {
                 <ModalBody pb={6}>
                   <FormControl>
                     <FormLabel>Tên học viên</FormLabel>
-                    {/* <Input ref={initialRef} placeholder="TenHV" /> */}
-                    <Input
-                      type="text"
-                      name="HoTen"
-                      onChange={handleChange}
-                      placeholder="Họ tên"
-                    ></Input>
+                    <Input ref={initialRef} placeholder="Tên HV" />
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Ngày sinh</FormLabel>
-                    {/* <Input ref={finalRef} placeholder="NgaySinh" /> */}
-                    <Input
-                      type="text"
-                      name="NgaySinh"
-                      onChange={handleChange}
-                      placeholder="Ngày Sinh"
-                    ></Input>
+                    <Input ref={finalRef} placeholder="Ngày Sinh" />
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Giới tính</FormLabel>
-                    {/* <Input placeholder="Nam / Nữ" id="GioiTinh" /> */}
                     <Input
-                      type="text"
-                      name="GioiTinh"
-                      onChange={handleChange}
                       placeholder="Giới Tính"
-                    ></Input>
+                      id="gioiTinhInput"
+                      onChange={(e) => {
+                        setGioiTinh(e.target.value);
+                      }}
+                    />
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Quê quán</FormLabel>
-                    {/* <Input placeholder="Quê quán" id="QueQuan" /> */}
                     <Input
-                      type="text"
-                      name="QueQuan"
-                      onChange={handleChange}
-                      placeholder="Quê Quán"
-                    ></Input>
+                      placeholder="Quê quán"
+                      id="queQuanInput"
+                      onChange={(e) => {
+                        setQueQuan(e.target.value);
+                      }}
+                    />
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Cấp bậc</FormLabel>
-                    {/* <Input placeholder="Cấp bậc" id="CapBac" /> */}
                     <Input
-                      type="text"
-                      name="CapBac"
-                      onChange={handleChange}
-                      placeholder="Cấp Bậc"
-                    ></Input>
+                      placeholder="Cấp bậc"
+                      id="capBacInput"
+                      onChange={(e) => {
+                        setCapBac(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Ảnh</FormLabel>
+                    <Input
+                      type="file"
+                      name="file"
+                      onChange={(e) => {
+                        setImageHV(e.target.files[0]);
+                      }}
+                    />
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleFormSubmit1}>
+                  <Button colorScheme="blue" mr={3}>
                     Lưu
                   </Button>
-                  <Button onClick={handleCloseModal1}>Hủy</Button>
+                  <Button>Hủy</Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td>
+          </Td> */}
 
-          <Td>
-            <Button onClick={handleShowModal2}>Xóa</Button>
+          {/* <Td>
+            <Button>Xóa</Button>
             <Modal
               initialFocusRef={initialRef}
               finalFocusRef={finalRef}
-              isOpen={showModal2}
-              onClose={handleCloseModal2}
+              // isOpen={}
+              // onClose={}
             >
               <ModalOverlay />
               <ModalContent>
-                <ModalHeader>Muốn xóa học viên {props.name} không ?</ModalHeader>
+                <ModalHeader>
+                  Muốn xóa học viên {props.name} không ?
+                </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody></ModalBody>
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleFormSubmit2}>
+                  <Button colorScheme="blue" mr={3}>
                     Xóa
                   </Button>
-                  <Button onClick={handleCloseModal2}>Hủy</Button>
+                  <Button />Hủy</Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td>
+          </Td> */}
         </Tr>
       </Tbody>
     </>
