@@ -28,7 +28,6 @@ import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 // import hocvienAPI from "../../api/hocVienAPI";
 
-
 const ListHocVienTable = (props) => {
   var LopChuyenNganh = "Bảo đảm An toàn thông tin";
   const { idLop } = useParams();
@@ -97,6 +96,7 @@ const ListHocVienTable = (props) => {
       </div>
       <Button
         marginTop={"30px"}
+        marginBottom={"70px"}
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
@@ -123,7 +123,9 @@ const ListHocVienTable = (props) => {
                 ref={initialRef}
                 type="text"
                 placeholder="Mã HV"
-                onChange={(e)=>{setMaHV(e.target.value)}}
+                onChange={(e) => {
+                  setMaHV(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl mt={4}>
@@ -132,7 +134,9 @@ const ListHocVienTable = (props) => {
                 ref={finalRef}
                 type="text"
                 placeholder="Tên học viên"
-                onChange={(e)=>{setHoTen(e.target.value)}}
+                onChange={(e) => {
+                  setHoTen(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl mt={4}>
@@ -190,9 +194,9 @@ const ListHocVienTable = (props) => {
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Save
+              Lưu
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Xóa</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -201,10 +205,10 @@ const ListHocVienTable = (props) => {
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
           <Thead>
             <Tr bg={"rgb(157, 173, 127)"}>
-              <Th w={"10%"} textAlign={"center"}>
+              <Th w={"5%"} textAlign={"center"}>
                 Mã HV
               </Th>
-              <Th w={"20%"} textAlign={"center"}>
+              <Th w={"10%"} textAlign={"center"}>
                 Họ tên
               </Th>
               <Th w={"10%"} textAlign={"center"}>
@@ -224,19 +228,19 @@ const ListHocVienTable = (props) => {
             </Tr>
           </Thead>
           <br />
-      {dsHV?.map((item) => (
-        <HocVien
-          key={item.maHV}
-          maHV={item.maHV}
-          hoTen={item.tenHV}
-          img={item.anhHV}
-          ngaySinh={item.ngaySinh}
-          gioiTinh={item.gioiTinh}
-          queQuan={item.queQuan}
-          capBac={item.capBac}
-        />
-      ))}
-      <br />
+          {dsHV?.map((item) => (
+            <HocVien
+              key={item.maHV}
+              maHV={item.maHV}
+              hoTen={item.tenHV}
+              img={item.anhHV}
+              ngaySinh={item.ngaySinh}
+              gioiTinh={item.gioiTinh}
+              queQuan={item.queQuan}
+              capBac={item.capBac}
+            />
+          ))}
+          <br />
         </Table>
       </TableContainer>
     </div>

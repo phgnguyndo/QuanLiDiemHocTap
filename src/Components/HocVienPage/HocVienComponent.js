@@ -9,64 +9,71 @@ import {
 } from "@chakra-ui/modal";
 import { useState, React } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import hocvienAPI from "../../api/hocVienAPI";
 import {
   Button,
   FormControl,
   FormLabel,
   Input,
+  Select,
   Tbody,
   Td,
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import hocvienAPI from "../../api/hocvienAPI";
+import anh from "../../Image/Logo.png";
 
 const HocVien = (props) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  // const {
-  //   isOpen: isEditModalOpen,
-  //   onOpen: onEditModalOpen,
-  //   onClose: onEditModalClose,
-  // } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isEditModalOpen,
+    onOpen: onEditModalOpen,
+    onClose: onEditModalClose,
+  } = useDisclosure();
 
-  // const [gioiTinh, setGioiTinh] = useState(props.gioiTinh || true);
-  // const [queQuan, setQueQuan] = useState(props.queQuan || "");
-  // const [capBac, setCapBac] = useState(props.capBac || "");
-  // const [imageHV, setImageHV] = useState("");
+  const [hoTen, setHoTen] = useState(props.hoTen || "");
+  const [ngaySinh, setNgaySinh] = useState(props.ngaySinh || "");
+  const [gioiTinh, setGioiTinh] = useState(props.gioiTinh || true);
+  const [queQuan, setQueQuan] = useState(props.queQuan || "");
+  const [capBac, setCapBac] = useState(props.capBac || "");
+  const [imageHV, setImageHV] = useState("");
 
-  // const initialRef = React.useRef(null);
-  // const finalRef = React.useRef(null);
-
-  // const { idLop } = useParams();
-  // const lcnId = idLop;
-
-  // const handleSuaHV = async () => {};
-  // const handleXoaHV = async () => {
-  //   try {
-  //     const idHV = props.maHV;
-  //     const formdata = new FormData();
-  //     formdata.append("maHV", maHV);
-  //     formdata.append("lopChuyenNganhId", lcnId);
-  //     formdata.append("tenHV", hoTen);
-  //     formdata.append("ngaySinh", ngaySinh);
-  //     formdata.append("gioiTinh", gioiTinh);
-  //     formdata.append("queQuan", queQuan);
-  //     formdata.append("capBac", capBac);
-  //     formdata.append("file", imageHV);
-  //     await hocvienAPI.update(idHV, formdata);
-  //     onClose();
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //   }
-  // };
   const { id } = useParams();
-  const {idLop}=useParams();
-  const idHV=props.maHV
-  const nav= useNavigate()
-  const handleOnClick=()=>{
-      nav(`/home/${id}/${idLop}/${idHV}`)
-  }
+  const { idLop } = useParams();
+  const idHV = props.maHV;
+  const nav = useNavigate();
+  const handleOnClick = () => {
+    nav(`/home/${id}/${idLop}/${idHV}`);
+  };
+  <img src={anh} alt="Ảnh đại diện" />;
+
+  const handleXoaHV = async () => {
+    try {
+      await hocvienAPI.delete(idHV);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const handleSuaHV = async () => {
+    try {
+      const idHV = props.maHV;
+      const formdata = new FormData();
+      formdata.append("lopChuyenNganhId", idLop);
+      formdata.append("tenHV", hoTen);
+      formdata.append("ngaySinh", ngaySinh);
+      formdata.append("gioiTinh", gioiTinh);
+      formdata.append("queQuan", queQuan);
+      formdata.append("capBac", capBac);
+      formdata.append("file", imageHV);
+      await hocvienAPI.update(idHV, formdata);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
 
   return (
     <>
@@ -75,7 +82,12 @@ const HocVien = (props) => {
           <Td position={"relative"} textAlign={"center"}>
             {props.maHV}
           </Td>
-          <Td position={"relative"} textAlign={"center"} cursor={"pointer"} onClick={handleOnClick}>
+          <Td
+            position={"relative"}
+            textAlign={"center"}
+            cursor={"pointer"}
+            onClick={handleOnClick}
+          >
             {props.hoTen}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
@@ -90,14 +102,9 @@ const HocVien = (props) => {
           <Td position={"relative"} textAlign={"center"}>
             {props.capBac}
           </Td>
-          {/* <Td position={"relative"} textAlign={"center"}>
+          <Td position={"relative"} textAlign={"center"}>
             <Button onClick={onOpen}>Sửa</Button>
-            <Modal
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              isOpen={isOpen}
-              onClose={onClose}
-            >
+            <Modal isCentered isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Sửa thông tin học viên</ModalHeader>
@@ -105,26 +112,38 @@ const HocVien = (props) => {
                 <ModalBody pb={6}>
                   <FormControl>
                     <FormLabel>Tên học viên</FormLabel>
-                    <Input ref={initialRef} placeholder="Tên HV" />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Ngày sinh</FormLabel>
-                    <Input ref={finalRef} placeholder="Ngày Sinh" />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Giới tính</FormLabel>
                     <Input
-                      placeholder="Giới Tính"
-                      id="gioiTinhInput"
+                      defaultValue={props.hoTen}
                       onChange={(e) => {
-                        setGioiTinh(e.target.value);
+                        setHoTen(e.target.value);
                       }}
                     />
                   </FormControl>
                   <FormControl mt={4}>
+                    <FormLabel>Ngày sinh</FormLabel>
+                    <Input
+                      defaultValue={props.ngaySinh}
+                      onChange={(e) => {
+                        setNgaySinh(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Giới tính</FormLabel>
+                    <Select
+                      id="gioiTinhInput"
+                      onChange={(e) => {
+                        setGioiTinh(e.target.value);
+                      }}
+                    >
+                      <option value={true}>Nam</option>
+                      <option value={false}>Nữ</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl mt={4}>
                     <FormLabel>Quê quán</FormLabel>
                     <Input
-                      placeholder="Quê quán"
+                      defaultValue={props.queQuan}
                       id="queQuanInput"
                       onChange={(e) => {
                         setQueQuan(e.target.value);
@@ -134,7 +153,7 @@ const HocVien = (props) => {
                   <FormControl mt={4}>
                     <FormLabel>Cấp bậc</FormLabel>
                     <Input
-                      placeholder="Cấp bậc"
+                      defaultValue={props.capBac}
                       id="capBacInput"
                       onChange={(e) => {
                         setCapBac(e.target.value);
@@ -153,22 +172,20 @@ const HocVien = (props) => {
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
+                  <Button colorScheme="blue" mr={3} onClick={handleSuaHV}>
                     Lưu
                   </Button>
-                  <Button>Hủy</Button>
+                  <Button onClick={onClose}>Hủy</Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td> */}
-
-          {/* <Td>
-            <Button>Xóa</Button>
+          </Td>
+          <Td position={"relative"} textAlign={"center"}>
+            <Button onClick={onEditModalOpen}>Xóa</Button>
             <Modal
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              // isOpen={}
-              // onClose={}
+              isCentered
+              onClose={onEditModalClose}
+              isOpen={isEditModalOpen}
             >
               <ModalOverlay />
               <ModalContent>
@@ -178,14 +195,14 @@ const HocVien = (props) => {
                 <ModalCloseButton />
                 <ModalBody></ModalBody>
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
+                  <Button colorScheme="blue" mr={3} onClick={handleXoaHV}>
                     Xóa
                   </Button>
-                  <Button />Hủy</Button>
+                  <Button onClick={onEditModalClose}>Hủy</Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td> */}
+          </Td>
         </Tr>
       </Tbody>
     </>
