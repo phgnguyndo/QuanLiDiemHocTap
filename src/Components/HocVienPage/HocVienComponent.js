@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/modal";
 import { useState, React } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import hocvienAPI from "../../api/hocVienAPI";
+// import hocvienAPI from "../../api/hocVienAPI";
 import {
   Button,
   FormControl,
@@ -82,7 +82,7 @@ const HocVien = (props) => {
             {props.ngaySinh}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            {props.gioiTinh}
+            {props.gioiTinh ? "Nam" : "Nữ"}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
             {props.queQuan}

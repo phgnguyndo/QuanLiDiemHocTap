@@ -23,9 +23,10 @@ import {
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
 import { useParams } from "react-router-dom";
-import hocVienAPI from "../../api/hocVienAPI";
+// import hocVienAPI from "../../api/hocVienAPI";
 import React, { useState, useEffect } from "react";
-import hocvienAPI from "../../api/hocVienAPI";
+import hocvienAPI from "../../api/hocvienAPI";
+// import hocvienAPI from "../../api/hocVienAPI";
 
 
 const ListHocVienTable = (props) => {
@@ -57,7 +58,7 @@ const ListHocVienTable = (props) => {
       formdata.append("queQuan", queQuan);
       formdata.append("capBac", capBac);
       formdata.append("file", imageHV);
-      await hocVienAPI.create(formdata);
+      await hocvienAPI.create(formdata);
       onClose();
       window.location.reload();
     } catch (error) {
