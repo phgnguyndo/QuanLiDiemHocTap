@@ -177,7 +177,7 @@ const CardDaiDoi = (props) => {
               <Input
                 type="text"
                 defaultValue={props.QuanSo}
-                onChange={(e) => setQuanSo(parseInt(e.target.value, 10))}
+                onChange={(e) => setQuanSo(parseInt(e.target.value))}
               ></Input>
             </Box>
             <Box>
