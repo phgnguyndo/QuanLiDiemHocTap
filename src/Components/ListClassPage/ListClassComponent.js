@@ -108,6 +108,10 @@ const ListClassComponent = () => {
                   setSoHV(e.target.value);
                 }}
               />
+              {/* <FormControl mt={4}>
+              <FormLabel>Ảnh</FormLabel>
+              <Input type="file" />
+            </FormControl> */}
             </FormControl>
             <FormControl mt={4}>
               <FormLabel>Ảnh lớp</FormLabel>
