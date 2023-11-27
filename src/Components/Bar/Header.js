@@ -1,17 +1,27 @@
 import { Form, InputGroup, ListGroup, Container, Navbar, Nav} from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Image } from "@chakra-ui/react";
 import logo from "../../Image/Logo.png";
+import hocvienAPI from "../../api/hocvienAPI";
 
 function Header() {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  // const [maHV, setMaHV]= useState("")
+  const [hocVien, setHocVien]=useState([])
 
+
+  useEffect(() => {
+    searchHocVien();
+  }, []);
+  const searchHocVien = async () => {
+    setHocVien(await hocvienAPI.get(searchText));
+  };
+  console.log(hocVien);
   const handleSearch = (text) => {
-    const results = ["Result 1", "Result 2", "Result 3","Result 4"].filter((result) =>
-      result.toLowerCase().includes(text.toLowerCase())
-    );
+    const results = hocVien.map((hv) => hv.tenHV);
+   
     // Giới hạn chỉ trả về 3 kết quả
     const limitedResults = results.slice(0, 3);
     setSearchResults(limitedResults);

@@ -18,6 +18,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
@@ -31,6 +32,7 @@ const BodyHomePage = (props) => {
   const fetchDaiDoi = async () => {
     setdsDaiDoi(await daidoiAPI.getAll());
   };
+  
   var i = 155;
   const handleSubmit = async () => {
     try {

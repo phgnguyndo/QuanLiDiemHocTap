@@ -12,12 +12,6 @@ import {
 import React, { useState } from "react";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import { useParams } from "react-router-dom";
-
-
-
-
-
-
 const DiemComponent = (props)=>{
 
 
