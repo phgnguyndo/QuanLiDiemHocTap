@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 
-const PhieuDiem= {
+const phieuDiemAPI= {
     getAll(params) {
         const url='/PhieuDiem';
         return axiosClient.get(url, {params})
@@ -23,4 +23,4 @@ update(data){
     }
 }
 
-export default PhieuDiem
+export default phieuDiemAPI

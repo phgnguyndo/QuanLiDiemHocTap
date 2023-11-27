@@ -5,13 +5,16 @@ import {
     Tr,
     Th,
     Td,
-    TableCaption,
-    TableContainer,
     Tfoot,
     Button,
     FormControl,
     FormLabel,
     Input,
+    useDisclosure,
+    ModalFooter,
+    ModalOverlay,
+    ModalContent,
+    ModalCloseButton,
   } from '@chakra-ui/react';
 //   import {
 //     Modal,
@@ -24,122 +27,64 @@ import {
 //     useDisclosure,
 //   } from "@chakra-ui/react";
   import DiemComponent from './DiemComponents';
+import React, { useState } from 'react';
+import { Modal } from 'bootstrap';
+import { ModalBody, ModalHeader } from 'react-bootstrap';
+import phieuDiemAPI from '../../api/PhieuDiem';
+import { useParams } from 'react-router-dom';
 const DiemHocKyComponent = (props)=>{
 
+    const DiemTBHocKy = 0;
 
 
-    const HocPhan = [
-        {
-            TenHocPhan: 'Giải tích 1',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 7,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-        {
-          TenHocPhan: 'Lịch sử Đảng Cộng sản Việt nam',
-          SoTinChi: 4,
-          DiemChuyenCan: 9,
-          DiemThuongXuyen: 7,
-          DiemThiKetThucMon: 8,
-          SoLanThiLai: 0,
-          HocKy: 1,
-          },
-          {
-            TenHocPhan: 'Toán chuyên đề',
-            SoTinChi: 4,
-            DiemChuyenCan: 7,
-            DiemThuongXuyen: 5,
-            DiemThiKetThucMon: 6,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-          {
-            TenHocPhan: 'Toán chuyên đề',
-            SoTinChi: 4,
-            DiemChuyenCan: 7,
-            DiemThuongXuyen: 5,
-            DiemThiKetThucMon: 6,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-          {
-            TenHocPhan: 'Toán chuyên đề',
-            SoTinChi: 4,
-            DiemChuyenCan: 7,
-            DiemThuongXuyen: 5,
-            DiemThiKetThucMon: 6,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-          {
-            TenHocPhan: 'Toán chuyên đề',
-            SoTinChi: 4,
-            DiemChuyenCan: 7,
-            DiemThuongXuyen: 5,
-            DiemThiKetThucMon: 6,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-      ];
+
+    const {idHV}=useParams();
+    const [diemCC,setDiemCC] = useState(0);
+    const [diemTX,setDiemTX] = useState(0);
+    const [diemThi,setDiemThi] = useState(0);
+    const [diemThiLai,setDiemThiLai] = useState(0);
+    const [lanThi,setLanThi] = useState(0);
+    const hocVienId=idHV;
+
+    const initialRef = React.useRef(null);
+    const finalRef = React.useRef(null);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
 
+    const handleSubmit= async ()=>{
+      try {
+        const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
+        const formData = {
+          lopHocPhanId ,
+          hocVienId ,
+          diemCC ,
+          diemTX ,
+          diemThi ,
+          diemThiLai ,
+          lanThi 
+        }
     
-    // // Tính điểm trung bình môn và học kỳ
-    // const diemTBMonHocKy = HocPhan.reduce((acc, student) => {
-    //   const diemTBMon = (
-    //     student.attributes.DiemChuyenCan * 0.1 +
-    //     student.attributes.DiemThuongXuyen * 0.3 +
-    //     student.attributes.DiemThiKetThucMon * 0.6
-    //   ).toFixed(2);
+        await phieuDiemAPI.create(formData);
+        onClose();
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
   
-    //   if (!acc[student.attributes.HocKy]) {
-    //     acc[student.attributes.HocKy] = {
-    //       totalDiem: 0,
-    //       count: 0,
-    //     };
-    //   }
-  
-    //   acc[student.attributes.HocKy].totalDiem += parseFloat(diemTBMon);
-    //   acc[student.attributes.HocKy].count += 1;
-  
-    //   return acc;
-    // }, {});
-  
-    // // Tính điểm trung bình học kỳ
-    // Object.keys(diemTBMonHocKy).forEach((hocKy) => {
-    //   diemTBMonHocKy[hocKy].diemTBHocKy = (
-    //     diemTBMonHocKy[hocKy].totalDiem / diemTBMonHocKy[hocKy].count
-    //   ).toFixed(2);
-      // });
-
-
-
-
-  const NhapDiemTungMonTuDong = (props) =>{
-    return (
-      <DiemComponent
-        TenHocPhan={props.TenHocPhan}
-        SoTinChi={props.SoTinChi}
-        DiemChuyenCan={props.DiemChuyenCan}
-        DiemThuongXuyen={props.DiemThuongXuyen}
-        DiemThiKetThucMon={props.DiemThiKetThucMon}
-        SoLanThiLai={props.SoLanThiLai}
-      />
-    );
-  };
+    };
 
     return(
         <>
         <Table variant="striped" colorScheme="teal" size="sm"  border="2px solid rgb(190,190,190)" marginTop={'10px'} marginBottom={'10px'}>
           <Thead>
           <Tr >
-              <Th colspan={"7"} style={{ textAlign: "center" }}>Học kỳ thứ {props.HocKy}</Th>
+              <Th colspan={"10"} style={{ textAlign: "center" }}>Học kỳ thứ {props.HocKy}</Th>
           </Tr>
 
           <Tr bg={""}>
+            <Th w={"9%"} textAlign={"center"}>
+              MaHocPhan
+            </Th>
             <Th w={"9%"} textAlign={"center"}>
               TenHocPhan
             </Th>
@@ -164,12 +109,27 @@ const DiemHocKyComponent = (props)=>{
             <Th w={"8%"} textAlign={"center"}>
               DiemTBMon
             </Th>
+            <Th colspan={"7"} w={"9%"} textAlign={"center"}>
+              Tùy chọn
+            </Th>
             </Tr>
           </Thead>
-          {HocPhan.map((hocPhan) => NhapDiemTungMonTuDong(hocPhan))}
+          <Tbody >
+          {/* {HocPhan.map((hocPhan) => NhapDiemTungMonTuDong(hocPhan))} */}          
+            <DiemComponent
+              MaHocPhan={'HP01'}
+              TenHocPhan={'Giải Tích 1'}
+              SoTinChi={4}
+              DiemChuyenCan={props.DiemChuyenCan}
+              DiemThuongXuyen={props.DiemThuongXuyen}
+              DiemThiKetThucMon={props.DiemThuongXuyen}
+              SoLanThiLai={props.DiemThuongXuyen}
+            />         
+        </Tbody>
           <Tfoot>
             <Tr >
-              <Th colspan={"6"} style={{ textAlign: "right" }}>Điểm trung bình học kỳ</Th>
+              <Th colspan={"7"} style={{ textAlign: "right" }}>Điểm trung bình học kỳ</Th>
+              <Th w={"8%"} textAlign={"center"}>{}</Th>
             </Tr>
           </Tfoot>
           </Table>
