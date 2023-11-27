@@ -1,172 +1,220 @@
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-  } from '@chakra-ui/react';
+  Table,
+  TableContainer,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Text,
+  Td,
+  Tr,
+} from '@chakra-ui/react';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@chakra-ui/react";
+import React, { useState, useEffect  } from 'react';
+import DiemHocKyComponent from './DiemHocKyComponent';
+import { useParams } from 'react-router-dom';
+import phieuDiemAPI from '../../api/PhieuDiem';
+
+// const HocKyThu = (props) => {
+//   return (
+//     <Tr >
+//       <Th colspan={"7"} style={{ textAlign: "center" }}>Học kỳ thứ {props}</Th>
+//     </Tr>
+//   );
+// };
+// export default HocKyThu;
+
+
+const DiemHocVien = (props) => {
+  // Tính điểm trung bình môn và học kỳ
+  // const diemTBMonHocKy = students.reduce((acc, student) => {
+  //   const diemTBMon = (
+  //     student.attributes.DiemChuyenCan * 0.1 +
+  //     student.attributes.DiemThuongXuyen * 0.3 +
+  //     student.attributes.DiemThiKetThucMon * 0.6
+  //   ).toFixed(2);
+
+  //   if (!acc[student.attributes.HocKy]) {
+  //     acc[student.attributes.HocKy] = {
+  //       totalDiem: 0,
+  //       count: 0,
+  //     };
+  //   }
+
+  //   acc[student.attributes.HocKy].totalDiem += parseFloat(diemTBMon);
+  //   acc[student.attributes.HocKy].count += 1;
+
+  //   return acc;
+  // }, {});
   
-  const DiemHocVien = (props) => {
-    const Name = "Nguyễn Quang Phong";
+  // Tính điểm trung bình học kỳ
+  // Object.keys(diemTBMonHocKy).forEach((hocKy) => {
+  //   diemTBMonHocKy[hocKy].diemTBHocKy = (
+  //     diemTBMonHocKy[hocKy].totalDiem / diemTBMonHocKy[hocKy].count
+  //   ).toFixed(2);
+  // });
+  const {idHV}=useParams()
+  const [diemCC,setDiemCC] = useState(0);
+  const [diemTX,setDiemTX] = useState(0);
+  const [diemThi,setDiemThi] = useState(0);
+  const [diemThiLai,setDiemThiLai] = useState(0);
+  const [lanThi,setLanThi] = useState(0);
   
-    const students = [
-        {
-          id: 1,
-          attributes: {
-            TenMonHoc: 'Giải tích 1',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 7,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-        },
-        {
-          id: 2,
-          attributes: {
-            TenMonHoc: 'Mã hóa',
-            SoTinChi: 3,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 8,
-            DiemThiKetThucMon: 9,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-        },
-        {
-          id: 3,
-          attributes: {
-            TenMonHoc: 'Lập trình cơ bản',
-            SoTinChi: 2,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 9,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 1,
-          },
-        },
-        {
-          id: 4,
-          attributes: {
-            TenMonHoc: 'Lập trình cơ bản',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 9,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 2,
-          },
-          
-        },
-        {
-          id: 5,
-          attributes: {
-            TenMonHoc: 'Lập trình cơ bản',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 9,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 2,
-          },
-          
-        },
-        {
-          id: 6,
-          attributes: {
-            TenMonHoc: 'Lập trình cơ bản',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 9,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 2,
-          },
-          
-        },
-        {
-          id: 7,
-          attributes: {
-            TenMonHoc: 'Lập trình cơ bản',
-            SoTinChi: 4,
-            DiemChuyenCan: 10,
-            DiemThuongXuyen: 9,
-            DiemThiKetThucMon: 10,
-            SoLanThiLai: 0,
-            HocKy: 2,
-          },
-          
-        },
-      ];
-    // Tính điểm trung bình môn và học kỳ
-    const diemTBMonHocKy = students.reduce((acc, student) => {
-      const diemTBMon = (
-        student.attributes.DiemChuyenCan * 0.1 +
-        student.attributes.DiemThuongXuyen * 0.3 +
-        student.attributes.DiemThiKetThucMon * 0.6
-      ).toFixed(2);
-  
-      if (!acc[student.attributes.HocKy]) {
-        acc[student.attributes.HocKy] = {
-          totalDiem: 0,
-          count: 0,
-        };
+  const hocVienId=idHV
+  const handleSubmit= async ()=>{
+    try {
+      const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
+      const formData = {
+        lopHocPhanId ,
+        hocVienId ,
+        diemCC ,
+        diemTX ,
+        diemThi ,
+        diemThiLai ,
+        lanThi 
       }
   
-      acc[student.attributes.HocKy].totalDiem += parseFloat(diemTBMon);
-      acc[student.attributes.HocKy].count += 1;
-  
-      return acc;
-    }, {});
-  
-    // Tính điểm trung bình học kỳ
-    Object.keys(diemTBMonHocKy).forEach((hocKy) => {
-      diemTBMonHocKy[hocKy].diemTBHocKy = (
-        diemTBMonHocKy[hocKy].totalDiem / diemTBMonHocKy[hocKy].count
-      ).toFixed(2);
-    });
-  
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-        <div style={{ fontFamily: 'cursive', fontSize: '40px', color: 'Red' }}>Bảng điểm của học viên {Name}</div>
-        <TableContainer>
-          <Table variant="striped" colorScheme="teal" size="sm">
-            <TableCaption>............................</TableCaption>
-            <Thead>
-              <Tr>
-                {Object.keys(students[0].attributes).map((attribute) => (
-                  <Th key={attribute}>{attribute}</Th>
-                ))}
-                <Th>DiemTBMon</Th>
-                <Th>DiemTBHocKy</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {students.map((student) => (
-                <Tr key={student.id}>
-                  {Object.entries(student.attributes).map(([key, value], index) => (
-                    <Td key={index}>{value}</Td>
-                  ))}
-                  <Td>
-                    {(
-                      student.attributes.DiemChuyenCan * 0.1 +
-                      student.attributes.DiemThuongXuyen * 0.3 +
-                      student.attributes.DiemThiKetThucMon * 0.6
-                    ).toFixed(2)}
-                  </Td>
-                  {/* <Td>{diemTBMonHocKy[student.attributes.HocKy]?.diemTBHocKy || 'N/A'}</Td> */}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </div>
-    );
+      await phieuDiemAPI.create(formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+
   };
-  
-  export default DiemHocVien;
-  
+  // console.log(idHV);
+  const [phieuDiem, setPhieuDiem] = useState([]);
+  useEffect(() => {
+    fetchPhieuDiem();
+  }, []);
+  const fetchPhieuDiem = async () => {
+    setPhieuDiem(await phieuDiemAPI.get(idHV));
+  };
+  console.log(phieuDiem);
+
+
+
+
+
+
+
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      padding:'10px'
+    }}>
+      <div style={{ fontFamily: 'cursive', fontSize: '40px', color: 'Red' }}>Bảng điểm của học viên </div>
+      <TableContainer padding="20px" variant="striped" colorScheme="teal" size="sm"  border="2px solid rgb(190,190,190)">
+      <Button
+              onClick={onOpen}
+              variant="solid"
+              colorScheme="blue"
+              marginRight={"10px"}
+              bg={"rgb(243,66,33)"}
+            >
+              Thêm thông tin
+            </Button>
+        <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thêm điểm</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Học Kỳ</FormLabel>
+              <Input placeholder="VD: 1" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Tên môn học</FormLabel>
+              <Input ref={initialRef} type="text" placeholder="VD: Giải tích" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Số tín chỉ</FormLabel>
+              <Input placeholder="VD: Giải tích" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Điểm Chuyên cần</FormLabel>
+              <Input ref={finalRef} type="text" placeholder="Trên 0 dưới 10" onChange={(e)=>{setDiemCC(parseFloat(e.target.value))}}/>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Điểm thường xuyên</FormLabel>
+              <Input
+                placeholder="Trên 0 dưới 10"
+                id="quanSoInput"
+                onChange={(e)=>{setDiemTX(parseFloat(e.target.value))}}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Điểm Thi Kết thúc môn</FormLabel>
+              <Input placeholder="VD: Giải tích" onChange={(e)=>{setDiemThi(parseFloat(e.target.value))}}/>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Điểm Thi Lại</FormLabel>
+              <Input placeholder="VD: Giải tích" onChange={(e)=>{setDiemThiLai(parseFloat(e.target.value))}}/>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Số lần thi lại</FormLabel>
+              <Input placeholder="VD: Giải tích" onChange={(e)=>{setLanThi(parseInt(e.target.value))}}/>
+            </FormControl>
+
+
+
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      
+
+            
+        <Table variant="striped" colorScheme="teal" size="sm"   border="2px solid rgb(190,190,190)" marginTop={'10px'}>
+          {/* <DiemHocKyComponent/> */}
+          {phieuDiem?.map((item) => (
+            <DiemHocKyComponent
+              HocKy = {1}
+              DiemChuyenCan={item.diemCC}
+              DiemThuongXuyen={item.diemTX}
+              DiemThiKetThucMon={item.diemThi}
+              DiemThiLai={item.diemThiLai}
+              SoLanThiLai={item.lanThi}
+            />
+          ))}
+          {/* <DiemHocKyComponent HocKy = {2}/>
+          <DiemHocKyComponent HocKy = {3}/>
+          <DiemHocKyComponent HocKy = {4}/> */}
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
+
+export default DiemHocVien;

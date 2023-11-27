@@ -52,7 +52,7 @@ const ListClassComponent = () => {
   const fetchLopCN = async () => {
     setdsLopCn(await lopcnAPI.get(id));
   };
-  // console.log(dsLopCn);
+  console.log(dsLopCn);
   return (
     <Box position={"relative"} w={"75%"} left={"12.5%"}>
       <Box

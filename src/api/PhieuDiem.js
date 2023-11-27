@@ -1,25 +1,26 @@
 import axiosClient from "./axiosClient";
 
-const bomonAPI= {
+const phieuDiemAPI= {
     getAll(params) {
-        const url='/bomon';
+        const url='/PhieuDiem';
         return axiosClient.get(url, {params})
     },
     get(id) {
-        const url=`/bomon/${id}`;
+        const url=`/PhieuDiem/${id}`;
         return axiosClient.get(url);
     },
     create(data){
-        const url='/bomon';
+        const url='/PhieuDiem';
         return axiosClient.post(url,data)
     },
-    update(data){
-        const url=`/bomon/${data.id}`;
+update(data){
+        const url=`/PhieuDiem/${data.id}`;
         return axiosClient.patch(url, data);
-    },
+},
     delete(id){
-        const url= `/bomon/${id}`
+        const url= `/PhieuDiem/${id}`;
+        return axiosClient.delete(url);
     }
 }
 
-export default bomonAPI 
+export default phieuDiemAPI
