@@ -3,28 +3,31 @@ import { Button, Checkbox, Form, Input, Card, Typography } from "antd";
 import MTA from "../../Image/MTA.jpg";
 import { Box } from "@chakra-ui/react";
 import axios from "axios";
-const onFinish =async (values) => {
+import { useNavigate } from "react-router";
+const onFinish = async (values) => {
   try {
     const dataToSend = {
-      "username": values.username,
-      "password": values.password
-    }
-   // Gửi yêu cầu POST đến backend sử dụng Axios
-    const response = await axios.post('https://localhost:7278/api/Authorize/Login', dataToSend);
-    
-    // Xử lý kết quả từ backend
-    console.log('Response from backend:', response.data);
+      username: values.username,
+      password: values.password,
+    };
+    // Gửi yêu cầu POST đến backend sử dụng Axios
+    const response = await axios.post(
+      "https://localhost:7278/api/Authorize/Login",
+      dataToSend
+    );
 
+    // Xử lý kết quả từ backend
+    console.log("Response from backend:", response.data);
   } catch (error) {
-    console.error('Error sending POST request:', error);
+    console.error("Error sending POST request:", error);
   }
 };
 
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
-
 const FormLogin = (props) => {
+  const nav= useNavigate()
   const handleSubmit = () => {
     alert(1);
   };
@@ -101,8 +104,18 @@ const FormLogin = (props) => {
               span: 16,
             }}
           >
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ position: "relative", left: "60px" }}
+            >
               Login
+            </Button>
+            <Button
+              style={{ position: "relative", left: "-100px", top: "40px" }}
+              onClick={()=>{nav("/register")}}
+            >
+              You don'n have account? Register now
             </Button>
           </Form.Item>
         </Form>

@@ -1,10 +1,21 @@
 import React from "react";
 import MTA from "../../Image/MTA.jpg";
-import { Button, Col, Form, Select, Input, Row, Card, Typography, notification} from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Select,
+  Input,
+  Row,
+  Card,
+  Typography,
+  notification,
+} from "antd";
 import { Box } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { register } from "../../features/Auth/userSlice";
+import { useNavigate } from "react-router";
 const { Option } = Select;
 const tailFormItemLayout = {
   wrapperCol: {
@@ -19,44 +30,28 @@ const tailFormItemLayout = {
   },
 };
 const Register = () => {
-  // const [registrationStatus, setRegistrationStatus] = useState(null);
+  const nav=useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  // const noticeRegister = () => {
-  //   if (registrationStatus === 'success') {
-  //     notification.success({
-  //       message: 'Đăng ký thành công',
-  //       duration: 3,  // Thời gian hiển thị trong 3 giây
-  //     });
-  //     setRegistrationStatus(null);
-  //   } else if (registrationStatus === 'error') {
-  //     notification.error({
-  //       message: 'Đăng ký thất bại',
-  //       duration: 3,
-  //     });
-  //     setRegistrationStatus(null);
-  //   }
-
-  // };
   const onFinish = async (values) => {
     try {
       const dataToSend = {
-            code: values.Username,
-            password: values.password,
-            role: values.role,
-          };
+        code: values.Username,
+        password: values.password,
+        role: values.role,
+      };
       const action = register(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
       notification.success({
-        message: 'Đăng ký thành công',
+        message: "Đăng ký thành công",
         duration: 3,
       });
       console.log("New user", user);
     } catch (error) {
-      console.log('Fail to register', error);
+      console.log("Fail to register", error);
       notification.error({
-        message: 'Đăng ký thất bại',
+        message: "Đăng ký thất bại",
         duration: 3,
       });
     }
@@ -72,7 +67,6 @@ const Register = () => {
     >
       {/* {registrationStatus !==null && noticeRegister()} */}
       <Card style={{ maxWidth: 600, width: "100%" }}>
-        
         <Form
           form={form}
           name="register"
@@ -170,8 +164,18 @@ const Register = () => {
             </Col>
           </Row>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" >
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ position: "relative", left: "55px" }}
+            >
               Register
+            </Button>
+            <Button
+              style={{ position: "relative", top: "40px", left: "-100px" }}
+              onClick={()=>{nav("/")}}
+            >
+              You have an account? Login now
             </Button>
           </Form.Item>
         </Form>
