@@ -28,8 +28,8 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 const ClassComponent = (props) => {
   const { id } = useParams();
-  const idLop=props.maLCN;
-  const nav=useNavigate(); 
+  const idLop = props.maLCN;
+  const nav = useNavigate();
   // const lopId=idHV;
   const daiDoiId = id;
   const maLCN = props.maLCN;
@@ -64,7 +64,7 @@ const ClassComponent = (props) => {
       await lopcnAPI.update(lopcnId, formdata);
       onClose();
       window.location.reload();
-      
+
       // const formData = {
       //   daiDoiId,
       //   tenLopChuyenNganh,
@@ -93,10 +93,13 @@ const ClassComponent = (props) => {
           <Image src={anh1} borderRadius="lg" />
           <Stack mt="6" spacing="3">
             <Heading
+              cursor={"pointer"}
               size="md"
               fontFamily={"cursive"}
               _hover={{ color: "brown" }}
-              onClick={()=>{nav(`/home/${daiDoiId}/${idLop}`)}}
+              onClick={() => {
+                nav(`/home/${daiDoiId}/${idLop}`);
+              }}
               // onClick={()=>{console.log(lopId)}}
             >
               {props.name}
@@ -191,7 +194,6 @@ const ClassComponent = (props) => {
                 }}
               ></Input>
             </Box>
-            
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>

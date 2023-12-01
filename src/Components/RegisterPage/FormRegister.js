@@ -30,7 +30,7 @@ const tailFormItemLayout = {
   },
 };
 const Register = () => {
-  const nav=useNavigate();
+  const nav = useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
@@ -47,6 +47,7 @@ const Register = () => {
         message: "Đăng ký thành công",
         duration: 3,
       });
+      nav("/")
       console.log("New user", user);
     } catch (error) {
       console.log("Fail to register", error);
@@ -173,7 +174,9 @@ const Register = () => {
             </Button>
             <Button
               style={{ position: "relative", top: "40px", left: "-100px" }}
-              onClick={()=>{nav("/")}}
+              onClick={() => {
+                nav("/");
+              }}
             >
               You have an account? Login now
             </Button>

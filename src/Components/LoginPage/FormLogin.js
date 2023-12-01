@@ -1,32 +1,39 @@
 import React from "react";
-import { Button, Checkbox, Form, Input, Card, Typography } from "antd";
+import { Button, Checkbox, Form, Input, Card, Typography, notification } from "antd";
 import MTA from "../../Image/MTA.jpg";
 import { Box } from "@chakra-ui/react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router";
-const onFinish = async (values) => {
-  try {
-    const dataToSend = {
-      username: values.username,
-      password: values.password,
-    };
-    // Gửi yêu cầu POST đến backend sử dụng Axios
-    const response = await axios.post(
-      "https://localhost:7278/api/Authorize/Login",
-      dataToSend
-    );
-
-    // Xử lý kết quả từ backend
-    console.log("Response from backend:", response.data);
-  } catch (error) {
-    console.error("Error sending POST request:", error);
-  }
-};
+import { login } from "../../features/Auth/userSlice";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
-const FormLogin = (props) => {
+const FormLogin = () => {
+  const dispatch=useDispatch()
+  const onFinish = async (values) => {  
+    try {
+      const dataToSend = {
+        username: values.username,
+        password: values.password
+      };
+      console.log(dataToSend);
+
+      const action = login(dataToSend);
+      const resultAction = await dispatch(action);
+      const user = unwrapResult(resultAction);
+      nav("/home")
+      console.log("New user", user);
+    } catch (error) {
+      notification.error({
+        message: "user name or password is invalid",
+        duration: 3,
+      });
+      console.log("Fail to login", error);
+    }
+  }; 
   const nav= useNavigate()
   const handleSubmit = () => {
     alert(1);

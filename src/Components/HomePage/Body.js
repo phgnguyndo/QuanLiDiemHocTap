@@ -18,7 +18,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import hocvienAPI from "../../api/hocvienAPI";
+// import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
@@ -52,7 +52,7 @@ const BodyHomePage = (props) => {
     }
   };
   return (
-    <Box position={"relative"} w={"70%"} left={"15%"}>
+    <Box position={"relative"} w={"70%"} left={"15%"} top={"10%"}>
       <Box
         w={"100%"}
         height={"50px"}

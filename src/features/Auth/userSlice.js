@@ -1,4 +1,5 @@
 import userAPI from '../../api/userAPI';
+import StorageKeys from '../../constance/storage-key';
 
 const {createSlice, createAsyncThunk}=require('@reduxjs/toolkit');
 
@@ -9,9 +10,9 @@ export const register = createAsyncThunk(
       // call api to register
       const data  =await userAPI.register(payload);
       //save data to localsrorage
-      localStorage.setItem('access_token', data.token);
-      localStorage.setItem('refresh_token', data.refreshToken);
-      localStorage.setItem('user', JSON.stringify(data.infoUser));
+      localStorage.setItem(StorageKeys.TOKEN , data.token);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, data.refreshToken);
+      localStorage.setItem(StorageKeys.USER, JSON.stringify(data.infoUser));
     
       //return user data
       return data.infoUser
@@ -24,9 +25,9 @@ export const login = createAsyncThunk(
       // call api to register
       const data  =await userAPI.login(payload);
       //save data to localsrorage
-      localStorage.setItem('access_token', data.token);
-      localStorage.setItem('refresh_token', data.refreshToken);
-      localStorage.setItem('user', JSON.stringify(data.infoUser));
+      localStorage.setItem(StorageKeys.TOKEN, data.token);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, data.refreshToken);
+      localStorage.setItem(StorageKeys.USER, JSON.stringify(data.infoUser));
     
       //return user data
       return data.infoUser
@@ -36,7 +37,7 @@ export const login = createAsyncThunk(
 const useSlice=createSlice({
     name:'user',
     initialState:{
-        current:{},
+        current:JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
         settings:{},
     },
     reducers:{},
