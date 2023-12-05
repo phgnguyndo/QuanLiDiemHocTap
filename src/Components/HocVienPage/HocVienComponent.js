@@ -24,6 +24,77 @@ import hocvienAPI from "../../api/hocvienAPI";
 import anh from "../../Image/Logo.png";
 
 const HocVien = (props) => {
+  const capBacData = [
+    "Binh nhất",
+    "Binh nhì",
+    "Hạ sĩ",
+    "Trung sĩ",
+    "Thượng sĩ",
+  ];
+  const provinceData = [
+    "An Giang",
+    "Bà Rịa-Vũng Tàu",
+    "Bắc Giang",
+    "Bắc Kạn",
+    "Bạc Liêu",
+    "Bắc Ninh",
+    "Bến Tre",
+    "Bình Định",
+    "Bình Dương",
+    "Bình Phước",
+    "Bình Thuận",
+    "Cà Mau",
+    "Cần Thơ",
+    "Cao Bằng",
+    "Đà Nẵng",
+    "Đắk Lắk",
+    "Đắk Nông",
+    "Điện Biên",
+    "Đồng Nai",
+    "Đồng Tháp",
+    "Gia Lai",
+    "Hà Giang",
+    "Hà Nam",
+    "Hà Nội",
+    "Hà Tĩnh",
+    "Hải Dương",
+    "Hải Phòng",
+    "Hậu Giang",
+    "Hòa Bình",
+    "Hưng Yên",
+    "Khánh Hòa",
+    "Kiên Giang",
+    "Kon Tum",
+    "Lai Châu",
+    "Lâm Đồng",
+    "Lạng Sơn",
+    "Lào Cai",
+    "Long An",
+    "Nam Định",
+    "Nghệ An",
+    "Ninh Bình",
+    "Ninh Thuận",
+    "Phú Thọ",
+    "Phú Yên",
+    "Quảng Bình",
+    "Quảng Nam",
+    "Quảng Ngãi",
+    "Quảng Ninh",
+    "Quảng Trị",
+    "Sóc Trăng",
+    "Sơn La",
+    "Tây Ninh",
+    "Thái Bình",
+    "Thái Nguyên",
+    "Thanh Hóa",
+    "Thừa Thiên-Huế",
+    "Tiền Giang",
+    "Trà Vinh",
+    "Tuyên Quang",
+    "Vĩnh Long",
+    "Vĩnh Phúc",
+    "Yên Bái",
+  ];
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
@@ -142,23 +213,35 @@ const HocVien = (props) => {
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Quê quán</FormLabel>
-                    <Input
-                      defaultValue={props.queQuan}
+                    <Select
+                      placeholder="Quê quán"
                       id="queQuanInput"
                       onChange={(e) => {
                         setQueQuan(e.target.value);
                       }}
-                    />
+                    >
+                      {provinceData.map((province, index) => (
+                        <option key={index} value={province}>
+                          {province}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Cấp bậc</FormLabel>
-                    <Input
-                      defaultValue={props.capBac}
+                    <Select
+                      placeholder="Cấp bậc"
                       id="capBacInput"
                       onChange={(e) => {
                         setCapBac(e.target.value);
                       }}
-                    />
+                    >
+                      {capBacData.map((capbac, index) => (
+                        <option key={index} value={capbac}>
+                          {capbac}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Ảnh</FormLabel>

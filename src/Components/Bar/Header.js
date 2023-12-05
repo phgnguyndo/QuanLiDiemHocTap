@@ -16,6 +16,7 @@ import StorageKeys from "../../constance/storage-key";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
@@ -62,7 +63,7 @@ function Header() {
   );
 
   return (
-    <Box fontFamily={"cursive"}>
+    <Box fontFamily={"cursive"} display={"flex"} flexDirection= "column">
       <Navbar
         bg="dark"
         data-bs-theme="dark"
@@ -71,7 +72,7 @@ function Header() {
           paddingTop: "70px",
           position: "fixed",
           width: "100%",
-          zIndex: 1000,
+          zIndex: 998,
           top: "0",
         }}
       >
@@ -84,7 +85,7 @@ function Header() {
             marginRight={"10px"}
           ></Image>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link onClick={() => setShowMenu(!showMenu)}>Home</Nav.Link>
 
             <Dropdown overlay={menu1} placement="bottomRight" arrow>
               <Nav.Link>Features</Nav.Link>
@@ -133,7 +134,32 @@ function Header() {
           </Dropdown>
         </Container>
       </Navbar>
+      
       <div style={{ height: "80px" }}></div>
+
+      {/* {showMenu && (
+        <div
+          style={{
+            position: "fixed",
+            top: "0px", // Điều chỉnh vị trí của menu
+            left: "180px",
+            width: "200px",
+            height:"70vh", // Điều chỉnh kích thước của menu
+            backgroundColor: "rgb(33,37,41)", // Màu nền của menu
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Hiệu ứng bóng đổ
+            zIndex: "999",
+            color:"gray",
+            // opacity:"80%"
+          }}
+        >
+          Quản lí điểm học viên */}
+          {/* Thêm các tùy chọn của menu vào đây */}
+          {/* <Nav className="flex-column">
+            <Nav.Link href="/khoa">Khoa</Nav.Link>
+            <Nav.Link href="/bomon">Bộ môn</Nav.Link>
+          </Nav>
+        </div>
+      )} */}
     </Box>
   );
 }

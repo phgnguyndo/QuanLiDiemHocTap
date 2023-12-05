@@ -52,7 +52,7 @@ const BodyHomePage = (props) => {
     }
   };
   return (
-    <Box position={"relative"} w={"70%"} left={"15%"} top={"10%"}>
+    <Box position={"relative"} w={"50%"} left={"25%"} top={"10%"}>
       <Box
         w={"100%"}
         height={"50px"}
