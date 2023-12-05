@@ -77,13 +77,13 @@ const CardDaiDoi = (props) => {
         overflow="hidden"
         variant="outline"
       >
-        <Image
+        {/* <Image
           w={"220px"}
           height={"220px"}
           bgSize={"cover"}
           maxW={{ base: "100%", sm: "220px" }}
           src={`https://localhost:7278/${props.img}`}
-        />
+        /> */}
 
         <Stack fontFamily={"cursive"} height={"200px"}>
           <CardBody>

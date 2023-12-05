@@ -4,9 +4,9 @@ const EndPage = () => {
   return (
     <>
       <Box w={"100%"} bg={"rgb(33,35,41)"}>
-        <Text color={"gray"} h={"15px"} fontFamily={"cursive"} textAlign={"center"} paddingTop={"5px"}>
+        {/* <Text color={"gray"} h={"15px"} fontFamily={"cursive"} textAlign={"center"} paddingTop={"5px"}>
           QUẢN LÍ ĐIỂM HỌC VIÊN TẠI ĐƠN VỊ QUẢN LÍ HỌC VIÊN
-        </Text>
+        </Text> */}
         <Text color={"gray"} h={"15px"} fontFamily={"cursive"} textAlign={"center"}>
           GV: TS. Nguyễn Văn Giang
         </Text><hr style={{color:"white",position:"relative", width:"40%", left:"30%"}} />
