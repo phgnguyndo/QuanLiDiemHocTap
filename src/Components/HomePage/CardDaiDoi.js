@@ -180,14 +180,14 @@ const CardDaiDoi = (props) => {
                 onChange={(e) => setQuanSo(parseInt(e.target.value))}
               ></Input>
             </Box>
-            <Box>
+            {/* <Box>
               <Input
                 type="file"
                 onChange={(e) => {
                   setImageDaiDoi(e.target.files[0]);
                 }}
               ></Input>
-            </Box>
+            </Box> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>

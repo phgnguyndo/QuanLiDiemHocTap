@@ -106,7 +106,7 @@ const BodyHomePage = (props) => {
                 }}
               />
             </FormControl>
-            <FormControl mt={4}>
+            {/* <FormControl mt={4}>
               <FormLabel>Ảnh</FormLabel>
               <Input
                 type="file"
@@ -115,7 +115,7 @@ const BodyHomePage = (props) => {
                   setImageDaiDoi(e.target.files[0]);
                 }}
               />
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
 
           <ModalFooter>
