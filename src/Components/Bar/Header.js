@@ -19,7 +19,7 @@ function Header() {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const nav=useNavigate()
+  const nav = useNavigate();
   // const [maHV, setMaHV]= useState("")
   const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
   console.log(username.name);
@@ -42,13 +42,25 @@ function Header() {
   };
   const handleLogout = () => {
     localStorage.clear();
-    nav("/")
+    nav("/");
   };
   const menu = (
     <Menu onClick={handleLogout}>
       <Menu.Item key="logout">Logout</Menu.Item>
     </Menu>
   );
+  const menu1 = (
+    <Menu>
+      <Menu.Item key="logout" onClick={()=>{nav("/khoa")}}>Khoa</Menu.Item>
+      <Menu.Item key="bm" onClick={()=>{nav("/bomon")}}>Bộ môn</Menu.Item>
+      <Menu.Item key="gv" onClick={()=>{nav("/giangvien")}}>Giảng viên</Menu.Item>
+      <Menu.Item key="hp" onClick={()=>{nav("/hocphan")}}>Học phần</Menu.Item>
+      <Menu.Item key="lhp" onClick={()=>{nav("/lophocphan")}}>Lớp học phần</Menu.Item>
+      <Menu.Item key="dh" onClick={()=>{nav("/dayhoc")}}>Dạy học</Menu.Item>
+      <Menu.Item key="ht" onClick={()=>{nav("/hoctap")}}>Học tập</Menu.Item>
+    </Menu>
+  );
+
   return (
     <Box fontFamily={"cursive"}>
       <Navbar
@@ -73,7 +85,10 @@ function Header() {
           ></Image>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="features">Features</Nav.Link>
+
+            <Dropdown overlay={menu1} placement="bottomRight" arrow>
+              <Nav.Link>Features</Nav.Link>
+            </Dropdown>
             <Nav.Link href="pricing">Pricing</Nav.Link>
           </Nav>
           <Form
