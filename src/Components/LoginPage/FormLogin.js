@@ -24,8 +24,11 @@ const FormLogin = () => {
       const action = login(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
+      if(user.role){
+        
+      }
       nav("/home")
-      console.log("New user", user);
+      // console.log("New user", user.role);
     } catch (error) {
       notification.error({
         message: "user name or password is invalid",
