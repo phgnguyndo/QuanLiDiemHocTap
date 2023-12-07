@@ -43,7 +43,7 @@ const BodyHomePage = (props) => {
       formdata.append("tenDaiDoi", tenDaiDoi);
       formdata.append("daiDoiTruong", daiDoiTruong);
       formdata.append("quanSo", quanSo);
-      formdata.append("file", imageDaiDoi);
+      // formdata.append("file", imageDaiDoi);
       await daidoiAPI.create(formdata);
       onClose();
       window.location.reload()
