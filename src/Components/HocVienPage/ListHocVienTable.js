@@ -23,10 +23,8 @@ import {
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
 import { useParams } from "react-router-dom";
-// import hocVienAPI from "../../api/hocVienAPI";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
-// import hocvienAPI from "../../api/hocVienAPI";
 
 const ListHocVienTable = (props) => {
   var LopChuyenNganh = "Bảo đảm An toàn thông tin";
@@ -64,6 +62,7 @@ const ListHocVienTable = (props) => {
       console.error("Error submitting form:", error);
     }
   };
+  
   const [dsHV, setdsHV] = useState([]);
   useEffect(() => {
     fetchDsHV();
@@ -72,6 +71,7 @@ const ListHocVienTable = (props) => {
     setdsHV(await hocvienAPI.get(idLop));
   };
   console.log(dsHV);
+
   return (
     <div
       style={{
@@ -82,7 +82,7 @@ const ListHocVienTable = (props) => {
         minHeight: "40vh",
       }}
     >
-      <h1 style={{ color: "GrayText" }}>Lớp {LopChuyenNganh}</h1>
+      <h1 style={{ color: "GrayText" }}>Lớp {props.tenHV}</h1>
       <div
         style={{
           fontSize: "50px",

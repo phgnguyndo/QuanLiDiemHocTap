@@ -26,6 +26,7 @@ import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg"
 import lopcnAPI from "../../api/lopcnAPI";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
 const ClassComponent = (props) => {
   const { id } = useParams();
   const idLop = props.maLCN;
@@ -33,12 +34,17 @@ const ClassComponent = (props) => {
   // const lopId=idHV;
   const daiDoiId = id;
   const maLCN = props.maLCN;
+  const [tenLopChuyenNganh, setTenLopChuyenNganh] = useState(props.name || "");
+  const [soHV, setSoHV] = useState(props.QuanSo || 0);
+  const [imageLop, setImageLop] = useState("");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
     onOpen: onEditModalOpen,
     onClose: onEditModalClose,
   } = useDisclosure();
+
   const handleXoaLop = async () => {
     try {
       await lopcnAPI.delete(maLCN);
@@ -49,10 +55,7 @@ const ClassComponent = (props) => {
       console.error("Error submitting form:", error);
     }
   };
-  const [tenLopChuyenNganh, setTenLopChuyenNganh] = useState(props.name || "");
-  const [soHV, setSoHV] = useState(props.QuanSo || 0);
-  const [imageLop, setImageLop] = useState("");
-
+  
   const SuaThongTin = async () => {
     try {
       const lopcnId = props.maLCN;
@@ -64,7 +67,6 @@ const ClassComponent = (props) => {
       await lopcnAPI.update(lopcnId, formdata);
       onClose();
       window.location.reload();
-
       // const formData = {
       //   daiDoiId,
       //   tenLopChuyenNganh,
@@ -78,6 +80,8 @@ const ClassComponent = (props) => {
       console.error("Error submitting form:", error);
     }
   };
+
+
   return (
     <>
       <Card
@@ -136,14 +140,14 @@ const ClassComponent = (props) => {
       >
         <ModalOverlay />
         <ModalContent fontFamily={"cursive"}>
-          <ModalHeader>Xóa đại đội</ModalHeader>
+          <ModalHeader>Xóa lớp</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text>Bạn có chắc chắn muốn xóa không?</Text>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
+              Hủy
             </Button>
             <Button
               colorScheme="blue"

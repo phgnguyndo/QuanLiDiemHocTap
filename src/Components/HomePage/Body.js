@@ -32,7 +32,7 @@ const BodyHomePage = (props) => {
   const fetchDaiDoi = async () => {
     setdsDaiDoi(await daidoiAPI.getAll());
   };
-  
+
   var i = 155;
   const handleSubmit = async () => {
     try {
@@ -46,7 +46,7 @@ const BodyHomePage = (props) => {
       formdata.append("file", imageDaiDoi);
       await daidoiAPI.create(formdata);
       onClose();
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
