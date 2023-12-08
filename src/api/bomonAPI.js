@@ -1,24 +1,25 @@
-import axiosClient from "./axiosClient";
+import axiosClient, { axiosFormData } from "./axiosClient";
 
 const bomonAPI= {
     getAll(params) {
-        const url='/bomon';
+        const url='/BoMon';
         return axiosClient.get(url, {params})
     },
     get(id) {
-        const url=`/bomon/${id}`;
+        const url=`/BoMon/${id}`;
         return axiosClient.get(url);
     },
     create(data){
-        const url='/bomon';
+        const url='/BoMon';
         return axiosClient.post(url,data)
     },
-    update(data){
-        const url=`/bomon/${data.id}`;
-        return axiosClient.patch(url, data);
+    update(id, data){
+        const url=`/BoMon/${id}`;
+        return axiosClient.put(url, data);
     },
     delete(id){
-        const url= `/bomon/${id}`
+        const url= `/BoMon/${id}`;
+        return axiosClient.delete(url);
     }
 }
 

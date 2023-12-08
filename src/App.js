@@ -22,13 +22,14 @@ function App() {
         {/* <Route index element={<Home />} /> */}
         <Route path="/home" element={<Home />} />
         <Route path="/home/:id" element={<ListClass />} />
-        <Route path="/product" element={<Product/>} />
-        <Route path="/register" element={<Register />} />
         <Route path="/home/:id/:idLop" element={<HocVien />} />
         <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
+        <Route path="/product" element={<Product/>} />
+        <Route path="/register" element={<Register />} />
         <Route path="/HocVien" element={<HocVien />} />
         <Route path="/Diem" element={<Diem/>} />
         <Route path="/khoa" element={<Khoa/>} />
+        <Route path="/khoa/:idKhoa" element={<BoMon/>} />
         <Route path="/bomon" element={<BoMon/>} />
         <Route path="/giangvien" element={<GiangVien/>} />
         <Route path="/hocphan" element={<HocPhan/>} />

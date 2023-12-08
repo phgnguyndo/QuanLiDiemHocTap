@@ -125,7 +125,7 @@ const FormLogin = () => {
               style={{ position: "relative", left: "-100px", top: "40px" }}
               onClick={()=>{nav("/register")}}
             >
-              You don'n have account? Register now
+              You don't have account? Register now
             </Button>
           </Form.Item>
         </Form>
