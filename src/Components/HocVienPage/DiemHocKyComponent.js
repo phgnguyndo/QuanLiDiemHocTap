@@ -117,13 +117,13 @@ const DiemHocKyComponent = (props)=>{
           <Tbody >
           {/* {HocPhan.map((hocPhan) => NhapDiemTungMonTuDong(hocPhan))} */}          
             <DiemComponent
-              MaHocPhan={'HP01'}
-              TenHocPhan={'Giải Tích 1'}
-              SoTinChi={4}
+              MaHocPhan={props.MaHocPhan}
+              TenHocPhan={props.TenHocPhan}
+              SoTinChi={props.SoTinChi}
               DiemChuyenCan={props.DiemChuyenCan}
               DiemThuongXuyen={props.DiemThuongXuyen}
-              DiemThiKetThucMon={props.DiemThuongXuyen}
-              SoLanThiLai={props.DiemThuongXuyen}
+              DiemThiKetThucMon={props.DiemThiKetThucMon}
+              SoLanThiLai={props.SoLanThiLai}
             />         
         </Tbody>
           <Tfoot>
