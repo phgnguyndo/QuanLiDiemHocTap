@@ -52,7 +52,7 @@ const Register = () => {
     } catch (error) {
       console.log("Fail to register", error);
       notification.error({
-        message: "Đăng ký thất bại",
+        message: "Đăng ký thất bại, tài khoản đã tồn tại",
         duration: 3,
       });
     }

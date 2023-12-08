@@ -18,6 +18,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { notification } from "antd";
 // import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -49,6 +50,10 @@ const BodyHomePage = (props) => {
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
+      notification.error({
+        message: "Thêm thất bại, Đại đội đã tồn tại",
+        duration: 3,
+      });
     }
   };
   return (
@@ -128,7 +133,7 @@ const BodyHomePage = (props) => {
       </Modal>
       <Box
        maxW={"100%"}
-       h={"100vh"}
+       h={`${dsDaiDoi.length*110/6}vh`}
       >
         {dsDaiDoi?.map((item) => (
         <CardDaiDoi

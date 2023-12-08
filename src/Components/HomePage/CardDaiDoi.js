@@ -32,7 +32,7 @@ const CardDaiDoi = (props) => {
       onClose();
       window.location.reload();
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error", error);
     }
   };
   const [tenDaiDoi, setTenDaiDoi] = useState(props.name || "");
