@@ -22,7 +22,7 @@ import {
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
-  const [imageDaiDoi, setImageDaiDoi] = useState("");
+  // const [imageDaiDoi, setImageDaiDoi] = useState("");
   const [quanSo, setQuanSo] = useState(0);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -32,7 +32,7 @@ const BodyHomePage = (props) => {
   const fetchDaiDoi = async () => {
     setdsDaiDoi(await daidoiAPI.getAll());
   };
-  
+
   var i = 155;
   const handleSubmit = async () => {
     try {
@@ -46,13 +46,13 @@ const BodyHomePage = (props) => {
       // formdata.append("file", imageDaiDoi);
       await daidoiAPI.create(formdata);
       onClose();
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
   return (
-    <Box position={"relative"} w={"50%"} left={"25%"} top={"10%"}>
+    <Box position={"relative"} w={"70%"} left={"15%"} top={"10%"}>
       <Box
         w={"100%"}
         height={"50px"}
@@ -126,7 +126,11 @@ const BodyHomePage = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {dsDaiDoi?.map((item) => (
+      <Box
+       maxW={"100%"}
+       h={"100vh"}
+      >
+        {dsDaiDoi?.map((item) => (
         <CardDaiDoi
           key={++i}
           maDaiDoi={item.maDaiDoi}
@@ -137,7 +141,10 @@ const BodyHomePage = (props) => {
           // id={++i}
         />
       ))}
+      </Box>
+      <br/>
     </Box>
+
   );
 };
 

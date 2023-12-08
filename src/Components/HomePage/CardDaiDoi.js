@@ -6,7 +6,6 @@ import {
   Stack,
   Text,
   Button,
-  Image,
   Box,
   Modal,
   ModalOverlay,
@@ -39,7 +38,7 @@ const CardDaiDoi = (props) => {
   const [tenDaiDoi, setTenDaiDoi] = useState(props.name || "");
   const [daiDoiTruong, setTenDDTruong] = useState(props.DaiDoiTruong || "");
   const [quanSo, setQuanSo] = useState(props.QuanSo || 0);
-  const [imageDaiDoi, setImageDaiDoi] = useState("");
+  // const [imageDaiDoi, setImageDaiDoi] = useState("");
 
   // const formData = {
   //   tenDaiDoi,
@@ -52,7 +51,7 @@ const CardDaiDoi = (props) => {
       formdata.append("tenDaiDoi", tenDaiDoi);
       formdata.append("daiDoiTruong", daiDoiTruong);
       formdata.append("quanSo", quanSo);
-      formdata.append("file", imageDaiDoi);
+      // formdata.append("file", imageDaiDoi);
       await daidoiAPI.update(maDaiDoi, formdata);
       onClose();
       window.location.reload();
@@ -69,11 +68,17 @@ const CardDaiDoi = (props) => {
 
   return (
     <Box margin={"20px 0px 20px 0px"}>
-      <Card w={"100%"} height={"220px"}
+      <Card
+        w={"40%"}
+        height={"220px"}      
         border={"1px solid rgb(190,190,190)"}
         boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
+        float={"left"}
+        left={"7%"}
+        marginLeft={"2%"}
+        marginTop={"20px"}
         // bg={"gray"}
-        direction={{ base: "column", sm: "row" }}
+        // direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
       >

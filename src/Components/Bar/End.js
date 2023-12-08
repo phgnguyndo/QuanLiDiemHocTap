@@ -2,7 +2,6 @@ import { Box, Text } from "@chakra-ui/react";
 
 const EndPage = () => {
   return (
-    <>
       <Box w={"100%"} bg={"rgb(33,35,41)"}>
         {/* <Text color={"gray"} h={"15px"} fontFamily={"cursive"} textAlign={"center"} paddingTop={"5px"}>
           QUẢN LÍ ĐIỂM HỌC VIÊN TẠI ĐƠN VỊ QUẢN LÍ HỌC VIÊN
@@ -41,7 +40,6 @@ const EndPage = () => {
           </Text>
         </Box>
       </Box>
-    </>
   );
 };
 export default EndPage;
