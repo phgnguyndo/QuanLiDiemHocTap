@@ -1,7 +1,6 @@
 import React from "react";
 import Home from "./Pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Product from "./Pages/Product";
 import Login from "./Pages/Login";
 import Register  from "./Pages/Register";
 import ListClass from "./Pages/ListClass";
@@ -24,9 +23,8 @@ function App() {
         <Route path="/home/:id" element={<ListClass />} />
         <Route path="/home/:id/:idLop" element={<HocVien />} />
         <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
-        <Route path="/product" element={<Product/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/HocVien" element={<HocVien />} />
+        <Route path="/HocVien/:id" element={<Diem/>} />
         <Route path="/Diem" element={<Diem/>} />
         <Route path="/khoa" element={<Khoa/>} />
         <Route path="/khoa/:idKhoa" element={<BoMon/>} />
