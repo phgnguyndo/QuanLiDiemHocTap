@@ -22,7 +22,7 @@ import {
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
-  const [imageDaiDoi, setImageDaiDoi] = useState("");
+  // const [imageDaiDoi, setImageDaiDoi] = useState("");
   const [quanSo, setQuanSo] = useState(0);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -43,7 +43,7 @@ const BodyHomePage = (props) => {
       formdata.append("tenDaiDoi", tenDaiDoi);
       formdata.append("daiDoiTruong", daiDoiTruong);
       formdata.append("quanSo", quanSo);
-      formdata.append("file", imageDaiDoi);
+      // formdata.append("file", imageDaiDoi);
       await daidoiAPI.create(formdata);
       onClose();
       window.location.reload();
@@ -106,7 +106,7 @@ const BodyHomePage = (props) => {
                 }}
               />
             </FormControl>
-            <FormControl mt={4}>
+            {/* <FormControl mt={4}>
               <FormLabel>Ảnh</FormLabel>
               <Input
                 type="file"
@@ -115,7 +115,7 @@ const BodyHomePage = (props) => {
                   setImageDaiDoi(e.target.files[0]);
                 }}
               />
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
 
           <ModalFooter>
@@ -126,7 +126,11 @@ const BodyHomePage = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {dsDaiDoi?.map((item) => (
+      <Box
+       maxW={"100%"}
+       h={"100vh"}
+      >
+        {dsDaiDoi?.map((item) => (
         <CardDaiDoi
           key={++i}
           maDaiDoi={item.maDaiDoi}
@@ -137,7 +141,10 @@ const BodyHomePage = (props) => {
           // id={++i}
         />
       ))}
+      </Box>
+      <br/>
     </Box>
+
   );
 };
 

@@ -6,7 +6,6 @@ import {
   Stack,
   Text,
   Button,
-  Image,
   Box,
   Modal,
   ModalOverlay,
@@ -39,7 +38,7 @@ const CardDaiDoi = (props) => {
   const [tenDaiDoi, setTenDaiDoi] = useState(props.name || "");
   const [daiDoiTruong, setTenDDTruong] = useState(props.DaiDoiTruong || "");
   const [quanSo, setQuanSo] = useState(props.QuanSo || 0);
-  const [imageDaiDoi, setImageDaiDoi] = useState("");
+  // const [imageDaiDoi, setImageDaiDoi] = useState("");
 
   // const formData = {
   //   tenDaiDoi,
@@ -52,7 +51,7 @@ const CardDaiDoi = (props) => {
       formdata.append("tenDaiDoi", tenDaiDoi);
       formdata.append("daiDoiTruong", daiDoiTruong);
       formdata.append("quanSo", quanSo);
-      formdata.append("file", imageDaiDoi);
+      // formdata.append("file", imageDaiDoi);
       await daidoiAPI.update(maDaiDoi, formdata);
       onClose();
       window.location.reload();
@@ -69,21 +68,27 @@ const CardDaiDoi = (props) => {
 
   return (
     <Box margin={"20px 0px 20px 0px"}>
-      <Card w={"100%"} height={"220px"}
+      <Card
+        w={"40%"}
+        height={"220px"}      
         border={"1px solid rgb(190,190,190)"}
         boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
+        float={"left"}
+        left={"7%"}
+        marginLeft={"2%"}
+        marginTop={"20px"}
         // bg={"gray"}
-        direction={{ base: "column", sm: "row" }}
+        // direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
       >
-        <Image
+        {/* <Image
           w={"220px"}
           height={"220px"}
           bgSize={"cover"}
           maxW={{ base: "100%", sm: "220px" }}
           src={`https://localhost:7278/${props.img}`}
-        />
+        /> */}
 
         <Stack fontFamily={"cursive"} height={"200px"}>
           <CardBody>
@@ -180,14 +185,14 @@ const CardDaiDoi = (props) => {
                 onChange={(e) => setQuanSo(parseInt(e.target.value))}
               ></Input>
             </Box>
-            <Box>
+            {/* <Box>
               <Input
                 type="file"
                 onChange={(e) => {
                   setImageDaiDoi(e.target.files[0]);
                 }}
               ></Input>
-            </Box>
+            </Box> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onEditModalClose}>
