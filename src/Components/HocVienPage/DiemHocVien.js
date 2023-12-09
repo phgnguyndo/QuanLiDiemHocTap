@@ -26,7 +26,7 @@ import React, { useState, useEffect } from "react";
 import DiemHocKyComponent from "./DiemHocKyComponent";
 import { useParams } from "react-router-dom";
 import phieuDiemAPI from "../../api/PhieuDiem";
-import hocPhanAPI from "../../api/hocPhanAPI";
+import hocPhanAPI from "../../api/hocphanAPI";
 
 const DiemHocVien = (props) => {
   const { idHV } = useParams();
