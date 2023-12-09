@@ -69,12 +69,12 @@ const CardDaiDoi = (props) => {
   return (
     <Box margin={"20px 0px 20px 0px"}>
       <Card
-        w={"40%"}
+        w={"30%"}
         height={"220px"}      
         border={"1px solid rgb(190,190,190)"}
         boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
         float={"left"}
-        left={"7%"}
+        left={"1%"}
         marginLeft={"2%"}
         marginTop={"20px"}
         // bg={"gray"}
@@ -90,11 +90,10 @@ const CardDaiDoi = (props) => {
           src={`https://localhost:7278/${props.img}`}
         /> */}
 
-        <Stack fontFamily={"cursive"} height={"200px"}>
+        <Stack height={"200px"}>
           <CardBody>
             <Heading
               size="md"
-              fontFamily={"cursive"}
               onClick={handleOnclick}
               _hover={{ color: "brown" }}
               cursor={"pointer"}

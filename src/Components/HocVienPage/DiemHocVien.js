@@ -81,7 +81,6 @@ const DiemHocVien = (props) => {
         diemThiLai,
         lanThi,
       };
-
       await phieuDiemAPI.create(formData);
       onClose();
       window.location.reload();

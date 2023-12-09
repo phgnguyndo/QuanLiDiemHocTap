@@ -1,7 +1,6 @@
 import {
   Form,
   InputGroup,
-  ListGroup,
   Container,
   Navbar,
   Nav,
@@ -16,14 +15,12 @@ import StorageKeys from "../../constance/storage-key";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
   const nav = useNavigate();
   // const [maHV, setMaHV]= useState("")
   const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
   console.log(username.name);
   const [hocVien, setHocVien] = useState([]);
-
   useEffect(() => {
     searchHocVien();
   }, []);
@@ -116,7 +113,7 @@ function Header() {
   );
 
   return (
-    <Box fontFamily={"cursive"} display={"flex"} flexDirection="column">
+    <Box display={"flex"} flexDirection="column">
       <Navbar
         bg="dark"
         data-bs-theme="dark"
