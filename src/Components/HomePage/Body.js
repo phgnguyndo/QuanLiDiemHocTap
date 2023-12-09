@@ -19,7 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { notification } from "antd";
-import hocPhanAPI from "../../api/hocphanAPI";
+// import hocPhanAPI from "../../api/hocphanAPI";
 // import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,8 +61,6 @@ const BodyHomePage = (props) => {
       <Box
         w={"100%"}
         height={"50px"}
-        //    bg={"brown"}
-        // margin={"10px 0px 50px 0px"}
         fontWeight={"600"}
         fontSize={"35px"}
         textAlign={"center"}

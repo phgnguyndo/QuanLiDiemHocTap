@@ -144,6 +144,7 @@ const ListHocVienTable = (props) => {
     setdsHV(await hocvienAPI.get(idLop));
   };
   console.log(dsHV);
+  
   return (
     <div
       style={{

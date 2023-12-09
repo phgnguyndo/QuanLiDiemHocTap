@@ -1,21 +1,21 @@
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    Tfoot,
-    Button,
-    FormControl,
-    FormLabel,
-    Input,
-    useDisclosure,
-    ModalFooter,
-    ModalOverlay,
-    ModalContent,
-    ModalCloseButton,
-  } from '@chakra-ui/react';
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Tfoot,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  useDisclosure,
+  ModalFooter,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 //   import {
 //     Modal,
 //     ModalOverlay,
@@ -26,115 +26,142 @@ import {
 //     ModalFooter,
 //     useDisclosure,
 //   } from "@chakra-ui/react";
-  import DiemComponent from './DiemComponents';
-import React, { useState } from 'react';
-import { Modal } from 'bootstrap';
-import { ModalBody, ModalHeader } from 'react-bootstrap';
-import phieuDiemAPI from '../../api/PhieuDiem';
-import { useParams } from 'react-router-dom';
-const DiemHocKyComponent = (props)=>{
+import DiemComponent from "./DiemComponents";
+import React, { useEffect, useState } from "react";
+import { Modal } from "bootstrap";
+import { ModalBody, ModalHeader } from "react-bootstrap";
+import phieuDiemAPI from "../../api/PhieuDiem";
+import { useParams } from "react-router-dom";
+const DiemHocKyComponent = (props) => {
+  const DiemTBHocKy = 0;
+  const [phieuDiem, setPhieuDiem] = useState([]);
+  const { idHV } = useParams();
+  const [diemCC, setDiemCC] = useState(0);
+  const [diemTX, setDiemTX] = useState(0);
+  const [diemThi, setDiemThi] = useState(0);
+  const [diemThiLai, setDiemThiLai] = useState(0);
+  const [lanThi, setLanThi] = useState(0);
+  const hocVienId = idHV;
 
-    const DiemTBHocKy = 0;
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useEffect(() => {
+    fetchPhieuDiem();
+  }, []);
+  const fetchPhieuDiem = async () => {
+    setPhieuDiem(await phieuDiemAPI.get(idHV));
+  };
+ console.log(phieuDiem);
+  const handleSubmit = async () => {
+    try {
+      const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
+      const formData = {
+        lopHocPhanId,
+        hocVienId,
+        diemCC,
+        diemTX,
+        diemThi,
+        diemThiLai,
+        lanThi,
+      };
 
+      await phieuDiemAPI.create(formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-    const {idHV}=useParams();
-    const [diemCC,setDiemCC] = useState(0);
-    const [diemTX,setDiemTX] = useState(0);
-    const [diemThi,setDiemThi] = useState(0);
-    const [diemThiLai,setDiemThiLai] = useState(0);
-    const [lanThi,setLanThi] = useState(0);
-    const hocVienId=idHV;
-
-    const initialRef = React.useRef(null);
-    const finalRef = React.useRef(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-
-    const handleSubmit= async ()=>{
-      try {
-        const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
-        const formData = {
-          lopHocPhanId ,
-          hocVienId ,
-          diemCC ,
-          diemTX ,
-          diemThi ,
-          diemThiLai ,
-          lanThi 
-        }
-    
-        await phieuDiemAPI.create(formData);
-        onClose();
-        window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-  
-    };
-
-    return(
-        <>
-        <Table variant="striped" colorScheme="teal" size="sm"  border="2px solid rgb(190,190,190)" marginTop={'10px'} marginBottom={'10px'}>
-          <Thead>
-          <Tr >
-              <Th colspan={"10"} style={{ textAlign: "center" }}>Học kỳ thứ {props.HocKy}</Th>
-          </Tr>
+  return (
+    <>
+      <Table
+        // bgcolor="red"
+        variant="striped"
+        size="sm"
+        position={"relative"}
+        top={"50px"}
+        w={"90%"}
+        left={"5%"}
+      >
+        <Thead>
+          {/* <Tr>
+            <Th colspan={"10"} style={{ textAlign: "center" }}>
+              Học kỳ thứ {props.HocKy}
+            </Th>
+          </Tr> */}
 
           <Tr bg={""}>
-            <Th w={"9%"} textAlign={"center"}>
-              MaHocPhan
+            <Th w={"2%"} textAlign={"center"}>
+              STT
             </Th>
-            <Th w={"9%"} textAlign={"center"}>
+            <Th w={"15%"} textAlign={"center"}>
               TenHocPhan
             </Th>
-            {/* <Th w={"10%"} bg={"gray"} textAlign={"center"}>
-              MaLCN
-            </Th> */}
-            <Th w={"15%"} textAlign={"center"}>
-              SoTinChi
+            <Th w={"6%"} textAlign={"center"}>
+              Học Kỳ
             </Th>
-            <Th w={"15%"} textAlign={"center"}>
-              DiemChuyenCan
+            <Th w={"6%"} textAlign={"center"}>
+              SoTC
             </Th>
-            <Th w={"10%"} textAlign={"center"}>
-              DiemThuongXuyen
+            <Th w={"6%"} textAlign={"center"}>
+              DiemCC
             </Th>
-            <Th w={"4%"} textAlign={"center"}>
-              DiemThiKetThucMon
+            <Th w={"6%"} textAlign={"center"}>
+              DiemTX
             </Th>
-            <Th w={"10%"} textAlign={"center"}>
-              SoLanThiLai
+            <Th w={"6%"} textAlign={"center"}>
+              DiemThi
+            </Th>
+            <Th w={"6%"} textAlign={"center"} >
+              LanThi
             </Th>
             <Th w={"8%"} textAlign={"center"}>
-              DiemTBMon
+              DiemTB
             </Th>
             <Th colspan={"7"} w={"9%"} textAlign={"center"}>
               Tùy chọn
             </Th>
-            </Tr>
-          </Thead>
-          <Tbody >
-          {/* {HocPhan.map((hocPhan) => NhapDiemTungMonTuDong(hocPhan))} */}          
+          </Tr>
+        </Thead>
+        <Tbody>
+          {phieuDiem.map((item, index)=>(
             <DiemComponent
-              MaHocPhan={'HP01'}
-              TenHocPhan={'Giải Tích 1'}
-              SoTinChi={4}
-              DiemChuyenCan={props.DiemChuyenCan}
-              DiemThuongXuyen={props.DiemThuongXuyen}
-              DiemThiKetThucMon={props.DiemThuongXuyen}
-              SoLanThiLai={props.DiemThuongXuyen}
-            />         
+            key={item.maPhieuDiem}
+            stt={index+1}
+            HocKy={item.hocPhan.hocKy}
+            TenHocPhan={item.hocPhan.tenHocPhan}
+            SoTinChi={item.hocPhan.soTC}
+            DiemChuyenCan={item.diemCC}
+            DiemThuongXuyen={item.diemTX}
+            DiemThiKetThucMon={item.diemThi}
+            LanThi={item.lanThi}
+          />
+          ))}
+          {/* <DiemComponent
+            MaHocPhan={props.MaHocPhan}
+            TenHocPhan={props.TenHocPhan}
+            SoTinChi={props.SoTinChi}
+            DiemChuyenCan={props.DiemChuyenCan}
+            DiemThuongXuyen={props.DiemThuongXuyen}
+            DiemThiKetThucMon={props.DiemThiKetThucMon}
+            SoLanThiLai={props.SoLanThiLai}
+          /> */}
         </Tbody>
-          <Tfoot>
-            <Tr >
-              <Th colspan={"7"} style={{ textAlign: "right" }}>Điểm trung bình học kỳ</Th>
-              <Th w={"8%"} textAlign={"center"}>{}</Th>
-            </Tr>
-          </Tfoot>
-          </Table>
-        </>
-    );
+        {/* <Tfoot>
+          <Tr>
+            <Th colspan={"7"} style={{ textAlign: "right" }}>
+              Điểm trung bình học kỳ
+            </Th>
+            <Th w={"8%"} textAlign={"center"}>
+              {}
+            </Th>
+          </Tr>
+        </Tfoot> */}
+      </Table>
+    </>
+  );
 };
 
 export default DiemHocKyComponent;
