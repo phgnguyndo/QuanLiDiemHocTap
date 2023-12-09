@@ -19,6 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { notification } from "antd";
+// import hocPhanAPI from "../../api/hocphanAPI";
 // import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +34,6 @@ const BodyHomePage = (props) => {
   const fetchDaiDoi = async () => {
     setdsDaiDoi(await daidoiAPI.getAll());
   };
-
   var i = 155;
   const handleSubmit = async () => {
     try {
@@ -57,18 +57,15 @@ const BodyHomePage = (props) => {
     }
   };
   return (
-    <Box position={"relative"} w={"70%"} left={"15%"} top={"10%"}>
+    <Box position={"relative"} >
       <Box
         w={"100%"}
         height={"50px"}
-        //    bg={"brown"}
-        margin={"10px 0px 50px 0px"}
         fontWeight={"600"}
         fontSize={"35px"}
         textAlign={"center"}
         alignItems={"center"}
         color={"brown"}
-        fontFamily={"cursive"}
       >
         Danh sách các đại đội
       </Box>
@@ -76,7 +73,7 @@ const BodyHomePage = (props) => {
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
-        left={"2%"}
+        left={"3%"}
         onClick={onOpen}
       >
         Thêm đại đội
@@ -131,25 +128,21 @@ const BodyHomePage = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Box
-       maxW={"100%"}
-       h={`${dsDaiDoi.length*110/6}vh`}
-      >
+      <Box maxW={"100%"} h={`${(dsDaiDoi.length * 80) / 6}vh`}>
         {dsDaiDoi?.map((item) => (
-        <CardDaiDoi
-          key={++i}
-          maDaiDoi={item.maDaiDoi}
-          img={item.anhDaiDoi}
-          name={item.tenDaiDoi}
-          DaiDoiTruong={item.daiDoiTruong}
-          QuanSo={item.quanSo}
-          // id={++i}
-        />
-      ))}
+          <CardDaiDoi
+            key={++i}
+            maDaiDoi={item.maDaiDoi}
+            img={item.anhDaiDoi}
+            name={item.tenDaiDoi}
+            DaiDoiTruong={item.daiDoiTruong}
+            QuanSo={item.quanSo}
+            // id={++i}
+          />
+        ))}
       </Box>
-      <br/>
+      <br />
     </Box>
-
   );
 };
 
