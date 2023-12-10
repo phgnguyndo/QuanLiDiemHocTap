@@ -1,17 +1,15 @@
 // import { useParams } from "react-router-dom"
-import Header from "../Components/Bar/Header"
-import ListClassComponent from "../Components/ListClassPage/ListClassComponent"
+import Head from "../Components/Bar/Head";
+import ListClassComponent from "../Components/ListClassPage/ListClassComponent";
 // import { Box } from "@chakra-ui/react"
 
-const ListClass=()=>{
-    // const {id}=useParams()
-    return(
-        <>
-        
-        <Header/>
-        <ListClassComponent/>
-        </>
-    )
-}
+const ListClass = () => {
+  // const {id}=useParams()
+  return (
+    <>
+      <Head content={<ListClassComponent />} />
+    </>
+  );
+};
 
-export default ListClass
+export default ListClass;

@@ -1,6 +1,6 @@
 import axiosClient, { axiosFormData } from "./axiosClient";
 
-const hocphanAPI = {
+const hocPhanAPI = {
   getAll(params) {
     const url = "/HocPhan";
     return axiosClient.get(url, { params });
@@ -11,11 +11,11 @@ const hocphanAPI = {
   },
   create(data) {
     const url = "/HocPhan";
-    return axiosClient.post(url, data);
+    return axiosFormData.post(url, data);
   },
   update(id, data) {
     const url = `/HocPhan/${id}`;
-    return axiosClient.put(url, data);
+    return axiosFormData.put(url, data);
   },
   delete(id) {
     const url = `/HocPhan/${id}`;
@@ -23,4 +23,4 @@ const hocphanAPI = {
   },
 };
 
-export default hocphanAPI;
+export default hocPhanAPI;

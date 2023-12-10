@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Header from "../Components/Bar/Header";
+import Head from "../Components/Bar/Head";
 import ListKhoaTable from "../Components/KhoaPage/ListKhoa";
 
 const Khoa=()=>{
     return(
         <>
-        <Header></Header>
-        <ListKhoaTable></ListKhoaTable>
+        <Head content={<ListKhoaTable/>}/>
         </>
     );
 };

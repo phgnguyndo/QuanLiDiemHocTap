@@ -37,7 +37,7 @@ const ListClassComponent = () => {
       formdata.append("daiDoiId", daiDoiId);
       formdata.append("tenLopChuyenNganh", tenLopChuyenNganh);
       formdata.append("soHV", soHV);
-      formdata.append("file", imageLop);
+      // formdata.append("file", imageLop);
       await lopcnAPI.create(formdata);
       onClose();
       window.location.reload();
@@ -54,12 +54,12 @@ const ListClassComponent = () => {
   };
   console.log(dsLopCn);
   return (
-    <Box position={"relative"} w={"75%"} left={"12.5%"}>
+    <Box position={"relative"} w={"95%"} left={"5%"}>
       <Box
         w={"100%"}
         height={"50px"}
         //    bg={"brown"}
-        margin={"10px 0px 50px 0px"}
+        // margin={"10px 0px 50px 0px"}
         fontWeight={"600"}
         fontSize={"35px"}
         textAlign={"center"}
@@ -113,7 +113,7 @@ const ListClassComponent = () => {
               <Input type="file" />
             </FormControl> */}
             </FormControl>
-            <FormControl mt={4}>
+            {/* <FormControl mt={4}>
               <FormLabel>Ảnh lớp</FormLabel>
               <Input
                 type="file"
@@ -122,7 +122,7 @@ const ListClassComponent = () => {
                   setImageLop(e.target.files[0]);
                 }}
               />
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
 
           <ModalFooter>
