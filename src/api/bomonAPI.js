@@ -15,7 +15,7 @@ const bomonAPI= {
     },
     update(data){
         const url=`/bomon/${data.id}`;
-        return axiosClient.patch(url, data);
+        return axiosClient.put(url, data);
     },
     delete(id){
         const url= `/bomon/${id}`

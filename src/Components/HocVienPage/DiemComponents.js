@@ -17,73 +17,75 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import { useParams } from "react-router-dom";
+import hocPhanAPI from "../../api/hocphanAPI";
 const DiemComponent = (props) => {
+  const [phieuDiem, setPhieuDiem] = useState([]);
+  const [dsHocPhan, setDsHocPhan] = useState([]);
+  const [maHocPhan, setMaHocPhan] = useState("");
+  const { idHV } = useParams();
+  const [diemCC, setDiemCC] = useState(props.DiemChuyenCan || 0);
+  const [diemTX, setDiemTX] = useState(props.DiemThuongXuyen || 0);
+  const [diemThi, setDiemThi] = useState(props.DiemThiKetThucMon || 0);
+  const [diemThiLai, setDiemThiLai] = useState(props.DiemThiLai || 0);
+  const [lanThi, setLanThi] = useState(props.LanThi || 0);
+  const hocVienId = idHV;
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isDeleteModalOpen,
-    onOpen: onDeleteModalOpen,
-    onClose: onDeleteModalClose,
-  } = useDisclosure();
   const {
     isOpen: isSubmitDeleteModalOpen,
     onOpen: onSubmitDeleteModalOpen,
     onClose: onSubmitDeleteModalClose,
   } = useDisclosure();
-
-  // const {
-  //   isOpen: isEditModalOpen,
-  //   onOpen: onEditModalOpen,
-  //   onClose: onEditModalClose,
-  // } = useDisclosure();
-  // const {
-  //   isOpen: isSubmitDeleteModalOpen,
-  //   onOpen: onSubmitDeleteModalOpen,
-  //   onClose: onSubmitDeleteModalClose,
-  // } = useDisclosure();
-
-  const { idHV } = useParams();
-  // const [diemCC,setDiemCC] = useState(0);
-  // const [diemTX,setDiemTX] = useState(0);
-  // const [diemThi,setDiemThi] = useState(0);
-  // const [diemThiLai,setDiemThiLai] = useState(0);
-  // const [lanThi,setLanThi] = useState(0);
-  const hocVienId = idHV;
-
-  const handleSubmit = async () => {
-    // try {
-    //   const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
-    //   const formData = {
-    //     lopHocPhanId ,
-    //     hocVienId ,
-    //     diemCC ,
-    //     diemTX ,
-    //     diemThi ,
-    //     diemThiLai ,
-    //     lanThi
-    //   }
-    //   await phieuDiemAPI.create(formData);
-    //   onClose();
-    //   window.location.reload();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  useEffect(() => {
+    fetchPhieuDiem();
+  }, []);
+  const fetchPhieuDiem = async () => {
+    setPhieuDiem(await phieuDiemAPI.get(idHV));
   };
 
-  //   const handleDelete = async () => {
-  //     try {
-  //       await phieuDiemAPI.delete(maLCN);
-  //       onClose();
-  //       // nav(`/home/${id}#`)
-  //       window.location.reload();
-  //     } catch (error) {
-  //       console.error("Error submitting form:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    fetchHocPhan();
+  }, []);
+
+  const fetchHocPhan = async () => {
+    setDsHocPhan(await hocPhanAPI.getAll());
+  };
+  const handleSubmit = async () => {
+    try {
+      const phieudiemID = props.MaPhieuDiem;
+      const hocPhanId = maHocPhan;
+      const formData = {
+        hocPhanId,
+        hocVienId,
+        diemCC,
+        diemTX,
+        diemThi,
+        diemThiLai,
+        lanThi,
+      };
+      console.log(phieudiemID);
+      await phieuDiemAPI.update(phieudiemID, formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+    const handleDelete = async () => {
+      try {
+        const phieudiemID = props.MaPhieuDiem;
+        await phieuDiemAPI.delete(phieudiemID);
+        onClose();
+        window.location.reload();
+      } catch (error) {
+        console.error("Lỗi", error);
+      }
+    };
   return (
     <>
       <Tr fontSize={"2px"}>
@@ -93,9 +95,9 @@ const DiemComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {props.TenHocPhan}
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
+        {/* <Td position={"relative"} textAlign={"center"}>
           {props.HocKy}
-        </Td>
+        </Td> */}
         <Td position={"relative"} textAlign={"center"}>
           {props.SoTinChi}
         </Td>
@@ -109,7 +111,7 @@ const DiemComponent = (props) => {
           {props.DiemThiKetThucMon}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          {props.LanThi}
+          {props.DiemThiLai}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
           {(
@@ -119,7 +121,12 @@ const DiemComponent = (props) => {
           ).toFixed(2)}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button variant="solid" colorScheme="blue" onClick={onOpen} fontSize={"12px"}>
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={onOpen}
+            fontSize={"12px"}
+          >
             Sửa
           </Button>
           <Modal
@@ -130,51 +137,70 @@ const DiemComponent = (props) => {
           >
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Sửa điểm học phần {props.MaHocPhan}</ModalHeader>
+              <ModalHeader>Sửa điểm học phần</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Mã học phần</FormLabel>
-                  <Input placeholder={props.MaHocPhan} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Tên môn học</FormLabel>
-                  <Input
-                    ref={initialRef}
-                    type="text"
-                    placeholder="VD: Giải tích"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Số tín chỉ</FormLabel>
-                  <Input placeholder="VD: Giải tích" />
+                <FormControl mt={4}>
+                  <FormLabel>Tên học phần</FormLabel>
+                  <Select
+                    placeholder="Tên học phần"
+                    onChange={(e) => {
+                      setMaHocPhan(e.target.value);
+                    }}
+                  >
+                    {dsHocPhan.map((item, index) => (
+                      <option key={index} value={item.maHocPhan}>
+                        {item.tenHocPhan}
+                      </option>
+                    ))}
+                  </Select>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Điểm Chuyên cần</FormLabel>
                   <Input
                     ref={finalRef}
-                    type="text"
-                    placeholder="Trên 0 dưới 10"
+                    defaultValue={props.DiemChuyenCan}
+                    onChange={(e) => {
+                      setDiemCC(parseFloat(e.target.value));
+                    }}
                   />
                 </FormControl>
 
                 <FormControl mt={4}>
                   <FormLabel>Điểm thường xuyên</FormLabel>
                   <Input
-                    placeholder="Trên 0 dưới 10"
-                    id="quanSoInput"
+                    defaultValue={props.DiemThuongXuyen}
                     onChange={(e) => {
-                      // setQuanSo(parseInt(e.target.value));
+                      setDiemTX(parseFloat(e.target.value));
                     }}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Điểm Thi Kết thúc môn</FormLabel>
-                  <Input placeholder="VD: Giải tích" />
+                  <Input
+                    defaultValue={props.DiemThiKetThucMon}
+                    onChange={(e) => {
+                      setDiemThi(parseFloat(e.target.value));
+                    }}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Điểm Thi Lại</FormLabel>
+                  <Input
+                    defaultValue={props.DiemThiLai}
+                    onChange={(e) => {
+                      setDiemThiLai(parseFloat(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Số lần thi lại</FormLabel>
-                  <Input placeholder="VD: Giải tích" />
+                  <Input
+                    defaultValue={props.LanThi}
+                    onChange={(e) => {
+                      setLanThi(parseFloat(e.target.value));
+                    }}
+                  />
                 </FormControl>
               </ModalBody>
               <ModalFooter>
@@ -187,7 +213,12 @@ const DiemComponent = (props) => {
           </Modal>
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button colorScheme="green" mr={3} onClick={onSubmitDeleteModalOpen} fontSize={"12px"}>
+          <Button
+            colorScheme="green"
+            mr={3}
+            onClick={onSubmitDeleteModalOpen}
+            fontSize={"12px"}
+          >
             Xóa
           </Button>
           <Modal
@@ -201,7 +232,7 @@ const DiemComponent = (props) => {
               <ModalHeader>Xóa đại đội</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Text>Bạn có chắc chắn muốn xóa {props.MaHocPhan} không?</Text>
+                <Text>Bạn có chắc chắn muốn xóa không?</Text>
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={onClose}>
@@ -211,7 +242,7 @@ const DiemComponent = (props) => {
                   colorScheme="blue"
                   bg={"rgb(243,66,33)"}
                   color={"white"}
-                  // onClick={handleDelete}
+                  onClick={handleDelete}
                 >
                   Xóa
                 </Button>
