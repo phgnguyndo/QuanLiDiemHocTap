@@ -29,7 +29,7 @@ function App() {
         <Route path="/HocVien" element={<HocVien />} />
         <Route path="/Diem" element={<Diem/>} />
         <Route path="/khoa" element={<Khoa/>} />
-        <Route path="/khoa/:idKhoa" element={<BoMon/>} />
+        {/* <Route path="/khoa/:idKhoa" element={<BoMon/>} /> */}
         <Route path="/bomon" element={<BoMon/>} />
         <Route path="/giangvien" element={<GiangVien/>} />
         <Route path="/hocphan" element={<HocPhan/>} />

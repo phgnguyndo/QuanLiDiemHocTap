@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import hocvienAPI from "../../api/hocvienAPI";
 import anh from "../../Image/Logo.png";
+import { Table } from "react-bootstrap";
 
 const HocVien = (props) => {
   const capBacData = [
@@ -148,33 +149,20 @@ const HocVien = (props) => {
 
   return (
     <>
-      <Tbody>
-        <Tr>
-          <Td position={"relative"} textAlign={"center"}>
-            {props.maHV}
-          </Td>
-          <Td
-            position={"relative"}
-            textAlign={"center"}
-            cursor={"pointer"}
-            onClick={handleOnClick}
-          >
+      <tbody>
+        <tr>
+          <td>{props.maHV}</td>
+          <td cursor={"pointer"} onClick={handleOnClick}>
             {props.hoTen}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            {props.ngaySinh}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            {props.gioiTinh ? "Nam" : "Nữ"}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            {props.queQuan}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            {props.capBac}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            <Button onClick={onOpen}>Sửa</Button>
+          </td>
+          <td>{props.ngaySinh}</td>
+          <td>{props.gioiTinh ? "Nam" : "Nữ"}</td>
+          <td>{props.queQuan}</td>
+          <td>{props.capBac}</td>
+          <td>
+            <Button onClick={onOpen}>
+              <i class="fa-solid fa-pencil fa-lg" color="#000000"></i>
+            </Button>
             <Modal isCentered isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
@@ -262,9 +250,11 @@ const HocVien = (props) => {
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            <Button onClick={onEditModalOpen}>Xóa</Button>
+          </td>
+          <td>
+            <Button onClick={onEditModalOpen}>
+              <i class="fa-solid fa-trash fa-lg" color="#000000"></i>
+            </Button>
             <Modal
               isCentered
               onClose={onEditModalClose}
@@ -285,9 +275,9 @@ const HocVien = (props) => {
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </Td>
-        </Tr>
-      </Tbody>
+          </td>
+        </tr>
+      </tbody>
     </>
   );
 };

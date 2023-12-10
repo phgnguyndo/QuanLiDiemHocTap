@@ -99,7 +99,6 @@ const ListHocVienTable = (props) => {
     "Yên Bái",
   ];
 
-  var LopChuyenNganh = "Bảo đảm An toàn thông tin";
   const { idLop } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
@@ -134,7 +133,7 @@ const ListHocVienTable = (props) => {
       console.error("Error submitting form:", error);
     }
   };
-  
+
   const [dsHV, setdsHV] = useState([]);
   useEffect(() => {
     fetchDsHV();
@@ -142,7 +141,6 @@ const ListHocVienTable = (props) => {
   const fetchDsHV = async () => {
     setdsHV(await hocvienAPI.get(idLop));
   };
-  console.log(dsHV);
 
   return (
     <div
@@ -154,7 +152,7 @@ const ListHocVienTable = (props) => {
         minHeight: "40vh",
       }}
     >
-      <h1 style={{ color: "GrayText" }}>Lớp {props.tenHV}</h1>
+      <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
       <div
         style={{
           fontSize: "50px",
@@ -174,7 +172,6 @@ const ListHocVienTable = (props) => {
         bg="rgb(26,132,74)"
         color={"white"}
         onClick={onOpen}
-        // position={"absolute"}
       >
         Thêm
       </Button>
@@ -280,37 +277,24 @@ const ListHocVienTable = (props) => {
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
               Lưu
             </Button>
-            <Button onClick={onClose}>Xóa</Button>
+            <Button onClick={onClose}>Hủy</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
       <TableContainer w={"150vh"}>
-        <Table variant="simple" size="sm">
-          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-          <Thead>
-            <Tr bg={"rgb(157, 173, 127)"}>
-              <Th w={"5%"} textAlign={"center"}>
-                Mã HV
-              </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Họ tên
-              </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Ngày sinh
-              </Th>
-              <Th w={"5%"} textAlign={"center"}>
-                Giới tính
-              </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Quê quán
-              </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Cấp bậc
-              </Th>
-              <Th w={"5%"}></Th>
-              <Th w={"5%"}></Th>
-            </Tr>
-          </Thead>
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Mã HV</th>
+              <th>Họ tên</th>
+              <th>Ngày sinh</th>
+              <th>Giới tính</th>
+              <th>Quê quán</th>
+              <th>Cấp bậc</th>
+              <th>Sửa</th>
+              <th>Xóa</th>
+            </tr>
+          </thead>
           <br />
           {dsHV?.map((item) => (
             <HocVien
@@ -324,7 +308,6 @@ const ListHocVienTable = (props) => {
               capBac={item.capBac}
             />
           ))}
-          {/* <br /> */}
         </Table>
       </TableContainer>
     </div>

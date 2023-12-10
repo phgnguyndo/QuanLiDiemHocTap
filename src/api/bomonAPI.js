@@ -6,7 +6,7 @@ const bomonAPI= {
         return axiosClient.get(url, {params})
     },
     get(id) {
-        const url=`/BoMon/${id}`;
+        const url=`/BoMon/bomonbyidkhoa/${id}`;
         return axiosClient.get(url);
     },
     create(data){
