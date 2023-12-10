@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ClassComponent from "./ClassComponent";
-import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
+// import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
 import { useParams } from "react-router-dom";
 import lopcnAPI from "../../api/lopcnAPI";
 const ListClassComponent = () => {
@@ -28,7 +28,7 @@ const ListClassComponent = () => {
   //   const [tenLopChuyenNganh,setTenLopChuyenNganh]=useState("");
   //   const [soHV,setSoHV]=useState(0);
   const [soHV, setSoHV] = useState(0);
-  const [imageLop, setImageLop] = useState("");
+  // const [imageLop, setImageLop] = useState("");
   const handleAddClass = async () => {
     try {
       const daiDoiId = id;
@@ -137,7 +137,6 @@ const ListClassComponent = () => {
       {dsLopCn?.map((item) => (
         <ClassComponent
           key={item.maLopChuyenNganh}
-          img={anh1}
           maLCN={item.maLopChuyenNganh}
           name={item.tenLopChuyenNganh}
           DaiDoiTruong={"Bùi Xuân Long"}
