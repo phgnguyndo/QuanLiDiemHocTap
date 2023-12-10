@@ -4,93 +4,96 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
-  Tfoot,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  useDisclosure,
-  ModalFooter,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
+  Tfoot
 } from "@chakra-ui/react";
-//   import {
-//     Modal,
-//     ModalOverlay,
-//     ModalContent,
-//     ModalHeader,
-//     ModalCloseButton,
-//     ModalBody,
-//     ModalFooter,
-//     useDisclosure,
-//   } from "@chakra-ui/react";
 import DiemComponent from "./DiemComponents";
 import React, { useEffect, useState } from "react";
-import { Modal } from "bootstrap";
-import { ModalBody, ModalHeader } from "react-bootstrap";
-import phieuDiemAPI from "../../api/PhieuDiem";
-import { useParams } from "react-router-dom";
 const DiemHocKyComponent = (props) => {
-  const DiemTBHocKy = 0;
-  const [phieuDiem, setPhieuDiem] = useState([]);
-  const { idHV } = useParams();
-  const [diemCC, setDiemCC] = useState(0);
-  const [diemTX, setDiemTX] = useState(0);
-  const [diemThi, setDiemThi] = useState(0);
-  const [diemThiLai, setDiemThiLai] = useState(0);
-  const [lanThi, setLanThi] = useState(0);
-  const hocVienId = idHV;
+  const { semester, phieuDiem } = props;
+  const [diemTrungBinhHocKy, setDiemTrungBinhHocKy] = useState(0);
+  const [diemTrungBinhNamHoc, setDiemTrungBinhNamHoc] = useState(0);
 
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const filteredPhieuDiem = phieuDiem?.filter(item => item.hocPhan.hocKy === semester);
+  console.log(filteredPhieuDiem);
+
   useEffect(() => {
-    fetchPhieuDiem();
-  }, []);
-  const fetchPhieuDiem = async () => {
-    setPhieuDiem(await phieuDiemAPI.get(idHV));
-  };
- console.log(phieuDiem);
-  const handleSubmit = async () => {
-    try {
-      const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
-      const formData = {
-        lopHocPhanId,
-        hocVienId,
-        diemCC,
-        diemTX,
-        diemThi,
-        diemThiLai,
-        lanThi,
-      };
+    // Tính điểm trung bình môn và điểm trung bình học kỳ
+    const tinhDiemTrungBinh = () => {
+      if (phieuDiem.length === 0) {
+        setDiemTrungBinhHocKy(0);
+        return;
+      }
 
-      await phieuDiemAPI.create(formData);
-      onClose();
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      let diemTrungBinhMonTotal = 0;
+      let tongSoTinChi = 0;
 
+      filteredPhieuDiem.forEach((item) => {
+        const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+        diemTrungBinhMonTotal += diemTrungBinhMon * item.hocPhan.soTC;
+        tongSoTinChi += item.hocPhan.soTC;
+      });
+
+      const diemTrungBinhHocKy = diemTrungBinhMonTotal / tongSoTinChi;
+      setDiemTrungBinhHocKy(diemTrungBinhHocKy);
+    };
+
+    tinhDiemTrungBinh();
+  }, [filteredPhieuDiem, semester]);
+
+  useEffect(() => {
+    // Tính điểm trung bình môn và điểm trung bình năm học
+    const tinhDiemTrungBinhNamHoc = () => {
+      if (phieuDiem.length === 0) {
+        setDiemTrungBinhNamHoc(0);
+        return;
+      }
+
+      let diemTrungBinhKy1 = 0;
+      let diemTrungBinhKy2 = 0;
+
+      // Tính điểm trung bình kỳ 1 và kỳ 2
+      phieuDiem.forEach((item) => {
+        if (item.hocPhan.hocKy === 1) {
+          const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+          diemTrungBinhKy1 += diemTrungBinhMon * item.hocPhan.soTC;
+        } else if (item.hocPhan.hocKy === 2) {
+          const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+          diemTrungBinhKy2 += diemTrungBinhMon * item.hocPhan.soTC;
+        }
+      });
+
+      const tongSoTinChiKy1 = phieuDiem
+        .filter((item) => item.hocPhan.hocKy === 1)
+        .reduce((total, item) => total + item.hocPhan.soTC, 0);
+
+      const tongSoTinChiKy2 = phieuDiem
+        .filter((item) => item.hocPhan.hocKy === 2)
+        .reduce((total, item) => total + item.hocPhan.soTC, 0);
+
+      const diemTrungBinhNamHoc =
+        (diemTrungBinhKy1 / tongSoTinChiKy1 + 2 * (diemTrungBinhKy2 / tongSoTinChiKy2)) / 3;
+
+      setDiemTrungBinhNamHoc(diemTrungBinhNamHoc);
+    };
+
+    tinhDiemTrungBinhNamHoc();
+  }, [phieuDiem, semester]);
   return (
     <>
       <Table
-        // bgcolor="red"
         variant="striped"
         size="sm"
         position={"relative"}
-        top={"50px"}
+        marginTop={"50px"}
         w={"90%"}
         left={"5%"}
       >
         <Thead>
-          {/* <Tr>
+          <Tr>
             <Th colspan={"10"} style={{ textAlign: "center" }}>
-              Học kỳ thứ {props.HocKy}
+              Học kỳ {props.HocKy}
             </Th>
-          </Tr> */}
+          </Tr>
 
           <Tr bg={""}>
             <Th w={"2%"} textAlign={"center"}>
@@ -99,9 +102,9 @@ const DiemHocKyComponent = (props) => {
             <Th w={"15%"} textAlign={"center"}>
               TenHocPhan
             </Th>
-            <Th w={"6%"} textAlign={"center"}>
+            {/* <Th w={"6%"} textAlign={"center"}>
               Học Kỳ
-            </Th>
+            </Th> */}
             <Th w={"6%"} textAlign={"center"}>
               SoTC
             </Th>
@@ -115,7 +118,7 @@ const DiemHocKyComponent = (props) => {
               DiemThi
             </Th>
             <Th w={"6%"} textAlign={"center"} >
-              LanThi
+              DiemThiLai
             </Th>
             <Th w={"8%"} textAlign={"center"}>
               DiemTB
@@ -126,39 +129,35 @@ const DiemHocKyComponent = (props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {phieuDiem.map((item, index)=>(
+        {filteredPhieuDiem.map((item, index) => (
             <DiemComponent
-            key={item.maPhieuDiem}
-            stt={index+1}
-            HocKy={item.hocPhan.hocKy}
-            TenHocPhan={item.hocPhan.tenHocPhan}
-            SoTinChi={item.hocPhan.soTC}
-            DiemChuyenCan={item.diemCC}
-            DiemThuongXuyen={item.diemTX}
-            DiemThiKetThucMon={item.diemThi}
-            LanThi={item.lanThi}
-          />
+              key={item.maPhieuDiem}
+              MaPhieuDiem={item.maPhieuDiem}
+              stt={index + 1}
+              HocKy={item.hocPhan.hocKy}
+              TenHocPhan={item.hocPhan.tenHocPhan}
+              SoTinChi={item.hocPhan.soTC}
+              DiemChuyenCan={item.diemCC}
+              DiemThuongXuyen={item.diemTX}
+              DiemThiKetThucMon={item.diemThi}
+              DiemThiLai={item.diemThiLai}
+              LanThi={item.lanThi}
+            />
           ))}
-          {/* <DiemComponent
-            MaHocPhan={props.MaHocPhan}
-            TenHocPhan={props.TenHocPhan}
-            SoTinChi={props.SoTinChi}
-            DiemChuyenCan={props.DiemChuyenCan}
-            DiemThuongXuyen={props.DiemThuongXuyen}
-            DiemThiKetThucMon={props.DiemThiKetThucMon}
-            SoLanThiLai={props.SoLanThiLai}
-          /> */}
         </Tbody>
-        {/* <Tfoot>
+        <Tfoot>
           <Tr>
             <Th colspan={"7"} style={{ textAlign: "right" }}>
               Điểm trung bình học kỳ
             </Th>
             <Th w={"8%"} textAlign={"center"}>
-              {}
+            {diemTrungBinhHocKy.toFixed(2)}
             </Th>
+            {/* <Th w={"8%"} textAlign={"center"}>
+            {diemTrungBinhNamHoc.toFixed(2)}
+            </Th> */}
           </Tr>
-        </Tfoot> */}
+        </Tfoot>
       </Table>
     </>
   );

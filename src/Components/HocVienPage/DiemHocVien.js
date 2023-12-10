@@ -35,7 +35,6 @@ const DiemHocVien = (props) => {
   const [diemThi, setDiemThi] = useState(0);
   const [diemThiLai, setDiemThiLai] = useState(0);
   const [lanThi, setLanThi] = useState(0);
-  const [tenHocPhan, setTenHocPhan] = useState("");
   const [maHocPhan, setMaHocPhan] = useState("");
   const [dsHocPhan, setDsHocPhan] = useState([]);
   const [phieuDiem, setPhieuDiem] = useState([]);
@@ -74,10 +73,20 @@ const DiemHocVien = (props) => {
   const fetchHocPhan = async () => {
     setDsHocPhan(await hocPhanAPI.getAll());
   };
-  console.log(dsHocPhan);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const getUniqueSemesters = () => {
+    const semesters = new Set();
+    dsHocPhan.forEach(item => {
+      semesters.add(item.hocKy);
+    });
+    return Array.from(semesters);
+  };
+
+  const uniqueSemesters = getUniqueSemesters();
+
   return (
     <Box position={"relative"}>
       <Box
@@ -183,7 +192,9 @@ const DiemHocVien = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <DiemHocKyComponent/>
+      {uniqueSemesters.map((semester, index) => (
+        <DiemHocKyComponent key={index} semester={semester} phieuDiem={phieuDiem} HocKy={index+1}/>
+      ))}
     </Box>
   );
 };

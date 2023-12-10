@@ -5,7 +5,6 @@ import {
   CardBody,
   CardFooter,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -22,7 +21,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 // import { useNavigate  } from "react-router-dom";
-import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
+// import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
 import lopcnAPI from "../../api/lopcnAPI";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -51,7 +50,7 @@ const ClassComponent = (props) => {
   };
   const [tenLopChuyenNganh, setTenLopChuyenNganh] = useState(props.name || "");
   const [soHV, setSoHV] = useState(props.QuanSo || 0);
-  const [imageLop, setImageLop] = useState("");
+  // const [imageLop, setImageLop] = useState("");
 
   const SuaThongTin = async () => {
     try {
