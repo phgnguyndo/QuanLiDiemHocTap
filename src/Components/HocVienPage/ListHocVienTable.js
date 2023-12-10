@@ -311,7 +311,7 @@ const ListHocVienTable = (props) => {
               <Th w={"5%"}></Th>
             </Tr>
           </Thead>
-          <br />
+          {/* <br /> */}
           {dsHV?.map((item) => (
             <HocVien
               key={item.maHV}

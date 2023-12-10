@@ -148,7 +148,6 @@ const HocVien = (props) => {
 
   return (
     <>
-      <Tbody>
         <Tr>
           <Td position={"relative"} textAlign={"center"}>
             {props.maHV}
@@ -287,7 +286,6 @@ const HocVien = (props) => {
             </Modal>
           </Td>
         </Tr>
-      </Tbody>
     </>
   );
 };
