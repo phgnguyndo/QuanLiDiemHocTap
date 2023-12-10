@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Header from "../Components/Bar/Header"
+import Head from "../Components/Bar/Head"
 import HocVienTable from "../Components/HocVienPage/ListHocVienTable";
 
 const HocVien = () => {
   return (
     <>
-    <Header/>
-    <HocVienTable/>
+    <Head content={<HocVienTable/>}/>
+    
     </>
   );
 };

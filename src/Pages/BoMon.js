@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Header from "../Components/Bar/Header";
+import Head from "../Components/Bar/Head";
 import ListBoMonTable from '../Components/BoMonPage/ListBoMon';
 
 const BoMon=()=>{
     return(
         <>
-        <Header></Header>
-        <ListBoMonTable></ListBoMonTable>
+        <Head content={<ListBoMonTable/>}></Head>
         </>
     )
 }

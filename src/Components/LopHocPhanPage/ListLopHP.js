@@ -2,8 +2,11 @@ import {
   Button,
   Table,
   Thead,
+  Tbody,
   Tr,
   Th,
+  Td,
+  TableCaption,
   TableContainer,
   useDisclosure,
   Modal,
@@ -18,46 +21,46 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Input } from "antd";
-import BoMon from "./BoMonComponent";
-import bomonAPI from "../../api/bomonAPI";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import khoaAPI from "../../api/khoaAPI";
+import hocphanAPI from "../../api/hocphanAPI";
+import lophocphanAPI from "../../api/lophocphanAPI";
+import LopHPComponent from "./LopHocPhanComponent";
 
-const ListBoMonTable = (props) => {
-  const { idKhoa } = useParams();
+const ListLopHPTable = (props) => {
+  const i = 0;
+  const { idHocPhan } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [tenBoMon, setTenBoMon] = useState("");
-  const [dsBoMon, setDsBoMon] = useState([]);
-  const [dsKhoa, setDsKhoa] = useState([]);
-  const [maKhoa, setMaKhoa] = useState("");
+  const [soHVien, setSoHV] = useState(0);
+  const [dsLhp, setDsLhp] = useState([]);
+  const [dsHocPhan, setDsHocPhan] = useState([]);
+  const [maHocPhan, setMaHocPhan] = useState("");
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
   useEffect(() => {
-    fetchBoMon();
+    fetchLhp();
   }, []);
-  const fetchBoMon = async () => {
-    setDsBoMon(await bomonAPI.getAll());
+  const fetchLhp = async () => {
+    setDsLhp(await lophocphanAPI.getAll());
   };
 
   useEffect(() => {
-    fetchKhoa();
+    fetchHocPhan();
   }, []);
-  console.log(idKhoa);
-  const fetchKhoa = async () => {
-    setDsKhoa(await khoaAPI.getAll());
+  const fetchHocPhan = async () => {
+    setDsHocPhan(await hocphanAPI.getAll());
   };
 
   const handleSubmit = async () => {
     try {
-      const tenBM = tenBoMon;
-      const khoaId = maKhoa;
+      const soHV = soHVien;
+      const hocPhanId = idHocPhan;
       const formdata = {
-        tenBM,
-        khoaId,
+        soHV,
+        hocPhanId,
       };
-      await bomonAPI.create(formdata);
+      await lophocphanAPI.create(formdata);
       onClose();
       window.location.reload();
     } catch (error) {
@@ -84,7 +87,7 @@ const ListBoMonTable = (props) => {
           color: "rgb(91, 138, 114)",
         }}
       >
-        Danh sách bộ môn
+        Danh sách lớp học phần
       </div>
       <Button
         position={"relative"}
@@ -105,17 +108,17 @@ const ListBoMonTable = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Thêm bộ môn</ModalHeader>
+          <ModalHeader>Thêm lớp học phần</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl mt={4}>
-              <FormLabel>Tên bộ môn</FormLabel>
+              <FormLabel>Tên học phần</FormLabel>
               <Input
                 ref={initialRef}
                 type="text"
                 placeholder="Tên bộ môn"
                 onChange={(e) => {
-                  setTenBoMon(e.target.value);
+                  setSoHV(parseInt(e.target.value));
                 }}
               />
             </FormControl>
@@ -126,12 +129,12 @@ const ListBoMonTable = (props) => {
                 placeholder="Không"
                 id="KhoaInPut"
                 onChange={(e) => {
-                  setMaKhoa(e.target.value);
+                  setMaHocPhan(e.target.value);
                 }}
               >
-                {dsKhoa.map((item, index) => (
-                  <option key={index} value={item.maKhoa}>
-                    {item.tenKhoa}
+                {dsHocPhan.map((item, index) => (
+                  <option key={index} value={item.maHocPhan}>
+                    {item.tenHocPhan}
                   </option>
                 ))}
               </Select>
@@ -146,30 +149,22 @@ const ListBoMonTable = (props) => {
         </ModalContent>
       </Modal>
       <TableContainer w={"120vh"}>
-        <Table
-          variant="striped"
-          size="lg"
-          position={"relative"}
-          top={"50px"}
-          w={"90%"}
-          left={"5%"}
-        >
+        <Table variant="simple" size="lg">
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>#</Th>
-              <Th>Bộ môn</Th>
-              <Th>Khoa</Th>
+              <Th>Lớp học phần</Th>
+              <Th>Học phần</Th>
               <Th textAlign={"center"}>Sửa</Th>
               <Th textAlign={"center"}>Xóa</Th>
             </Tr>
           </Thead>
-          {dsBoMon?.map((item, i) => (
-            <BoMon
-              key={item.maBM}
+          {dsLhp?.map((item, i) => (
+            <LopHPComponent
+              key={item.maLHP}
               stt={i + 1}
-              tenBM={item.tenBM}
-              maBM={item.maBM}
-              khoaId={item.khoaId}
+              soHV={props.soHV}
+              hocPhanId={item.hocPhanId}
             />
           ))}
           <br />
@@ -179,4 +174,4 @@ const ListBoMonTable = (props) => {
   );
 };
 
-export default ListBoMonTable;
+export default ListLopHPTable;
