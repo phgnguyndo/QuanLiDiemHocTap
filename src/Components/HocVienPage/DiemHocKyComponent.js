@@ -52,7 +52,7 @@ const DiemHocKyComponent = (props) => {
   const fetchPhieuDiem = async () => {
     setPhieuDiem(await phieuDiemAPI.get(idHV));
   };
- console.log(phieuDiem);
+  console.log(phieuDiem);
   const handleSubmit = async () => {
     try {
       const lopHocPhanId = "76878356-a9e8-4664-1bac-08dbeddacba9";
@@ -114,7 +114,7 @@ const DiemHocKyComponent = (props) => {
             <Th w={"6%"} textAlign={"center"}>
               DiemThi
             </Th>
-            <Th w={"6%"} textAlign={"center"} >
+            <Th w={"6%"} textAlign={"center"}>
               LanThi
             </Th>
             <Th w={"8%"} textAlign={"center"}>
@@ -126,18 +126,18 @@ const DiemHocKyComponent = (props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {phieuDiem.map((item, index)=>(
+          {phieuDiem.map((item, index) => (
             <DiemComponent
-            key={item.maPhieuDiem}
-            stt={index+1}
-            HocKy={item.hocPhan.hocKy}
-            TenHocPhan={item.hocPhan.tenHocPhan}
-            SoTinChi={item.hocPhan.soTC}
-            DiemChuyenCan={item.diemCC}
-            DiemThuongXuyen={item.diemTX}
-            DiemThiKetThucMon={item.diemThi}
-            LanThi={item.lanThi}
-          />
+              key={item.maPhieuDiem}
+              stt={index + 1}
+              HocKy={item.hocPhan.hocKy}
+              TenHocPhan={item.hocPhan.tenHocPhan}
+              SoTinChi={item.hocPhan.soTC}
+              DiemChuyenCan={item.diemCC}
+              DiemThuongXuyen={item.diemTX}
+              DiemThiKetThucMon={item.diemThi}
+              LanThi={item.lanThi}
+            />
           ))}
           {/* <DiemComponent
             MaHocPhan={props.MaHocPhan}

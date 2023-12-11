@@ -19,6 +19,7 @@ import {
   FormLabel,
   ModalFooter,
   Select,
+  Box,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
@@ -143,34 +144,22 @@ const ListHocVienTable = (props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "40vh",
-      }}
-    >
+    <Box position={"relative"}>
       <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
-      <div
-        style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
-          marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
-        }}
+      <Box
+        color={"brown"}
+        fontSize={"35px"}
+        fontWeight={500}
+        textAlign={"center"}
       >
         Danh sách học viên
-      </div>
+      </Box>
       <Button
-        position={"relative"}
-        top={"-40px"}
-        left={"-513px"}
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
+        left={"5%"}
+        top={"20px"}
         onClick={onOpen}
       >
         Thêm
@@ -281,36 +270,56 @@ const ListHocVienTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <TableContainer w={"150vh"}>
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>Mã HV</th>
-              <th>Họ tên</th>
-              <th>Ngày sinh</th>
-              <th>Giới tính</th>
-              <th>Quê quán</th>
-              <th>Cấp bậc</th>
-              <th>Sửa</th>
-              <th>Xóa</th>
-            </tr>
-          </thead>
-          <br />
-          {dsHV?.map((item) => (
-            <HocVien
-              key={item.maHV}
-              maHV={item.maHV}
-              hoTen={item.tenHV}
-              img={item.anhHV}
-              ngaySinh={item.ngaySinh}
-              gioiTinh={item.gioiTinh}
-              queQuan={item.queQuan}
-              capBac={item.capBac}
-            />
-          ))}
+      {/* <TableContainer w={"150vh"}> */}
+        <Table
+          variant="striped"
+          size="sm"
+          position={"relative"}
+          top={"50px"}
+          w={"90%"}
+          left={"5%"}
+        >
+          <Thead>
+            <Tr>
+              <Th w={"10%"}>
+                Mã HV
+              </Th>
+              <Th w={"30%"}>
+                Họ tên
+              </Th>
+              <Th w={"10%"}>
+                Ngày sinh
+              </Th>
+              <Th w={"10%"}>
+                Giới tính
+              </Th>
+              <Th w={"10%"}>
+                Quê quán
+              </Th>
+              <Th w={"10%"}>
+                Cấp bậc
+              </Th>
+              <Th w={"1%"} textAlign={"center"}>Sửa</Th>
+              <Th w={"1%"} textAlign={"center"}>Xóa</Th>
+            </Tr>
+          </Thead>
+          <>
+            {dsHV?.map((item) => (
+              <HocVien
+                key={item.maHV}
+                maHV={item.maHV}
+                hoTen={item.tenHV}
+                img={item.anhHV}
+                ngaySinh={item.ngaySinh}
+                gioiTinh={item.gioiTinh}
+                queQuan={item.queQuan}
+                capBac={item.capBac}
+              />
+            ))}
+          </>
         </Table>
-      </TableContainer>
-    </div>
+      {/* </TableContainer> */}
+    </Box>
   );
 };
 

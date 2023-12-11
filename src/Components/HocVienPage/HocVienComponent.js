@@ -149,17 +149,17 @@ const HocVien = (props) => {
 
   return (
     <>
-      <tbody>
-        <tr>
-          <td>{props.maHV}</td>
-          <td cursor={"pointer"} onClick={handleOnClick}>
+      <Tbody>
+        <Tr>
+          <Td>{props.maHV}</Td>
+          <Td cursor={"pointer"} onClick={handleOnClick}>
             {props.hoTen}
-          </td>
-          <td>{props.ngaySinh}</td>
-          <td>{props.gioiTinh ? "Nam" : "Nữ"}</td>
-          <td>{props.queQuan}</td>
-          <td>{props.capBac}</td>
-          <td>
+          </Td>
+          <Td>{props.ngaySinh}</Td>
+          <Td>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
+          <Td>{props.queQuan}</Td>
+          <Td>{props.capBac}</Td>
+          <Td>
             <Button onClick={onOpen}>
               <i class="fa-solid fa-pencil fa-lg" color="#000000"></i>
             </Button>
@@ -250,8 +250,8 @@ const HocVien = (props) => {
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </td>
-          <td>
+          </Td>
+          <Td textAlign={"center"}>
             <Button onClick={onEditModalOpen}>
               <i class="fa-solid fa-trash fa-lg" color="#000000"></i>
             </Button>
@@ -275,9 +275,9 @@ const HocVien = (props) => {
                 </ModalFooter>
               </ModalContent>
             </Modal>
-          </td>
-        </tr>
-      </tbody>
+          </Td>
+        </Tr>
+      </Tbody>
     </>
   );
 };
