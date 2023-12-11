@@ -149,12 +149,17 @@ const HocVien = (props) => {
 
   return (
     <>
-      <tbody>
-        <tr>
-          <td>{props.maHV}</td>
-          <td cursor={"pointer"} onClick={handleOnClick}>
+        <Tr>
+          <Td position={"relative"} textAlign={"center"}>
+            {props.maHV}
+          </Td>
+          <Td
+            position={"relative"}
+            textAlign={"center"}
+            cursor={"pointer"}
+            onClick={handleOnClick}
+          >
             {props.hoTen}
-          </td>
           <td>{props.ngaySinh}</td>
           <td>{props.gioiTinh ? "Nam" : "Nữ"}</td>
           <td>{props.queQuan}</td>
@@ -276,8 +281,8 @@ const HocVien = (props) => {
               </ModalContent>
             </Modal>
           </td>
-        </tr>
-      </tbody>
+          </Td>
+        </Tr>
     </>
   );
 };

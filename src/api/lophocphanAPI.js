@@ -1,4 +1,4 @@
-import axiosClient, { axiosFormData } from "./axiosClient";
+import axiosClient from "./axiosClient";
 
 const lophocphanAPI = {
   getAll(params) {

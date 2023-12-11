@@ -1,26 +1,26 @@
 import axiosClient from "./axiosClient";
 
-const bomonAPI= {
+const giangVienAPI= {
     getAll(params) {
-        const url='/BoMon';
+        const url='/GiangVien';
         return axiosClient.get(url, {params})
     },
     get(id) {
-        const url=`/BoMon/bomonbyidkhoa/${id}`;
+        const url=`/GiangVien/${id}`;
         return axiosClient.get(url);
     },
     create(data){
-        const url='/BoMon';
+        const url='/GiangVien';
         return axiosClient.post(url,data)
     },
-    update(id, data){
-        const url=`/BoMon/${id}`;
+    update(id,data){
+        const url=`/GiangVien/${id}`;
         return axiosClient.put(url, data);
     },
     delete(id){
-        const url= `/BoMon/${id}`;
-        return axiosClient.delete(url);
+        const url= `/GiangVien/${id}`
+        return axiosClient.delete(url)
     }
 }
 
-export default bomonAPI 
+export default giangVienAPI 

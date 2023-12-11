@@ -282,20 +282,33 @@ const ListHocVienTable = (props) => {
         </ModalContent>
       </Modal>
       <TableContainer w={"150vh"}>
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>Mã HV</th>
-              <th>Họ tên</th>
-              <th>Ngày sinh</th>
-              <th>Giới tính</th>
-              <th>Quê quán</th>
-              <th>Cấp bậc</th>
-              <th>Sửa</th>
-              <th>Xóa</th>
-            </tr>
-          </thead>
-          <br />
+        <Table variant="simple" size="sm">
+          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+          <Thead>
+            <Tr bg={"rgb(157, 173, 127)"}>
+              <Th w={"5%"} textAlign={"center"}>
+                Mã HV
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Họ tên
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Ngày sinh
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Giới tính
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Quê quán
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Cấp bậc
+              </Th>
+              <Th w={"5%"}></Th>
+              <Th w={"5%"}></Th>
+            </Tr>
+          </Thead>
+          {/* <br /> */}
           {dsHV?.map((item) => (
             <HocVien
               key={item.maHV}
