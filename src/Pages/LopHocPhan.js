@@ -1,11 +1,10 @@
-import Header from "../Components/Bar/Header"
+import Head from "../Components/Bar/Head"
 import ListLopHPTable from "../Components/LopHocPhanPage/ListLopHP"
 
 const LopHocPhan=()=>{
     return(
         <>
-            <Header></Header>
-            <ListLopHPTable></ListLopHPTable>
+            <Head content={<ListLopHPTable/>}></Head>
         </>
     )
 }
