@@ -72,13 +72,12 @@ const CardDaiDoi = (props) => {
         w={"30%"}
         height={"220px"}      
         border={"1px solid rgb(190,190,190)"}
-        boxShadow={"1px 1px 1px 1px rgb(190,190,190)"}
+        boxShadow={"2px 2px 4px 2px rgba(190, 190, 190, 0.5)"}
         float={"left"}
         left={"1%"}
         marginLeft={"2%"}
         marginTop={"20px"}
-        // bg={"gray"}
-        // direction={{ base: "column", sm: "row" }}
+        backgroundColor="#f4f4f4"
         overflow="hidden"
         variant="outline"
       >

@@ -1,9 +1,9 @@
 import axiosClient, { axiosFormData } from "./axiosClient";
 
 const hocvienAPI= {
-    getAll(params) {
-        const url='/HocVien';
-        return axiosClient.get(url, {params})
+    getAll(a,b) {
+        const url=`/HocVien?pageNumber=${a}&pageSize=${b}`;
+        return axiosClient.get(url)
     },
     get(id) {
         const url=`/HocVien/${id}`;

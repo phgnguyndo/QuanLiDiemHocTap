@@ -11,6 +11,7 @@ import GiangVien from "./Pages/GiangVien";
 import BoMon from "./Pages/BoMon";
 import HocPhan from "./Pages/HocPhan";
 import LopHocPhan from "./Pages/LopHocPhan";
+import AllHocVien from "./Pages/PageAllHocVien";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/khoa" element={<Khoa/>} />
         {/* <Route path="/khoa/:idKhoa" element={<BoMon/>} /> */}
         <Route path="/bomon" element={<BoMon/>} />
+        <Route path="/hocvien" element={<AllHocVien/>} />
         <Route path="/giangvien" element={<GiangVien/>} />
         <Route path="/hocphan" element={<HocPhan/>} />
         <Route path="/lophocphan" element={<LopHocPhan/>} />

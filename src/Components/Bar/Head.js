@@ -21,7 +21,6 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import StorageKeys from "../../constance/storage-key";
-import userImage from "../../Image/user.jpg";
 const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const { Header, Sider, Content } = Layout;
 
@@ -98,9 +97,25 @@ const Head = ({ content }) => {
             {
               key: "6",
               icon: <ReadOutlined />,
-              label: "aaaa",
+              label: "Lớp học phần",
               onClick: () => {
-                nav("/aaaa");
+                nav("/lophocphan");
+              },
+            },
+            {
+              key: "7",
+              icon: <ReadOutlined />,
+              label: "Học viên",
+              onClick: () => {
+                nav("/hocvien");
+              },
+            },
+            {
+              key: "8",
+              icon: <ReadOutlined />,
+              label: "Giảng dạy ",
+              onClick: () => {
+                nav("/giangday");
               },
             },
           ]}
@@ -128,6 +143,7 @@ const Head = ({ content }) => {
                 left: "80%",
                 fontSize: "20px",
                 cursor: "pointer",
+                color:"red",
                 onClick: { handleLogout },
               }}
             />
