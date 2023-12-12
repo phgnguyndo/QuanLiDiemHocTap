@@ -112,6 +112,9 @@ const ListAllHocVien = (props) => {
   const [capBac, setCapBac] = useState("");
   const [imageHV, setImageHV] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
@@ -303,11 +306,14 @@ const ListAllHocVien = (props) => {
               capBac={item.capBac}
             />
           ))}
-        </Tbody><br/>
+        </Tbody>
+        <br />
 
-        <Tfoot left={"25%"} position={"absolute"}><PaginationComponent style={{top:"10px"}}/></Tfoot>
+        <Tfoot left={"25%"} position={"absolute"}>
+          <PaginationComponent style={{ top: "10px" }} />
+        </Tfoot>
       </Table>
-     
+
       {/* </TableContainer> */}
     </Box>
   );
