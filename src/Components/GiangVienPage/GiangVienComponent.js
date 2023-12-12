@@ -7,7 +7,20 @@ import {
     ModalHeader,
     ModalOverlay,
   } from "@chakra-ui/modal";
-  import { useState, React } from "react";
+  import {
+    HomeOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserAddOutlined,
+    LogoutOutlined,
+    RadarChartOutlined,
+    HeatMapOutlined,
+    ReadOutlined,
+    UserOutlined,
+    EditOutlined,
+    DeleteOutlined
+  } from "@ant-design/icons";
+  import { useState, React, useEffect } from "react";
   import { useNavigate, useParams } from "react-router-dom";
   import {
     Button,
@@ -18,9 +31,11 @@ import {
     Tbody,
     Td,
     Tr,
+    color,
     useDisclosure,
   } from "@chakra-ui/react";
 import giangVienAPI from "../../api/giangVienAPI";
+import bomonAPI from "../../api/bomonAPI";
   
   const GiangVienComponent = (props) => {
     const capBacData = [
@@ -45,9 +60,11 @@ import giangVienAPI from "../../api/giangVienAPI";
     const [capBac, setCapBac] = useState(props.capBac || "");
     const [tenGV, setTenGV] = useState(props.hoTen ||"");
     const [sdt, setSdt] = useState(props.sdt || "");
+    const [dsBomon, setDsBomon] = useState([]);
     const MaGV = props.maGV
     const [tenBoMon,setTenBoMon] = useState(props.boMon.tenBoMon || "")
-  
+    const [boMonId, setBomonID] = useState("");
+
     const handleXoaGV = async () => {
       try {
         await giangVienAPI.delete(MaGV);
@@ -59,7 +76,6 @@ import giangVienAPI from "../../api/giangVienAPI";
     };
     const handleSuaGV = async () => {
       try {
-        const boMonId = props.boMonId;
         const formData = {
             tenGV,
             boMonId,
@@ -72,12 +88,18 @@ import giangVienAPI from "../../api/giangVienAPI";
         console.error("Error submitting form:", error);
       }
     };
-  
+
+    useEffect(() => {
+      fetchDsBoMon();
+    });
+    const fetchDsBoMon = async () => {
+      setDsBomon(await bomonAPI.getAll());
+    };
     return (
       <>
           <Tr>
             <Td position={"relative"} textAlign={"center"}>
-              {props.maGV}
+              {props.STT}
             </Td>
             <Td
               position={"relative"}
@@ -97,11 +119,11 @@ import giangVienAPI from "../../api/giangVienAPI";
               {props.boMon.tenBM}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
-              <Button onClick={onOpen}>Sửa</Button>
+              <Button onClick={onOpen} bg="blue.500"><EditOutlined /></Button>
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Sửa thông tin học viên</ModalHeader>
+                  <ModalHeader>Sửa thông tin giảng viên</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
                     <FormControl>
@@ -123,13 +145,20 @@ import giangVienAPI from "../../api/giangVienAPI";
                       />
                     </FormControl>
                     <FormControl mt={4}>
-                      <FormLabel>Mã bộ môn</FormLabel>
-                      <Input
-                        defaultValue={props.boMonId}
-                        onChange={(e) => {
-                          setSdt(e.target.value);
-                        }}
-                      />
+                    <FormLabel>Thuộc bộ môn</FormLabel>
+                        <Select
+                          placeholder="Tên bộ môn"
+                          id="boMonInput"
+                          onChange={(e) => {
+                            setBomonID(e.target.value);
+                          }}
+                          > 
+                          {dsBomon.map((item,index) => (
+                            <option key={index} value={item.maBM}>
+                              {item.tenBM}
+                            </option>
+                          ))}
+                        </Select>
                     </FormControl>
                     <FormControl mt={4}>
                       <FormLabel>Giới tính</FormLabel>
@@ -162,16 +191,14 @@ import giangVienAPI from "../../api/giangVienAPI";
                     </FormControl>
                   </ModalBody>
                   <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={handleSuaGV}>
-                      Lưu
-                    </Button>
+                    <Button colorScheme="blue" mr={3} onClick={handleSuaGV}>Lưu</Button>
                     <Button onClick={onClose}>Hủy</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
             </Td>
             <Td position={"relative"} textAlign={"center"}>
-              <Button onClick={onEditModalOpen}>Xóa</Button>
+              <Button onClick={onEditModalOpen} bg={"red.500"}><DeleteOutlined /></Button>
               <Modal
                 isCentered
                 onClose={onEditModalClose}

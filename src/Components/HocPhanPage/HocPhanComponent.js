@@ -7,6 +7,19 @@ import {
     ModalHeader,
     ModalOverlay,
   } from "@chakra-ui/modal";
+  import {
+    HomeOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserAddOutlined,
+    LogoutOutlined,
+    RadarChartOutlined,
+    HeatMapOutlined,
+    ReadOutlined,
+    UserOutlined,
+    EditOutlined,
+    DeleteOutlined
+  } from "@ant-design/icons";
   import { useState, React } from "react";
   import { useNavigate, useParams } from "react-router-dom";
   import {
@@ -70,13 +83,12 @@ import hocPhanAPI from "../../api/hocphanAPI";
       <>
           <Tr>
             <Td position={"relative"} textAlign={"center"}>
-              {props.maHP}
+              {props.STT}
             </Td>
             <Td
               position={"relative"}
               textAlign={"center"}
               cursor={"pointer"}
-            //   onClick={handleOnClick}
             >
               {props.tenHP}
             </Td>
@@ -90,7 +102,7 @@ import hocPhanAPI from "../../api/hocphanAPI";
               {props.hocKy}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
-              <Button onClick={onOpen}>Sửa</Button>
+              <Button onClick={onOpen} bg={"blue.500"}><EditOutlined /></Button>
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
@@ -156,7 +168,7 @@ import hocPhanAPI from "../../api/hocphanAPI";
               </Modal>
             </Td>
             <Td position={"relative"} textAlign={"center"}>
-              <Button onClick={onEditModalOpen}>Xóa</Button>
+              <Button onClick={onEditModalOpen} bg={"red.500"}><DeleteOutlined /></Button>
               <Modal
                 isCentered
                 onClose={onEditModalClose}
