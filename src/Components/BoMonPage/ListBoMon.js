@@ -16,6 +16,7 @@ import {
   FormLabel,
   ModalFooter,
   Select,
+  Box,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import BoMon from "./BoMonComponent";
@@ -66,33 +67,21 @@ const ListBoMonTable = (props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "40vh",
-      }}
-    >
-      <div
-        style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
-          marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
-        }}
+    <Box position={"relative"}>
+      <Box
+        color={"brown"}
+        fontSize={"35px"}
+        fontWeight={500}
+        textAlign={"center"}
       >
         Danh sách bộ môn
-      </div>
+      </Box>
       <Button
-        position={"relative"}
-        top={"-40px"}
-        left={"-400px"}
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
+        left={"5%"}
+        top={"30px"}
         onClick={onOpen}
       >
         Thêm
@@ -145,37 +134,37 @@ const ListBoMonTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <TableContainer w={"120vh"}>
-        <Table
-          variant="striped"
-          size="lg"
-          position={"relative"}
-          top={"50px"}
-          w={"90%"}
-          left={"5%"}
-        >
-          <Thead background={"rgb(182, 187, 196)"}>
-            <Tr>
-              <Th textAlign={"center"}>#</Th>
-              <Th>Bộ môn</Th>
-              <Th>Khoa</Th>
-              <Th textAlign={"center"}>Sửa</Th>
-              <Th textAlign={"center"}>Xóa</Th>
-            </Tr>
-          </Thead>
-          {dsBoMon?.map((item, i) => (
-            <BoMon
-              key={item.maBM}
-              stt={i + 1}
-              tenBM={item.tenBM}
-              maBM={item.maBM}
-              khoaId={item.khoaId}
-            />
-          ))}
-          <br />
-        </Table>
-      </TableContainer>
-    </div>
+      {/* <TableContainer w={"120vh"}> */}
+      <Table
+        variant="striped"
+        size="lg"
+        position={"relative"}
+        top={"50px"}
+        w={"90%"}
+        left={"5%"}
+      >
+        <Thead background={"rgb(182, 187, 196)"}>
+          <Tr>
+            <Th textAlign={"center"}>#</Th>
+            <Th>Bộ môn</Th>
+            <Th>Khoa</Th>
+            <Th textAlign={"center"}>Sửa</Th>
+            <Th textAlign={"center"}>Xóa</Th>
+          </Tr>
+        </Thead>
+        {dsBoMon?.map((item, i) => (
+          <BoMon
+            key={item.maBM}
+            stt={i + 1}
+            tenBM={item.tenBM}
+            maBM={item.maBM}
+            khoaId={item.khoaId}
+          />
+        ))}
+        <br />
+      </Table>
+      {/* </TableContainer> */}
+    </Box>
   );
 };
 
