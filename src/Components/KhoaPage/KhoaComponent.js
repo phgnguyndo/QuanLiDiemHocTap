@@ -24,6 +24,7 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState, React } from "react";
 import khoaAPI from "../../api/khoaAPI";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +67,6 @@ const KhoaComponent = (props) => {
 
   return (
     <>
-      <Tbody>
         <Tr>
           <Td position={"relative"} textAlign={"center"} w={"3%"}>
             {props.stt}
@@ -82,8 +82,8 @@ const KhoaComponent = (props) => {
             {props.tenKhoa}
           </Td>
           <Td position={"relative"} textAlign={"center"}>
-            <Button onClick={onEditModalOpen}>
-              <i class="fa-solid fa-pencil fa-lg" color="#000000"></i>
+            <Button onClick={onEditModalOpen} background={"blue.300"}>
+              <EditOutlined />
             </Button>
             <Modal
               isCentered
@@ -126,8 +126,8 @@ const KhoaComponent = (props) => {
             </Modal>
           </Td>
           <Td textAlign={"center"}>
-            <Button onClick={onOpen}>
-              <i class="fa-solid fa-trash fa-lg" color="#000000"></i>
+            <Button onClick={onOpen} background={"red.300"}>
+              <DeleteOutlined />
             </Button>
             <Modal
               isCentered
@@ -159,7 +159,6 @@ const KhoaComponent = (props) => {
             </Modal>
           </Td>
         </Tr>
-      </Tbody>
     </>
   );
 };

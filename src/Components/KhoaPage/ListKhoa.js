@@ -104,33 +104,38 @@ const ListKhoaTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {/* <TableContainer w={"80vh"}> */}
-      <Table
-        variant="striped"
-        size="lg"
-        position={"relative"}
-        top={"50px"}
-        w={"70%"}
-        align="center"
-      >
-        <Thead background={"rgb(182, 187, 196)"}>
-          <Tr>
-            <Th textAlign={"center"}>#</Th>
-            <Th w={"95%"}>Khoa</Th>
-            <Th textAlign={"center"}>Sửa</Th>
-            <Th textAlign={"center"}>Xóa</Th>
-          </Tr>
-        </Thead>
-        {dsKhoa?.map((item, i) => (
-          <KhoaComponent
-            key={item.maKhoa}
-            maKhoa={item.maKhoa}
-            stt={i + 1}
-            tenKhoa={item.tenKhoa}
-          />
-        ))}
-      </Table>
-      {/* </TableContainer> */}
+      <TableContainer>
+        <Table
+          variant="striped"
+          size="sm"
+          position={"relative"}
+          top={"50px"}
+          w={"70%"}
+          align="center"
+        >
+          <Thead background={"rgb(182, 187, 196)"}>
+            <Tr>
+              <Th textAlign={"center"}>STT</Th>
+              <Th w={"95%"}>Khoa</Th>
+              <Th textAlign={"center"}>Sửa</Th>
+              <Th textAlign={"center"}>Xóa</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {dsKhoa?.map((item, i) => (
+              <KhoaComponent
+                key={item.maKhoa}
+                maKhoa={item.maKhoa}
+                stt={i + 1}
+                tenKhoa={item.tenKhoa}
+              />
+            ))}
+          </Tbody>
+          <br></br>
+          <br></br>
+          <br></br>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

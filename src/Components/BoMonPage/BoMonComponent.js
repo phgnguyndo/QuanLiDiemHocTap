@@ -13,6 +13,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Select,
   Tbody,
   Td,
   Tr,
@@ -21,6 +22,9 @@ import {
 import { useState, React } from "react";
 import bomonAPI from "../../api/bomonAPI";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import khoaAPI from "../../api/khoaAPI";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const BoMon = (props) => {
   const { idKhoa } = useParams();
@@ -31,11 +35,20 @@ const BoMon = (props) => {
     onClose: onEditModalClose,
   } = useDisclosure();
   const [TenBoMon, setTenBoMon] = useState(props.tenBM || "");
-
+  const [dsKhoa, setDsKhoa] = useState([]);
+  const [maKhoa, setMaKhoa] = useState("");
   const idBoMon = props.maBM;
   const nav = useNavigate();
   const handleOnClick = () => {
     nav(`/khoa/${idKhoa}/${idBoMon}`);
+  };
+
+  useEffect(() => {
+    fetchKhoa();
+  }, []);
+  console.log(idKhoa);
+  const fetchKhoa = async () => {
+    setDsKhoa(await khoaAPI.getAll());
   };
 
   const handleXoaBoMon = async () => {
@@ -66,68 +79,75 @@ const BoMon = (props) => {
 
   return (
     <>
-      <Tbody>
-        <Tr>
-          <Td textAlign={"center"}>{props.stt}</Td>
-          <Td cursor={"pointer"} 
-          // onClick={handleOnClick}
-          >
-            {props.tenBM}
-          </Td>
-          <Td textAlign={"center"}>
-            <Button onClick={onOpen}>
-              <i class="fa-solid fa-pencil fa-lg" color="#000000"></i>
-            </Button>
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Sửa thông tin bộ môn</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel>Tên bộ môn</FormLabel>
-                    <Input
-                      defaultValue={props.tenBM}
-                      onChange={(e) => {
-                        setTenBoMon(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleSuaBoMon}>
-                    Lưu
-                  </Button>
-                  <Button onClick={onClose}>Hủy</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-          <Td textAlign={"center"}>
-            <Button onClick={onEditModalOpen}>
-              <i class="fa-solid fa-trash fa-lg" color="#000000"></i>
-            </Button>
-            <Modal
-              isCentered
-              onClose={onEditModalClose}
-              isOpen={isEditModalOpen}
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Muốn xóa bộ môn {props.tenBM} không ?</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody></ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleXoaBoMon}>
-                    Xóa
-                  </Button>
-                  <Button onClick={onEditModalClose}>Hủy</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-        </Tr>
-      </Tbody>
+      <Tr>
+        <Td textAlign={"center"}>{props.stt}</Td>
+        <Td cursor={"pointer"}>{props.tenBM}</Td>
+        <Td >{props.tenKhoa}</Td>
+        <Td textAlign={"center"}>
+          <Button onClick={onOpen} background={"blue.300"}>
+            <EditOutlined />
+          </Button>
+          <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Sửa thông tin bộ môn</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <FormControl>
+                  <FormLabel>Tên bộ môn</FormLabel>
+                  <Input
+                    defaultValue={props.tenBM}
+                    onChange={(e) => {
+                      setTenBoMon(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+              <FormLabel>Khoa</FormLabel>
+              <Select
+                value={props.tenKhoa}
+                id="KhoaInPut"
+                onChange={(e) => {
+                  setMaKhoa(e.target.value);
+                }}
+              >
+                {dsKhoa.map((item, index) => (
+                  <option key={index} value={item.maKhoa}>
+                    {item.tenKhoa}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={handleSuaBoMon}>
+                  Lưu
+                </Button>
+                <Button onClick={onClose}>Hủy</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+        <Td textAlign={"center"}>
+          <Button onClick={onEditModalOpen} background={"red.300"}>
+            <DeleteOutlined />
+          </Button>
+          <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Muốn xóa bộ môn {props.tenBM} không ?</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody></ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={handleXoaBoMon}>
+                  Xóa
+                </Button>
+                <Button onClick={onEditModalClose}>Hủy</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+      </Tr>
     </>
   );
 };

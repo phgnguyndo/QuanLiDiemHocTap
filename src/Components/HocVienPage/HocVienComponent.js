@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import hocvienAPI from "../../api/hocvienAPI";
 import anh from "../../Image/Logo.png";
-import { Table } from "react-bootstrap";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const HocVien = (props) => {
   const capBacData = [
@@ -149,135 +149,127 @@ const HocVien = (props) => {
 
   return (
     <>
-      <Tbody>
-        <Tr>
-          <Td>{props.maHV}</Td>
-          <Td cursor={"pointer"} onClick={handleOnClick}>
-            {props.hoTen}
-          </Td>
-          <Td>{props.ngaySinh}</Td>
-          <Td>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
-          <Td>{props.queQuan}</Td>
-          <Td>{props.capBac}</Td>
-          <Td>
-            <Button onClick={onOpen}>
-              <i class="fa-solid fa-pencil fa-lg" color="#000000"></i>
-            </Button>
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Sửa thông tin học viên</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel>Tên học viên</FormLabel>
-                    <Input
-                      defaultValue={props.hoTen}
-                      onChange={(e) => {
-                        setHoTen(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Ngày sinh</FormLabel>
-                    <Input
-                      defaultValue={props.ngaySinh}
-                      onChange={(e) => {
-                        setNgaySinh(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Giới tính</FormLabel>
-                    <Select
-                      id="gioiTinhInput"
-                      onChange={(e) => {
-                        setGioiTinh(e.target.value);
-                      }}
-                    >
-                      <option value={true}>Nam</option>
-                      <option value={false}>Nữ</option>
-                    </Select>
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Quê quán</FormLabel>
-                    <Select
-                      placeholder="Quê quán"
-                      id="queQuanInput"
-                      onChange={(e) => {
-                        setQueQuan(e.target.value);
-                      }}
-                    >
-                      {provinceData.map((province, index) => (
-                        <option key={index} value={province}>
-                          {province}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Cấp bậc</FormLabel>
-                    <Select
-                      placeholder="Cấp bậc"
-                      id="capBacInput"
-                      onChange={(e) => {
-                        setCapBac(e.target.value);
-                      }}
-                    >
-                      {capBacData.map((capbac, index) => (
-                        <option key={index} value={capbac}>
-                          {capbac}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Ảnh</FormLabel>
-                    <Input
-                      type="file"
-                      name="file"
-                      onChange={(e) => {
-                        setImageHV(e.target.files[0]);
-                      }}
-                    />
-                  </FormControl>
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleSuaHV}>
-                    Lưu
-                  </Button>
-                  <Button onClick={onClose}>Hủy</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-          <Td textAlign={"center"}>
-            <Button onClick={onEditModalOpen}>
-              <i class="fa-solid fa-trash fa-lg" color="#000000"></i>
-            </Button>
-            <Modal
-              isCentered
-              onClose={onEditModalClose}
-              isOpen={isEditModalOpen}
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>
-                  Muốn xóa học viên {props.name} không ?
-                </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody></ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={handleXoaHV}>
-                    Xóa
-                  </Button>
-                  <Button onClick={onEditModalClose}>Hủy</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-        </Tr>
-      </Tbody>
+      <Tr>
+        <Td>{props.maHV}</Td>
+        <Td cursor={"pointer"} onClick={handleOnClick}>
+          {props.hoTen}
+        </Td>
+        <Td>{props.ngaySinh}</Td>
+        <Td>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
+        <Td>{props.queQuan}</Td>
+        <Td>{props.capBac}</Td>
+        <Td>
+          <Button onClick={onOpen} background={"blue.300"}>
+            <EditOutlined />
+          </Button>
+          <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Sửa thông tin học viên</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <FormControl>
+                  <FormLabel>Tên học viên</FormLabel>
+                  <Input
+                    defaultValue={props.hoTen}
+                    onChange={(e) => {
+                      setHoTen(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Ngày sinh</FormLabel>
+                  <Input
+                    defaultValue={props.ngaySinh}
+                    onChange={(e) => {
+                      setNgaySinh(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Giới tính</FormLabel>
+                  <Select
+                    id="gioiTinhInput"
+                    onChange={(e) => {
+                      setGioiTinh(e.target.value);
+                    }}
+                  >
+                    <option value={true}>Nam</option>
+                    <option value={false}>Nữ</option>
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Quê quán</FormLabel>
+                  <Select
+                    placeholder="Quê quán"
+                    id="queQuanInput"
+                    onChange={(e) => {
+                      setQueQuan(e.target.value);
+                    }}
+                  >
+                    {provinceData.map((province, index) => (
+                      <option key={index} value={province}>
+                        {province}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Cấp bậc</FormLabel>
+                  <Select
+                    placeholder="Cấp bậc"
+                    id="capBacInput"
+                    onChange={(e) => {
+                      setCapBac(e.target.value);
+                    }}
+                  >
+                    {capBacData.map((capbac, index) => (
+                      <option key={index} value={capbac}>
+                        {capbac}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Ảnh</FormLabel>
+                  <Input
+                    type="file"
+                    name="file"
+                    onChange={(e) => {
+                      setImageHV(e.target.files[0]);
+                    }}
+                  />
+                </FormControl>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={handleSuaHV}>
+                  Lưu
+                </Button>
+                <Button onClick={onClose}>Hủy</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+        <Td textAlign={"center"}>
+          <Button onClick={onEditModalOpen} background={"red.300"}>
+            <DeleteOutlined />
+          </Button>
+          <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Muốn xóa học viên {props.name} không ?</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody></ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={handleXoaHV}>
+                  Xóa
+                </Button>
+                <Button onClick={onEditModalClose}>Hủy</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+      </Tr>
     </>
   );
 };

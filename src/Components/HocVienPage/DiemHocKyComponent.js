@@ -92,7 +92,7 @@ const DiemHocKyComponent = (props) => {
             </Th>
           </Tr> */}
 
-          <Tr bg={""}>
+          <Tr>
             <Th w={"2%"} textAlign={"center"}>
               STT
             </Th>

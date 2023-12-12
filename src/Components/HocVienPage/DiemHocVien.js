@@ -183,7 +183,7 @@ const DiemHocVien = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <DiemHocKyComponent/>
+      <DiemHocKyComponent />
     </Box>
   );
 };

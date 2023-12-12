@@ -17,6 +17,7 @@ import {
   ModalFooter,
   Select,
   Box,
+  Tbody,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import BoMon from "./BoMonComponent";
@@ -31,6 +32,7 @@ const ListBoMonTable = (props) => {
   const [tenBoMon, setTenBoMon] = useState("");
   const [dsBoMon, setDsBoMon] = useState([]);
   const [dsKhoa, setDsKhoa] = useState([]);
+
   const [maKhoa, setMaKhoa] = useState("");
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -134,36 +136,41 @@ const ListBoMonTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {/* <TableContainer w={"120vh"}> */}
-      <Table
-        variant="striped"
-        size="lg"
-        position={"relative"}
-        top={"50px"}
-        w={"90%"}
-        left={"5%"}
-      >
-        <Thead background={"rgb(182, 187, 196)"}>
-          <Tr>
-            <Th textAlign={"center"}>#</Th>
-            <Th>Bộ môn</Th>
-            <Th>Khoa</Th>
-            <Th textAlign={"center"}>Sửa</Th>
-            <Th textAlign={"center"}>Xóa</Th>
-          </Tr>
-        </Thead>
-        {dsBoMon?.map((item, i) => (
-          <BoMon
-            key={item.maBM}
-            stt={i + 1}
-            tenBM={item.tenBM}
-            maBM={item.maBM}
-            khoaId={item.khoaId}
-          />
-        ))}
-        <br />
-      </Table>
-      {/* </TableContainer> */}
+      <TableContainer>
+        <Table
+          variant="striped"
+          size="sm"
+          position={"relative"}
+          top={"50px"}
+          w={"90%"}
+          left={"5%"}
+        >
+          <Thead background={"rgb(182, 187, 196)"}>
+            <Tr>
+              <Th textAlign={"center"}>STT</Th>
+              <Th>Bộ môn</Th>
+              <Th>Khoa</Th>
+              <Th textAlign={"center"}>Sửa</Th>
+              <Th textAlign={"center"}>Xóa</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {dsBoMon?.map((item, i) => (
+              <BoMon
+                key={item.maBM}
+                stt={i + 1}
+                maBM={item.maBM}
+                tenBM={item.tenBM}
+                khoaId={item.khoaId}
+                tenKhoa={item.khoa.tenKhoa}
+              />
+            ))}
+          </Tbody>
+          <br></br>
+          <br></br>
+          <br></br>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };
