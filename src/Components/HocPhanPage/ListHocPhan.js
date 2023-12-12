@@ -23,6 +23,7 @@ import {
   import { Input } from "antd";
   import { useParams } from "react-router-dom";
   import React, { useState, useEffect } from "react";
+  import bomonAPI from "../../api/bomonAPI";
   import hocPhanAPI from "../../api/hocphanAPI.js"
 import HocPhanComponent from "./HocPhanComponent.js";
 
@@ -37,7 +38,8 @@ import HocPhanComponent from "./HocPhanComponent.js";
     const [hocKy, setHocKy] = useState("");
     const [soTC, setTinChi] = useState("");
     const [soTiet, setSotiet] = useState("");
-    const [boMonId, setBomon] = useState("");
+    const [boMonId, setBomonID] = useState("");
+    const [dsBomon, setDsBomon] = useState([]);
   
     
     const handleSubmit = async () => {
@@ -65,7 +67,13 @@ import HocPhanComponent from "./HocPhanComponent.js";
         setdsHP(await hocPhanAPI.getAll());
       };
       console.log(dsHP);
-
+      
+      useEffect(() => {
+        fetchDsBoMon();
+      });
+      const fetchDsBoMon = async () => {
+        setDsBomon(await bomonAPI.getAll());
+      };
 
 
   
@@ -115,17 +123,6 @@ import HocPhanComponent from "./HocPhanComponent.js";
           <ModalHeader>Thêm Học phần</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Mã học phần</FormLabel>
-              <Input
-                ref={initialRef}
-                type="text"
-                placeholder="Mã HP"
-                onChange={(e) => {
-                  setMaHP(e.target.value);
-                }}
-              />
-            </FormControl>
             <FormControl mt={4}>
               <FormLabel>Tên học phần</FormLabel>
               <Input
@@ -172,14 +169,19 @@ import HocPhanComponent from "./HocPhanComponent.js";
             </FormControl>
             <FormControl mt={4}>
               <FormLabel>Thuộc bộ môn</FormLabel>
-              <Input
-                ref={finalRef}
-                type="text"
-                placeholder="Mã bộ môn"
+              <Select
+                placeholder="Tên bộ môn"
+                id="boMonInput"
                 onChange={(e) => {
-                  setBomon(e.target.value);
+                  setBomonID(e.target.value);
                 }}
-              />
+                > 
+                {dsBomon.map((item,index) => (
+                  <option key={index} value={item.maBM}>
+                    {item.tenBM}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
           </ModalBody>
           <ModalFooter>

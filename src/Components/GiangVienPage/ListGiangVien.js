@@ -26,7 +26,7 @@ import {
   import React, { useState, useEffect } from "react";
 import GiangVienComponent from "./GiangVienComponent";
 import giangVienAPI from "../../api/giangVienAPI";
-  
+import bomonAPI from "../../api/bomonAPI";
   const ListGiangVienTable = (props) => {
     const capBacData = [
       "Đại tá",
@@ -50,8 +50,8 @@ import giangVienAPI from "../../api/giangVienAPI";
     const [sdt, setSdt] = useState("");
     const [gioiTinh, setGioiTinh] = useState(true);
     const [capBac, setCapBac] = useState("");
-    const [boMonId, setBomon] = useState("");
-  
+    const [boMonId, setBomonID] = useState("");
+    const [dsBomon, setDsBomon] = useState([]);
     
     const handleSubmit = async () => {
         try {
@@ -77,7 +77,12 @@ import giangVienAPI from "../../api/giangVienAPI";
       };
       console.log(dsGV);
 
-
+      useEffect(() => {
+        fetchDsBoMon();
+      });
+      const fetchDsBoMon = async () => {
+        setDsBomon(await bomonAPI.getAll());
+      };
 
   
     return (
@@ -126,17 +131,6 @@ import giangVienAPI from "../../api/giangVienAPI";
           <ModalHeader>Thêm Giảng viên</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Mã giảng viên</FormLabel>
-              <Input
-                ref={initialRef}
-                type="text"
-                placeholder="Mã GV"
-                onChange={(e) => {
-                  setMaGV(e.target.value);
-                }}
-              />
-            </FormControl>
             <FormControl mt={4}>
               <FormLabel>Tên giảng viên</FormLabel>
               <Input
@@ -162,18 +156,19 @@ import giangVienAPI from "../../api/giangVienAPI";
             </FormControl>
             <FormControl mt={4}>
               <FormLabel>Thuộc bộ môn</FormLabel>
-              <Input
-                // id="gioiTinhInput"
-                ref={finalRef}
-                type="text"
-                placeholder="Mã bộ môn"
+              <Select
+                placeholder="Tên bộ môn"
+                id="boMonInput"
                 onChange={(e) => {
-                  setBomon(e.target.value);
+                  setBomonID(e.target.value);
                 }}
-              />
-                {/* <option value={true}>Nam</option>
-                <option value={false}>Nữ</option> */}
-              {/* </Input> */}
+                > 
+                {dsBomon.map((item,index) => (
+                  <option key={index} value={item.maBM}>
+                    {item.tenBM}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
 
             <FormControl mt={4}>
@@ -248,7 +243,7 @@ import giangVienAPI from "../../api/giangVienAPI";
                 hoTen={item.tenGV}
                 sdt={item.sdt}
                 gioiTinh={item.gioiTinh}
-                boMonId={item.boMonId}
+                boMon={item.boMon}
                 capBac={item.capBac}
                 />
                 ))}
