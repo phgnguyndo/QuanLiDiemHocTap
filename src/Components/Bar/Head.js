@@ -5,19 +5,28 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserAddOutlined,
-  UserOutlined,
+  LogoutOutlined,
   RadarChartOutlined,
   HeatMapOutlined,
-  ReadOutlined
+  ReadOutlined,
+  UserOutlined
 } from "@ant-design/icons";
-import {Dropdown,Layout, Menu, Button, theme,notification } from "antd";
+import {
+  Dropdown,
+  Layout,
+  Menu,
+  Button,
+  theme,
+  notification,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import StorageKeys from "../../constance/storage-key";
+import userImage from "../../Image/user.jpg";
 const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const { Header, Sider, Content } = Layout;
 
-const Head = ({content}) => {
-  const nav=useNavigate()
+const Head = ({ content }) => {
+  const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -42,40 +51,57 @@ const Head = ({content}) => {
           defaultSelectedKeys={["1"]}
           items={[
             {
+              key: "-1",
+              icon:<UserOutlined/>,
+              label: username.code,
+            },
+            {
               key: "0",
               icon: <HomeOutlined />,
               label: "Trang chủ",
-              onClick:()=>{nav("/home")}
+              onClick: () => {
+                nav("/home");
+              },
             },
             {
               key: "2",
               icon: <RadarChartOutlined />,
               label: "Khoa",
-              onClick:()=>{nav("/khoa")}
+              onClick: () => {
+                nav("/khoa");
+              },
             },
             {
               key: "3",
               icon: <HeatMapOutlined />,
               label: "Bộ môn",
-              onClick:()=>{nav("/bomon")}
+              onClick: () => {
+                nav("/bomon");
+              },
             },
             {
               key: "4",
               icon: <UserAddOutlined />,
               label: "Giảng viên",
-              onClick:()=>{nav("/giangvien")}
+              onClick: () => {
+                nav("/giangvien");
+              },
             },
             {
               key: "5",
               icon: <ReadOutlined />,
               label: "Học phần",
-              onClick:()=>{nav("/hocphan")}
+              onClick: () => {
+                nav("/hocphan");
+              },
             },
             {
               key: "6",
               icon: <ReadOutlined />,
               label: "aaaa",
-              onClick:()=>{nav("/aaaa")}
+              onClick: () => {
+                nav("/aaaa");
+              },
             },
           ]}
         />
@@ -92,13 +118,19 @@ const Head = ({content}) => {
               height: 64,
             }}
           />
-          <i style={{ position: "relative", left: "78%", fontSize: "15px" }}>
+          {/* <i style={{ position: "relative", left: "78%", fontSize: "15px" }}>
             {username.code}
-          </i>
+          </i> */}
           <Dropdown overlay={menu} placement="bottomRight" arrow>
-          <UserOutlined
-            style={{position: "relative", left: "80%", fontSize: "20px", cursor:"pointer", onClick:{handleLogout} }}
-          />
+            <LogoutOutlined
+              style={{
+                position: "relative",
+                left: "80%",
+                fontSize: "20px",
+                cursor: "pointer",
+                onClick: { handleLogout },
+              }}
+            />
           </Dropdown>
         </Header>
         <Content
