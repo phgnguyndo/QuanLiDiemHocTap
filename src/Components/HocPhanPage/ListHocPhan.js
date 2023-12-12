@@ -28,7 +28,8 @@ import {
 import HocPhanComponent from "./HocPhanComponent.js";
 
   const ListHocPhanTable = (props) => {
-    
+    const i = 0;
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
@@ -87,7 +88,6 @@ import HocPhanComponent from "./HocPhanComponent.js";
           minHeight: "40vh",
         }}
       >
-        <h1 style={{ color: "GrayText" }}>Bộ môn ... </h1>
         <div
           style={{
             fontSize: "50px",
@@ -197,9 +197,9 @@ import HocPhanComponent from "./HocPhanComponent.js";
 
 
         <TableContainer w={"150vh"}>
-          <Table variant='striped' colorScheme='teal' size="sm">
+          <Table variant='striped' size="sm">
             <Thead>
-              <Tr bg={"rgb(157, 173, 127)"}>
+              <Tr bg={"rgb(182, 187, 196)"}>
                 <Th w={"5%"} textAlign={"center"}>
                   Mã HP
                 </Th>
@@ -220,10 +220,10 @@ import HocPhanComponent from "./HocPhanComponent.js";
               </Tr>
             </Thead>
             <Tbody>
-                {dsHP.map((item) => (
+                {dsHP.map((item,i) => (
                 <HocPhanComponent
                 key={item.maHocPhan}
-                maHP={item.maHocPhan}
+                STT={i+1}
                 tenHP={item.tenHocPhan}
                 soTC={item.soTC}
                 hocKy={item.hocKy}

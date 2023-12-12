@@ -38,7 +38,7 @@ import bomonAPI from "../../api/bomonAPI";
       "Trung úy",
       "Thiếu úy"
     ];
-    
+    const i = 0;
   
     const { idLop } = useParams();
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -95,7 +95,6 @@ import bomonAPI from "../../api/bomonAPI";
           minHeight: "40vh",
         }}
       >
-        <h1 style={{ color: "GrayText" }}>Bộ môn ... </h1>
         <div
           style={{
             fontSize: "50px",
@@ -211,13 +210,12 @@ import bomonAPI from "../../api/bomonAPI";
 
 
 
-        <TableContainer w={"150vh"}>
-          <Table variant='striped' colorScheme='teal' size="sm">
-            {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+        <TableContainer w={"150vh"} >
+          <Table variant='striped' size="sm">
             <Thead>
-              <Tr bg={"rgb(157, 173, 127)"}>
+              <Tr bg={"rgb(182, 187, 196)"}>
                 <Th w={"5%"} textAlign={"center"}>
-                  Mã GV
+                  STT
                 </Th>
                 <Th w={"10%"} textAlign={"center"}>
                   Họ tên
@@ -236,10 +234,10 @@ import bomonAPI from "../../api/bomonAPI";
               </Tr>
             </Thead>
             <Tbody>
-                {dsGV.map((item) => (
+                {dsGV.map((item, i) => (
                 <GiangVienComponent
                 key={item.maGV}
-                maGV={item.maGV}
+                STT={i+1}
                 hoTen={item.tenGV}
                 sdt={item.sdt}
                 gioiTinh={item.gioiTinh}
