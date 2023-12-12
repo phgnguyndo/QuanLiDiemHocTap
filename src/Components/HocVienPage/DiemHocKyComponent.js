@@ -95,7 +95,7 @@ const DiemHocKyComponent = (props) => {
             </Th>
           </Tr>
 
-          <Tr bg={""}>
+          <Tr bg={"rgb(182,187,196)"}>
             <Th w={"2%"} textAlign={"center"}>
               STT
             </Th>

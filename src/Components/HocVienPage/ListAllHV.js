@@ -290,7 +290,7 @@ const ListAllHocVien = (props) => {
             <Th textAlign={"center"}>Xóa</Th>
           </Tr>
         </Thead>
-        <>
+        <Tbody>
           {dsHV?.map((item) => (
             <HocVien
               key={item.maHV}
@@ -303,13 +303,11 @@ const ListAllHocVien = (props) => {
               capBac={item.capBac}
             />
           ))}
-        </>
-        {/* <Tfoot textAlign={"center"}>
-          <Tr>
-            <PaginationComponent />
-          </Tr>
-        </Tfoot> */}
+        </Tbody><br/>
+
+        <Tfoot left={"25%"} position={"absolute"}><PaginationComponent style={{top:"10px"}}/></Tfoot>
       </Table>
+     
       {/* </TableContainer> */}
     </Box>
   );
