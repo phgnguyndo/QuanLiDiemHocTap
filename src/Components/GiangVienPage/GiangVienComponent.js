@@ -46,7 +46,7 @@ import giangVienAPI from "../../api/giangVienAPI";
     const [tenGV, setTenGV] = useState(props.hoTen ||"");
     const [sdt, setSdt] = useState(props.sdt || "");
     const MaGV = props.maGV
-  
+    const [tenBoMon,setTenBoMon] = useState(props.boMon.tenBoMon || "")
   
     const handleXoaGV = async () => {
       try {
@@ -94,7 +94,7 @@ import giangVienAPI from "../../api/giangVienAPI";
               {props.sdt}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
-              {props.capBac}
+              {props.boMon.tenBM}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
               <Button onClick={onOpen}>Sửa</Button>
