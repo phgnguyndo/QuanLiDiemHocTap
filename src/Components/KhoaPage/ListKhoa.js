@@ -52,30 +52,20 @@ const ListKhoaTable = (props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "40vh",
-      }}
-    >
-      <div
-        style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
-          marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
-        }}
+    <Box position={"relative"}>
+      <Box
+        color={"brown"}
+        variant="solid"
+        fontSize={"40px"}
+        fontWeight={500}
+        textAlign={"center"}
       >
         Danh sách Khoa
-      </div>
+      </Box>
       <Button
         position={"relative"}
         top={"30px"}
-        left={"-225px"}
+        left={"172px"}
         variant="solid"
         bg="rgb(80,132,74)"
         color={"white"}
@@ -114,34 +104,34 @@ const ListKhoaTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <TableContainer w={"80vh"}>
-        <Table
-          variant="striped"
-          size="lg"
-          position={"relative"}
-          top={"50px"}
-          w={"90%"}
-          left={"5%"}
-        >
-          <Thead background={"rgb(182, 187, 196)"}>
-            <Tr>
-              <Th textAlign={"center"}>#</Th>
-              <Th>Khoa</Th>
-              <Th textAlign={"center"}>Sửa</Th>
-              <Th textAlign={"center"}>Xóa</Th>
-            </Tr>
-          </Thead>
-          {dsKhoa?.map((item, i) => (
-            <KhoaComponent
-              key={item.maKhoa}
-              maKhoa={item.maKhoa}
-              stt={i + 1}
-              tenKhoa={item.tenKhoa}
-            />
-          ))}
-        </Table>
-      </TableContainer>
-    </div>
+      {/* <TableContainer w={"80vh"}> */}
+      <Table
+        variant="striped"
+        size="lg"
+        position={"relative"}
+        top={"50px"}
+        w={"70%"}
+        align="center"
+      >
+        <Thead background={"rgb(182, 187, 196)"}>
+          <Tr>
+            <Th textAlign={"center"}>#</Th>
+            <Th w={"95%"}>Khoa</Th>
+            <Th textAlign={"center"}>Sửa</Th>
+            <Th textAlign={"center"}>Xóa</Th>
+          </Tr>
+        </Thead>
+        {dsKhoa?.map((item, i) => (
+          <KhoaComponent
+            key={item.maKhoa}
+            maKhoa={item.maKhoa}
+            stt={i + 1}
+            tenKhoa={item.tenKhoa}
+          />
+        ))}
+      </Table>
+      {/* </TableContainer> */}
+    </Box>
   );
 };
 

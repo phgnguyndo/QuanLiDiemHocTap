@@ -159,7 +159,7 @@ const ListHocVienTable = (props) => {
         bg="rgb(26,132,74)"
         color={"white"}
         left={"5%"}
-        top={"20px"}
+        top={"30px"}
         onClick={onOpen}
       >
         Thêm
@@ -271,53 +271,45 @@ const ListHocVienTable = (props) => {
         </ModalContent>
       </Modal>
       {/* <TableContainer w={"150vh"}> */}
-        <Table
-          variant="striped"
-          size="sm"
-          position={"relative"}
-          top={"50px"}
-          w={"90%"}
-          left={"5%"}
-        >
-          <Thead>
-            <Tr>
-              <Th w={"10%"}>
-                Mã HV
-              </Th>
-              <Th w={"30%"}>
-                Họ tên
-              </Th>
-              <Th w={"10%"}>
-                Ngày sinh
-              </Th>
-              <Th w={"10%"}>
-                Giới tính
-              </Th>
-              <Th w={"10%"}>
-                Quê quán
-              </Th>
-              <Th w={"10%"}>
-                Cấp bậc
-              </Th>
-              <Th w={"1%"} textAlign={"center"}>Sửa</Th>
-              <Th w={"1%"} textAlign={"center"}>Xóa</Th>
-            </Tr>
-          </Thead>
-          <>
-            {dsHV?.map((item) => (
-              <HocVien
-                key={item.maHV}
-                maHV={item.maHV}
-                hoTen={item.tenHV}
-                img={item.anhHV}
-                ngaySinh={item.ngaySinh}
-                gioiTinh={item.gioiTinh}
-                queQuan={item.queQuan}
-                capBac={item.capBac}
-              />
-            ))}
-          </>
-        </Table>
+      <Table
+        variant="striped"
+        size="sm"
+        position={"relative"}
+        top={"50px"}
+        w={"90%"}
+        left={"5%"}
+      >
+        <Thead>
+          <Tr>
+            <Th w={"12%"}>Mã HV</Th>
+            <Th >Họ tên</Th>
+            <Th >Ngày sinh</Th>
+            <Th >Giới tính</Th>
+            <Th >Quê quán</Th>
+            <Th >Cấp bậc</Th>
+            <Th textAlign={"center"}>
+              Sửa
+            </Th>
+            <Th textAlign={"center"}>
+              Xóa
+            </Th>
+          </Tr>
+        </Thead>
+        <>
+          {dsHV?.map((item) => (
+            <HocVien
+              key={item.maHV}
+              maHV={item.maHV}
+              hoTen={item.tenHV}
+              img={item.anhHV}
+              ngaySinh={item.ngaySinh}
+              gioiTinh={item.gioiTinh}
+              queQuan={item.queQuan}
+              capBac={item.capBac}
+            />
+          ))}
+        </>
+      </Table>
       {/* </TableContainer> */}
     </Box>
   );
