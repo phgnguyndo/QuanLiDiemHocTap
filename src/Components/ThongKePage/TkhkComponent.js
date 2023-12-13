@@ -29,7 +29,7 @@ import { useState, React } from "react";
 import khoaAPI from "../../api/khoaAPI";
 import { useNavigate } from "react-router-dom";
 
-const ThongKeComponent = (props) => {
+const TkhkComponent = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
@@ -137,4 +137,4 @@ const ThongKeComponent = (props) => {
     </>
   );
 };
-export default ThongKeComponent;
+export default TkhkComponent;

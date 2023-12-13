@@ -12,7 +12,8 @@ import BoMon from "./Pages/BoMon";
 import HocPhan from "./Pages/HocPhan";
 import LopHocPhan from "./Pages/LopHocPhan";
 import AllHocVien from "./Pages/PageAllHocVien";
-import ThongKe from "./Pages/ThongKe";
+import TkTheoKy from "./Pages/TkTheoKy";
+import TkTheoNam from "./Pages/TkTheoNam";
 
 function App() {
   return (
@@ -20,9 +21,10 @@ function App() {
       <Routes>
         <Route index element={<Login />} />
         {/* <Route index element={<Home />} /> */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/home/:id" element={<ListClass />} />
-        <Route path="/home/:id/:idLop" element={<HocVien />} />
+        {/* <Route path="/home" element={<Home/>} /> */}
+        <Route path="/home" element={<ListClass/>} />
+        <Route path="/home/:id" element={<ListClass/>} />
+        <Route path="/home/:id/:idLop" element={<HocVien/>} />
         <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
         <Route path="/register" element={<Register />} />
         <Route path="/HocVien/:id" element={<Diem/>} />
@@ -34,7 +36,8 @@ function App() {
         <Route path="/giangvien" element={<GiangVien/>} />
         <Route path="/hocphan" element={<HocPhan/>} />
         <Route path="/lophocphan" element={<LopHocPhan/>} />
-        <Route path="/thongke" element={<ThongKe/>} />
+        <Route path="/tkhk" element={<TkTheoKy/>} />
+        <Route path="/tkn" element={<TkTheoNam/>} />
         <Route path="/*" element={<div>404 not found</div>} />
       </Routes>
     </BrowserRouter>
