@@ -57,8 +57,10 @@ import bomonAPI from "../../api/bomonAPI";
         try {
           const formData = {
             tenGV,
-            boMonId,
+            gioiTinh,
+            capBac,
             sdt,
+            boMonId,
           };
           await giangVienAPI.create(formData);
           onClose();
@@ -79,7 +81,7 @@ import bomonAPI from "../../api/bomonAPI";
 
       useEffect(() => {
         fetchDsBoMon();
-      });
+      },[]);
       const fetchDsBoMon = async () => {
         setDsBomon(await bomonAPI.getAll());
       };
@@ -115,7 +117,6 @@ import bomonAPI from "../../api/bomonAPI";
             bg="rgb(26,132,74)"
             color={"white"}
             onClick={onOpen}
-            // position={"absolute"}
             >
             Thêm
         </Button>
@@ -158,6 +159,7 @@ import bomonAPI from "../../api/bomonAPI";
               <Select
                 placeholder="Tên bộ môn"
                 id="boMonInput"
+                type="text"
                 onChange={(e) => {
                   setBomonID(e.target.value);
                 }}
@@ -224,6 +226,9 @@ import bomonAPI from "../../api/bomonAPI";
                   Giới tính
                 </Th>
                 <Th w={"10%"} textAlign={"center"}>
+                  Cấp bậc
+                </Th>
+                <Th w={"10%"} textAlign={"center"}>
                   Số điện thoại
                 </Th>
                 <Th w={"10%"} textAlign={"center"}>
@@ -236,7 +241,7 @@ import bomonAPI from "../../api/bomonAPI";
             <Tbody>
                 {dsGV.map((item, i) => (
                 <GiangVienComponent
-                key={item.maGV}
+                maGV={item.maGV}
                 STT={i+1}
                 hoTen={item.tenGV}
                 sdt={item.sdt}

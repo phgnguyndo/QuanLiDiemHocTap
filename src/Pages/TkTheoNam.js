@@ -1,7 +1,9 @@
+import Head from "../Components/Bar/Head"
+import ListTKTheoNam from "../Components/TkTheoNam/ListTKTheoNam"
 const TKTheoNam=()=>{
     return(
         <>
-        theo nam
+            <Head content={<ListTKTheoNam/>}></Head>
         </>
     )
 }

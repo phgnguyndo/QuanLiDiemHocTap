@@ -78,6 +78,8 @@ import bomonAPI from "../../api/bomonAPI";
       try {
         const formData = {
             tenGV,
+            gioiTinh,
+            capBac,
             boMonId,
             sdt,
           };
@@ -105,12 +107,14 @@ import bomonAPI from "../../api/bomonAPI";
               position={"relative"}
               textAlign={"center"}
               cursor={"pointer"}
-            //   onClick={handleOnClick}
             >
               {props.hoTen}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
               {props.gioiTinh ? "Nam" : "Nữ"}
+            </Td>
+            <Td position={"relative"} textAlign={"center"}>
+              {props.capBac}
             </Td>
             <Td position={"relative"} textAlign={"center"}>
               {props.sdt}

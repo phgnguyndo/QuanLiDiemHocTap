@@ -222,7 +222,7 @@ import HocPhanComponent from "./HocPhanComponent.js";
             <Tbody>
                 {dsHP.map((item,i) => (
                 <HocPhanComponent
-                key={item.maHocPhan}
+                maHP={item.maHocPhan}
                 STT={i+1}
                 tenHP={item.tenHocPhan}
                 soTC={item.soTC}
