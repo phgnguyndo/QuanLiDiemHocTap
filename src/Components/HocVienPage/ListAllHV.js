@@ -115,6 +115,8 @@ const ListAllHocVien = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   
+  
+
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
@@ -138,13 +140,31 @@ const ListAllHocVien = (props) => {
   };
 
   const [dsHV, setdsHV] = useState([]);
+  // useEffect(() => {
+  //   fetchDsHV();
+  // }, []);
+  // const fetchDsHV = async () => {
+  //   setdsHV(await hocvienAPI.getAll(1, 10));
+  // };
   useEffect(() => {
-    fetchDsHV();
-  }, []);
-  const fetchDsHV = async () => {
-    setdsHV(await hocvienAPI.getAll(1, 10));
+    fetchDsHV(currentPage, pageSize);
+  }, [currentPage, pageSize]);
+
+  const fetchDsHV = async (page, size) => {
+    setdsHV(await hocvienAPI.getAll(page, 2));
   };
-  console.log(dsHV);
+  // console.log(dsHV);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // Implement actions when the page changes (e.g., fetching data)
+    fetchDsHV(page, pageSize);
+  };
+
+  const handleSizeChange = (size) => {
+    setPageSize(size);
+    // Implement actions when the page size changes (e.g., fetching data)
+    fetchDsHV(currentPage, size);
+  };
   return (
     <Box position={"relative"}>
       <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
@@ -308,13 +328,13 @@ const ListAllHocVien = (props) => {
           ))}
         </Tbody>
         <br />
-
         <Tfoot left={"25%"} position={"absolute"}>
-          <PaginationComponent style={{ top: "10px" }} />
+        <PaginationComponent
+          onPageChange={handlePageChange}
+          onSizeChange={handleSizeChange}
+        />
         </Tfoot>
       </Table>
-
-      {/* </TableContainer> */}
     </Box>
   );
 };
