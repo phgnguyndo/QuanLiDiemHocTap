@@ -120,8 +120,9 @@ const DiemComponent = (props) => {
             props.DiemThiKetThucMon * 0.6
           ).toFixed(2)}
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
+        <Td position={"relative"} textAlign={"right"}>
           <Button
+            ml={"10px"}
             variant="solid"
             colorScheme="blue"
             onClick={onOpen}
@@ -212,7 +213,7 @@ const DiemComponent = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
+        <Td position={"relative"} textAlign={"left"}>
           <Button
             colorScheme="green"
             mr={3}

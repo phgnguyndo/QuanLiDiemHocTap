@@ -118,6 +118,14 @@ const Head = ({ content }) => {
                 nav("/giangday");
               },
             },
+            {
+              key: "9",
+              icon: <ReadOutlined />,
+              label: "Thống kê",
+              onClick: () => {
+                nav("/thongke");
+              },
+            },
           ]}
         />
       </Sider>
