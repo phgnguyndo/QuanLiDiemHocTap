@@ -12,6 +12,7 @@ import BoMon from "./Pages/BoMon";
 import HocPhan from "./Pages/HocPhan";
 import LopHocPhan from "./Pages/LopHocPhan";
 import AllHocVien from "./Pages/PageAllHocVien";
+import GiangDay from "./Pages/GiangDay";
 
 
 function App() {

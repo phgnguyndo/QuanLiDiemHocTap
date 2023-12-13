@@ -110,14 +110,14 @@ const Head = ({ content }) => {
                 nav("/hocvien");
               },
             },
-            {
-              key: "8",
-              icon: <ReadOutlined />,
-              label: "Giảng dạy ",
-              onClick: () => {
-                nav("/giangday");
-              },
-            },
+            // {
+            //   key: "8",
+            //   icon: <ReadOutlined />,
+            //   label: "Giảng dạy ",
+            //   onClick: () => {
+            //     nav("/giangday");
+            //   },
+            // },
           ]}
         />
       </Sider>

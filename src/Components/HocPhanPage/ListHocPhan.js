@@ -215,8 +215,8 @@ import HocPhanComponent from "./HocPhanComponent.js";
                 <Th w={"10%"} textAlign={"center"}>
                   Thuộc học kỳ
                 </Th>
-                <Th w={"5%"}></Th>
-                <Th w={"5%"}></Th>
+                <Th w={"5%"} textAlign={"center"}>Sửa</Th>
+                <Th w={"5%"} textAlign={"center"}>Xóa</Th>
               </Tr>
             </Thead>
             <Tbody>

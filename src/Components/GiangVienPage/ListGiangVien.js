@@ -229,8 +229,8 @@ import bomonAPI from "../../api/bomonAPI";
                 <Th w={"10%"} textAlign={"center"}>
                   Thuộc bộ môn
                 </Th>
-                <Th w={"5%"}></Th>
-                <Th w={"5%"}></Th>
+                <Th w={"5%"} textAlign={"center"}>Sửa</Th>
+                <Th w={"5%"} textAlign={"center"}>Xóa</Th>
               </Tr>
             </Thead>
             <Tbody>
