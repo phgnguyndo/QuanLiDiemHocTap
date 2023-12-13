@@ -50,7 +50,7 @@ const ListClassComponent = () => {
     fetchLopCN();
   }, []);
   const fetchLopCN = async () => {
-    setdsLopCn(await lopcnAPI.get(id));
+    setdsLopCn(await lopcnAPI.getAll());
   };
   console.log(dsLopCn);
   return (

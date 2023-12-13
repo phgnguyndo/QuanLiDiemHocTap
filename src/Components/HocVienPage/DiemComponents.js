@@ -7,6 +7,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Td, Tr } from "@chakra-ui/table";
 import {
   Modal,
@@ -76,16 +77,16 @@ const DiemComponent = (props) => {
     }
   };
 
-    const handleDelete = async () => {
-      try {
-        const phieudiemID = props.MaPhieuDiem;
-        await phieuDiemAPI.delete(phieudiemID);
-        onClose();
-        window.location.reload();
-      } catch (error) {
-        console.error("Lỗi", error);
-      }
-    };
+  const handleDelete = async () => {
+    try {
+      const phieudiemID = props.MaPhieuDiem;
+      await phieuDiemAPI.delete(phieudiemID);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Lỗi", error);
+    }
+  };
   return (
     <>
       <Tr fontSize={"2px"}>
@@ -121,14 +122,23 @@ const DiemComponent = (props) => {
           ).toFixed(2)}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button
+          {/* <Button
             variant="solid"
             colorScheme="blue"
             onClick={onOpen}
             fontSize={"12px"}
           >
             Sửa
-          </Button>
+          </Button> */}
+          <EditOutlined
+            style={{
+              fontSize: "20px",
+              position: "relative",
+              color: "blue",
+              left: "15px",
+            }}
+            onClick={onOpen}
+          />
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -213,14 +223,23 @@ const DiemComponent = (props) => {
           </Modal>
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button
+          {/* <Button
             colorScheme="green"
             mr={3}
             onClick={onSubmitDeleteModalOpen}
             fontSize={"12px"}
           >
             Xóa
-          </Button>
+          </Button> */}
+          <DeleteOutlined
+            style={{
+              color: "red",
+              fontSize: "20px",
+              position: "relative",
+              left: "-15px",
+            }}
+            onClick={onSubmitDeleteModalOpen}
+          />
           <Modal
             isCentered
             onClose={onSubmitDeleteModalClose}

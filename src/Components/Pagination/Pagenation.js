@@ -3,16 +3,16 @@ import { Pagination } from 'antd';
 
 const PaginationComponent = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(2);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // Thực hiện các hành động khi trang thay đổi, ví dụ: lấy dữ liệu mới từ API
+    props.onPageChange(page); // Notify the parent component about the page change
   };
 
-  const handleSizeChange = (current, size) => {
+  const handleSizeChange = (size) => {
     setPageSize(size);
-    // Thực hiện các hành động khi kích thước trang thay đổi, ví dụ: lấy dữ liệu mới từ API với kích thước mới
+    props.onSizeChange(size); // Notify the parent component about the page size change
   };
 
   const renderPageNumbers = () => {
@@ -21,7 +21,7 @@ const PaginationComponent = (props) => {
       pageNumbers.push(
         <Pagination.Item
           key={i}
-          onClick={() => handlePageChange(i)}
+          // onClick={() => handlePageChange(i)}
           style={{ border: i === currentPage ? '1px solid #1890ff' : '1px solid #d9d9d9' }}
         >
           {i}
@@ -35,10 +35,9 @@ const PaginationComponent = (props) => {
     <Pagination
       current={currentPage}
       pageSize={pageSize}
-      total={100} // Tổng số phần tử trong danh sách
-    //   showSizeChanger
-    //   showQuickJumper
-    //   hideOnSinglePage
+      total={10} // Tổng số phần tử trong danh sách
+      // showSizeChanger
+      hideOnSinglePage
       onChange={handlePageChange}
       onShowSizeChange={handleSizeChange}
       style={{ display: 'flex', justifyContent: 'center' }}
