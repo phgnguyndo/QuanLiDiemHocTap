@@ -18,8 +18,10 @@ import ClassComponent from "./ClassComponent";
 // import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
 import { useParams } from "react-router-dom";
 import lopcnAPI from "../../api/lopcnAPI";
+import StorageKeys from "../../constance/storage-key";
+const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ListClassComponent = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -31,7 +33,7 @@ const ListClassComponent = () => {
   // const [imageLop, setImageLop] = useState("");
   const handleAddClass = async () => {
     try {
-      const daiDoiId = id;
+      const daiDoiId = username.maDaiDoi;
       const tenLopChuyenNganh = finalRef.current.value;
       const formdata = new FormData();
       formdata.append("daiDoiId", daiDoiId);

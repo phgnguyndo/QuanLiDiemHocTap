@@ -57,9 +57,12 @@ import bomonAPI from "../../api/bomonAPI";
         try {
           const formData = {
             tenGV,
+            gioiTinh,
+            capBac,
             boMonId,
             sdt,
           };
+          console.log(formData);
           await giangVienAPI.create(formData);
           onClose();
           window.location.reload();
@@ -79,7 +82,7 @@ import bomonAPI from "../../api/bomonAPI";
 
       useEffect(() => {
         fetchDsBoMon();
-      });
+      },[]);
       const fetchDsBoMon = async () => {
         setDsBomon(await bomonAPI.getAll());
       };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MTA from "../../Image/MTA.jpg";
 import {
   Button,
@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { register } from "../../features/Auth/userSlice";
 import { useNavigate } from "react-router";
+import daidoiAPI from "../../api/daidoiAPI";
 const { Option } = Select;
 const tailFormItemLayout = {
   wrapperCol: {
@@ -29,7 +30,7 @@ const tailFormItemLayout = {
     },
   },
 };
-const Register = () => {
+const TaoTK = () => {
   const nav = useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -38,8 +39,10 @@ const Register = () => {
       const dataToSend = {
         code: values.Username,
         password: values.password,
-        role: "user2",
+        maDaiDoi: values.role,
+        role: "user1",
       };
+      console.log(dataToSend);
       const action = register(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
@@ -47,8 +50,8 @@ const Register = () => {
         message: "Đăng ký thành công",
         duration: 3,
       });
-      nav("/")
-      console.log("New user", user);
+      // nav("/")
+      // console.log("New user", user);
     } catch (error) {
       console.log("Fail to register", error);
       notification.error({
@@ -58,9 +61,16 @@ const Register = () => {
     }
   };
 
+  const [dsDaiDoi, setdsDaiDoi] = useState([]);
+  useEffect(() => {
+    fetchDaiDoi();
+  }, []);
+  const fetchDaiDoi = async () => {
+    setdsDaiDoi(await daidoiAPI.getAll());
+  };
   return (
     <Box
-      bgImage={MTA}
+      // bgImage={MTA}
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
@@ -140,8 +150,7 @@ const Register = () => {
               </Form.Item>
             </Col>
           </Row>
-
-          {/* <Row>
+          <Row>
             <Col span={24}>
               <Form.Item
                 name="role"
@@ -157,13 +166,16 @@ const Register = () => {
                   placeholder="Select a role"
                   style={{ left: "34px", width: "150px" }}
                 >
-                  <Option value="admin">admin</Option>
+                  {dsDaiDoi.map((item) => (
+                    <Option value={item.maDaiDoi}>{item.tenDaiDoi}</Option>
+                  ))}
+                  {/* <Option value="admin">admin</Option>
                   <Option value="user1">user1</Option>
-                  <Option value="user2">user2</Option>
+                  <Option value="user2">user2</Option> */}
                 </Select>
               </Form.Item>
             </Col>
-          </Row> */}
+          </Row>
           <Form.Item {...tailFormItemLayout}>
             <Button
               type="primary"
@@ -186,4 +198,4 @@ const Register = () => {
     </Box>
   );
 };
-export default Register;
+export default TaoTK;

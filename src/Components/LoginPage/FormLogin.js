@@ -1,5 +1,13 @@
-import React from "react";
-import { Button, Checkbox, Form, Input, Card, Typography, notification } from "antd";
+import React, { useEffect } from "react";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Card,
+  Typography,
+  notification,
+} from "antd";
 import MTA from "../../Image/MTA.jpg";
 import { Box } from "@chakra-ui/react";
 // import axios from "axios";
@@ -12,22 +20,25 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 const FormLogin = () => {
-  const dispatch=useDispatch()
-  const onFinish = async (values) => {  
+  useEffect(() => {
+    // Clear local storage khi component được tải
+    localStorage.clear();
+  }, []);
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
     try {
       const dataToSend = {
         username: values.username,
-        password: values.password
+        password: values.password,
       };
       console.log(dataToSend);
 
       const action = login(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
-      if(user.role){
-        
+      if (user.role) {
       }
-      nav("/home")
+      nav("/home");
       // console.log("New user", user.role);
     } catch (error) {
       notification.error({
@@ -36,8 +47,8 @@ const FormLogin = () => {
       });
       console.log("Fail to login", error);
     }
-  }; 
-  const nav= useNavigate()
+  };
+  const nav = useNavigate();
   const handleSubmit = () => {
     alert(1);
   };
@@ -123,7 +134,9 @@ const FormLogin = () => {
             </Button>
             <Button
               style={{ position: "relative", left: "-100px", top: "40px" }}
-              onClick={()=>{nav("/register")}}
+              onClick={() => {
+                nav("/register");
+              }}
             >
               You don't have account? Register now
             </Button>
