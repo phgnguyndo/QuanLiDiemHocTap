@@ -1,25 +1,26 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Tfoot
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Tfoot } from "@chakra-ui/react";
 import DiemComponent from "./DiemComponents";
 import React, { useEffect, useState } from "react";
+import dtbAPI from "../../api/dtbAPI";
+import { useParams } from "react-router-dom";
 const DiemHocKyComponent = (props) => {
+  const { idHV } = useParams();
+  const hocVienId = idHV;
   const { semester, phieuDiem } = props;
   const [diemTrungBinhHocKy, setDiemTrungBinhHocKy] = useState(0);
   const [diemTrungBinhNamHoc, setDiemTrungBinhNamHoc] = useState(0);
+  const [isDiemTrungBinhHocKyUpdated, setIsDiemTrungBinhHocKyUpdated] =
+    useState(false);
 
-  const filteredPhieuDiem = phieuDiem?.filter(item => item.hocPhan.hocKy === semester);
+  const filteredPhieuDiem = phieuDiem?.filter(
+    (item) => item.hocPhan.hocKy === semester
+  );
   console.log(filteredPhieuDiem);
 
   useEffect(() => {
     // Tính điểm trung bình môn và điểm trung bình học kỳ
     const tinhDiemTrungBinh = () => {
-      if (phieuDiem.length === 0) {
+      if (phieuDiem.length === 0 || !semester) {
         setDiemTrungBinhHocKy(0);
         return;
       }
@@ -28,17 +29,41 @@ const DiemHocKyComponent = (props) => {
       let tongSoTinChi = 0;
 
       filteredPhieuDiem.forEach((item) => {
-        const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+        const diemTrungBinhMon =
+          item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
         diemTrungBinhMonTotal += diemTrungBinhMon * item.hocPhan.soTC;
         tongSoTinChi += item.hocPhan.soTC;
       });
 
-      const diemTrungBinhHocKy = diemTrungBinhMonTotal / tongSoTinChi;
+      const diemTrungBinhHocKy =
+        tongSoTinChi > 0 ? diemTrungBinhMonTotal / tongSoTinChi : 0;
+
       setDiemTrungBinhHocKy(diemTrungBinhHocKy);
+      setIsDiemTrungBinhHocKyUpdated(true);
     };
 
     tinhDiemTrungBinh();
-  }, [filteredPhieuDiem, semester]);
+  }, [phieuDiem, semester]);
+
+  const handUpdateDtb = async () => {
+    try {
+      const dtb=diemTrungBinhHocKy;
+      const formdata = { dtb };
+      await dtbAPI.update(semester,hocVienId, formdata);
+      alert(diemTrungBinhHocKy)
+    } catch (error) {
+      console.error(error)
+    }
+    
+  };
+
+  useEffect(() => {
+    if (isDiemTrungBinhHocKyUpdated) {
+      // alert(diemTrungBinhHocKy);
+      handUpdateDtb();
+      setIsDiemTrungBinhHocKyUpdated(false);
+    }
+  }, [diemTrungBinhHocKy, isDiemTrungBinhHocKyUpdated]);
 
   useEffect(() => {
     // Tính điểm trung bình môn và điểm trung bình năm học
@@ -54,10 +79,12 @@ const DiemHocKyComponent = (props) => {
       // Tính điểm trung bình kỳ 1 và kỳ 2
       phieuDiem.forEach((item) => {
         if (item.hocPhan.hocKy === 1) {
-          const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+          const diemTrungBinhMon =
+            item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
           diemTrungBinhKy1 += diemTrungBinhMon * item.hocPhan.soTC;
         } else if (item.hocPhan.hocKy === 2) {
-          const diemTrungBinhMon = item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
+          const diemTrungBinhMon =
+            item.diemCC * 0.1 + item.diemTX * 0.3 + item.diemThi * 0.6;
           diemTrungBinhKy2 += diemTrungBinhMon * item.hocPhan.soTC;
         }
       });
@@ -71,7 +98,9 @@ const DiemHocKyComponent = (props) => {
         .reduce((total, item) => total + item.hocPhan.soTC, 0);
 
       const diemTrungBinhNamHoc =
-        (diemTrungBinhKy1 / tongSoTinChiKy1 + 2 * (diemTrungBinhKy2 / tongSoTinChiKy2)) / 3;
+        (diemTrungBinhKy1 / tongSoTinChiKy1 +
+          2 * (diemTrungBinhKy2 / tongSoTinChiKy2)) /
+        3;
 
       setDiemTrungBinhNamHoc(diemTrungBinhNamHoc);
     };
@@ -117,7 +146,7 @@ const DiemHocKyComponent = (props) => {
             <Th w={"6%"} textAlign={"center"}>
               DiemThi
             </Th>
-            <Th w={"6%"} textAlign={"center"} >
+            <Th w={"6%"} textAlign={"center"}>
               DiemThiLai
             </Th>
             <Th w={"8%"} textAlign={"center"}>
@@ -129,7 +158,7 @@ const DiemHocKyComponent = (props) => {
           </Tr>
         </Thead>
         <Tbody>
-        {filteredPhieuDiem.map((item, index) => (
+          {filteredPhieuDiem.map((item, index) => (
             <DiemComponent
               key={item.maPhieuDiem}
               MaPhieuDiem={item.maPhieuDiem}
@@ -151,7 +180,7 @@ const DiemHocKyComponent = (props) => {
               Điểm trung bình học kỳ
             </Th>
             <Th w={"8%"} textAlign={"center"}>
-            {diemTrungBinhHocKy.toFixed(2)}
+              {diemTrungBinhHocKy.toFixed(2)}
             </Th>
             {/* <Th w={"8%"} textAlign={"center"}>
             {diemTrungBinhNamHoc.toFixed(2)}
