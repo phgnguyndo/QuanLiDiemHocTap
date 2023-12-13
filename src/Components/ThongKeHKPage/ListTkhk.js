@@ -63,9 +63,9 @@ const ListTkhk = (props) => {
               <Th w={"30%"} textAlign={"center"}>
                 Tên học viên
               </Th>
-              <Th w={"20%"} textAlign={"center"}>
+              {/* <Th w={"20%"} textAlign={"center"}>
                 Lớp chuyên ngành
-              </Th>
+              </Th> */}
               <Th textAlign={"center"}>Điểm TB</Th>
               <Th textAlign={"center"}>Học kỳ</Th>
               <Th colSpan={"4"} textAlign={"center"}>
