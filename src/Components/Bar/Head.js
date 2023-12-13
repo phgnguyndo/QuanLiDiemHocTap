@@ -28,6 +28,9 @@ const Head = ({ content }) => {
     localStorage.clear();
     nav("/");
   };
+
+  const isAdmin = username.role === "admin";
+
   const menu = (
     <Menu onClick={handleLogout}>
       <Menu.Item key="logout">Logout</Menu.Item>
@@ -38,84 +41,6 @@ const Head = ({ content }) => {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
-        {/* <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "-1",
-              icon: <UserOutlined />,
-              label: username.code,
-            },
-            {
-              key: "0",
-              icon: <HomeOutlined />,
-              label: "Trang chủ",
-              onClick: () => {
-                nav("/home");
-              },
-            },
-            {
-              key: "2",
-              icon: <RadarChartOutlined />,
-              label: "Khoa",
-              onClick: () => {
-                nav("/khoa");
-              },
-            },
-            {
-              key: "3",
-              icon: <HeatMapOutlined />,
-              label: "Bộ môn",
-              onClick: () => {
-                nav("/bomon");
-              },
-            },
-            {
-              key: "4",
-              icon: <UserAddOutlined />,
-              label: "Giảng viên",
-              onClick: () => {
-                nav("/giangvien");
-              },
-            },
-            {
-              key: "5",
-              icon: <ReadOutlined />,
-              label: "Học phần",
-              onClick: () => {
-                nav("/hocphan");
-              },
-            },
-            {
-              key: "6",
-              icon: <ReadOutlined />,
-              label: "Lớp học phần",
-              onClick: () => {
-                nav("/lophocphan");
-              },
-            },
-            {
-              key: "7",
-              icon: <ReadOutlined />,
-              label: "Học viên",
-              onClick: () => {
-                nav("/hocvien");
-              },
-            },
-            {
-              key: "8",
-              icon: <ReadOutlined />,
-              label: "Giảng dạy ",
-              onClick: () => {
-                nav("/giangday");
-              },
-            },
-          ]}
-        />
-      </Sider>
-      <Layout> */}
         <Menu
           theme="dark"
           mode="inline"
@@ -213,6 +138,17 @@ const Head = ({ content }) => {
               Theo năm
             </Menu.Item>
           </SubMenu>
+          {isAdmin && (
+            <Menu.Item
+              key="12"
+              icon={<UserOutlined />}
+              onClick={() => {
+                nav("/taotaikhoan");
+              }}
+            >
+              Tạo tài khoản
+            </Menu.Item>
+          )}
         </Menu>
       </Sider>
       <Layout>
