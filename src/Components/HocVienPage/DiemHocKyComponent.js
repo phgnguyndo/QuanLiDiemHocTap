@@ -15,7 +15,7 @@ const DiemHocKyComponent = (props) => {
   const filteredPhieuDiem = phieuDiem?.filter(
     (item) => item.hocPhan.hocKy === semester
   );
-  console.log(filteredPhieuDiem);
+  // console.log(filteredPhieuDiem);
 
   useEffect(() => {
     // Tính điểm trung bình môn và điểm trung bình học kỳ
@@ -47,14 +47,13 @@ const DiemHocKyComponent = (props) => {
 
   const handUpdateDtb = async () => {
     try {
-      const dtb=diemTrungBinhHocKy;
+      const dtb = diemTrungBinhHocKy;
       const formdata = { dtb };
-      await dtbAPI.update(semester,hocVienId, formdata);
-      alert(diemTrungBinhHocKy)
+      await dtbAPI.update(semester, hocVienId, formdata);
+      // alert(diemTrungBinhHocKy);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
   };
 
   useEffect(() => {

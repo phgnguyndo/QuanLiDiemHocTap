@@ -183,7 +183,6 @@ const DiemHocVien = (props) => {
               />
             </FormControl>
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
               Save

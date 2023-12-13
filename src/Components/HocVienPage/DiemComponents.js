@@ -122,24 +122,16 @@ const DiemComponent = (props) => {
           ).toFixed(2)}
         </Td>
         <Td position={"relative"} textAlign={"right"}>
-          <Button
-            ml={"10px"}
-            variant="solid"
-            colorScheme="blue"
-            onClick={onOpen}
-            fontSize={"12px"}
-          >
-            Sửa
+          <Button onClick={onOpen} color={"blue.500"}>
+            <EditOutlined
+              style={{
+                fontSize: "20px",
+                left: "15px",
+              }}
+              onClick={onOpen}
+            />
           </Button>
-          <EditOutlined
-            style={{
-              fontSize: "20px",
-              position: "relative",
-              color: "blue",
-              left: "15px",
-            }}
-            onClick={onOpen}
-          />
+
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -225,22 +217,16 @@ const DiemComponent = (props) => {
         </Td>
         <Td position={"relative"} textAlign={"left"}>
           <Button
-            colorScheme="green"
-            mr={3}
             onClick={onSubmitDeleteModalOpen}
-            fontSize={"12px"}
+            color={"red.500"}
           >
-            Xóa
-          </Button>
           <DeleteOutlined
             style={{
-              color: "red",
               fontSize: "20px",
-              position: "relative",
-              left: "-15px",
             }}
-            onClick={onSubmitDeleteModalOpen}
           />
+          </Button>
+          
           <Modal
             isCentered
             onClose={onSubmitDeleteModalClose}

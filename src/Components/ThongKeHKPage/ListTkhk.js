@@ -19,7 +19,7 @@ import {
   Tbody,
 } from "@chakra-ui/react";
 import { Input } from "antd";
-import khoaAPI from "../../api/khoaAPI";
+import dtbAPI from "../../api/dtbAPI";
 import React, { useState, useEffect } from "react";
 import TkhkComponent from "./TkhkComponent";
 
@@ -34,7 +34,7 @@ const ListTkhk = (props) => {
     fetchThongKe();
   }, []);
   const fetchThongKe = async () => {
-    setDsThongKe(await khoaAPI.getAll());
+    setDsThongKe(await dtbAPI.getAll());
   };
 
   return (
@@ -78,9 +78,7 @@ const ListTkhk = (props) => {
               <TkhkComponent
                 key={item.maHV}
                 stt={i + 1}
-                tenHV={item.tenHV}
-                tenLcn={item.tenLcn}
-                diemTB={item.diemTB}
+                dtb={item.dtb}
                 hocKy={item.hocKy}
               />
             ))}
