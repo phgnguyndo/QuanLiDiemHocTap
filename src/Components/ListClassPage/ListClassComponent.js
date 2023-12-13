@@ -65,7 +65,6 @@ const ListClassComponent = () => {
         textAlign={"center"}
         alignItems={"center"}
         color={"brown"}
-        fontFamily={"cursive"}
       >
         Danh sách các lớp
       </Box>
@@ -74,7 +73,8 @@ const ListClassComponent = () => {
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
-        left={"2%"}
+        top={"20px"}
+        left={"80%"}
         onClick={onOpen}
       >
         Thêm lớp
@@ -105,7 +105,7 @@ const ListClassComponent = () => {
               <Input
                 placeholder="quan so lop"
                 onChange={(e) => {
-                  setSoHV(e.target.value);
+                  setSoHV(parseInt(e.target.value));
                 }}
               />
               {/* <FormControl mt={4}>

@@ -84,8 +84,10 @@ const ClassComponent = (props) => {
         maxH={"200px"}
         float={"left"}
         marginLeft={"14.5px"}
-        boxShadow={"0px 1px 1px 1px rgb(190,190,190)"}
+        bg={"#f8f9fa"}
+        boxShadow={"2px 2px 4px 0px rgba(190, 190, 190, 0.8)"}
         marginRight={"10px"}
+        top={"50px"}
         marginTop={"20px"}
         // bg={""}
       >
