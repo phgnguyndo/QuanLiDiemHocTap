@@ -1,118 +1,104 @@
 import {
-    Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    FormControl,
-    FormLabel,
-    ModalFooter,
-    Select,
-  } from "@chakra-ui/react";
-  import { Input } from "antd";
-  import { useParams } from "react-router-dom";
-  import React, { useState, useEffect } from "react";
-  import bomonAPI from "../../api/bomonAPI";
-  import hocPhanAPI from "../../api/hocphanAPI.js"
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  ModalFooter,
+  Select,
+  Box,
+} from "@chakra-ui/react";
+import { Input } from "antd";
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import bomonAPI from "../../api/bomonAPI";
+import hocPhanAPI from "../../api/hocphanAPI.js";
 import HocPhanComponent from "./HocPhanComponent.js";
 
-  const ListHocPhanTable = (props) => {
-    const i = 0;
+const ListHocPhanTable = (props) => {
+  const i = 0;
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const initialRef = React.useRef(null);
-    const finalRef = React.useRef(null);
-  
-    const [maHP, setMaHP] = useState("");
-    const [tenHocPhan, setTenHP] = useState("");
-    const [hocKy, setHocKy] = useState("");
-    const [soTC, setTinChi] = useState("");
-    const [soTiet, setSotiet] = useState("");
-    const [boMonId, setBomonID] = useState("");
-    const [dsBomon, setDsBomon] = useState([]);
-  
-    
-    const handleSubmit = async () => {
-        try {
-          const formdata = {
-            tenHocPhan,
-            soTiet,
-            soTC,
-            hocKy,
-            boMonId,
-          };
-          await hocPhanAPI.create(formdata);
-          onClose();
-          window.location.reload();
-        } catch (error) {
-          console.error("Error submitting form:", error);
-        }
-      };
-      
-      const [dsHP, setdsHP] = useState([]);
-      useEffect(() => {
-        fetchDsHP();
-      }, []);
-      const fetchDsHP = async () => {
-        setdsHP(await hocPhanAPI.getAll());
-      };
-      console.log(dsHP);
-      
-      useEffect(() => {
-        fetchDsBoMon();
-      });
-      const fetchDsBoMon = async () => {
-        setDsBomon(await bomonAPI.getAll());
-      };
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
+  const [maHP, setMaHP] = useState("");
+  const [tenHocPhan, setTenHP] = useState("");
+  const [hocKy, setHocKy] = useState("");
+  const [soTC, setTinChi] = useState("");
+  const [soTiet, setSotiet] = useState("");
+  const [boMonId, setBomonID] = useState("");
+  const [dsBomon, setDsBomon] = useState([]);
 
-  
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "40vh",
-        }}
+  const handleSubmit = async () => {
+    try {
+      const formdata = {
+        tenHocPhan,
+        soTiet,
+        soTC,
+        hocKy,
+        boMonId,
+      };
+      await hocPhanAPI.create(formdata);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const [dsHP, setdsHP] = useState([]);
+  useEffect(() => {
+    fetchDsHP();
+  }, []);
+  const fetchDsHP = async () => {
+    setdsHP(await hocPhanAPI.getAll());
+  };
+  console.log(dsHP);
+
+  useEffect(() => {
+    fetchDsBoMon();
+  });
+  const fetchDsBoMon = async () => {
+    setDsBomon(await bomonAPI.getAll());
+  };
+
+  return (
+    <Box position={"relative"}>
+      <Box
+        variant="solid"
+        fontSize={"40px"}
+        fontWeight={500}
+        textAlign={"center"}
+        color={"rgb(91, 138, 114)"}
       >
-        <div
-          style={{
-            fontSize: "50px",
-            fontFamily: "inherit",
-            fontWeight: "bold",
-            marginBottom: "80px",
-            color: "rgb(91, 138, 114)",
-          }}
-        >
-          Danh sách các học phần
-        </div>
-        
-         <Button
-            position={"relative"}
-            top={"-40px"}
-            left={"-513px"}
-            variant="solid"
-            bg="rgb(26,132,74)"
-            color={"white"}
-            onClick={onOpen}
-            // position={"absolute"}
-            >
-            Thêm học phần
-        </Button>
-        <Modal
+        Danh sách các học phần
+      </Box>
+      <Button
+        position={"relative"}
+        top={"30px"}
+        left={"60px"}
+        variant="solid"
+        bg="rgb(80,132,74)"
+        color={"white"}
+        onClick={onOpen}
+      >
+        Thêm
+      </Button>
+      <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -175,8 +161,8 @@ import HocPhanComponent from "./HocPhanComponent.js";
                 onChange={(e) => {
                   setBomonID(e.target.value);
                 }}
-                > 
-                {dsBomon.map((item,index) => (
+              >
+                {dsBomon.map((item, index) => (
                   <option key={index} value={item.maBM}>
                     {item.tenBM}
                   </option>
@@ -192,50 +178,55 @@ import HocPhanComponent from "./HocPhanComponent.js";
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-
-
-
-        <TableContainer w={"150vh"}>
-          <Table variant='striped' size="sm">
-            <Thead>
-              <Tr bg={"rgb(182, 187, 196)"}>
-                <Th w={"5%"} textAlign={"center"}>
-                  Mã HP
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Tên học phần
-                </Th>
-                <Th w={"5%"} textAlign={"center"}>
-                  Số tiết
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Số tín chỉ
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Thuộc học kỳ
-                </Th>
-                <Th w={"5%"}></Th>
-                <Th w={"5%"}></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-                {dsHP.map((item,i) => (
-                <HocPhanComponent
+      <TableContainer>
+        <Table
+          variant="striped"
+          size="sm"
+          position={"relative"}
+          top={"50px"}
+          w={"90%"}
+          align="center"
+        >
+          <Thead>
+            <Tr bg={"rgb(182, 187, 196)"}>
+              <Th w={"5%"} textAlign={"center"}>
+                STT
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Tên học phần
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Số tiết
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Số tín chỉ
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Thuộc học kỳ
+              </Th>
+              <Th colSpan={"7"} textAlign={"center"} w={"3%"}>Tùy chọn</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {dsHP.map((item, i) => (
+              <HocPhanComponent
                 key={item.maHocPhan}
-                STT={i+1}
+                STT={i + 1}
                 tenHP={item.tenHocPhan}
                 soTC={item.soTC}
                 hocKy={item.hocKy}
                 soTiet={item.soTiet}
                 boMonId={item.boMonId}
-                />
-                ))}
+              />
+            ))}
           </Tbody>
-          </Table>
-        </TableContainer>
-      </div>
-    );
-  };
-  
-  export default ListHocPhanTable;
+          <br></br>
+          <br></br>
+          <br></br>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+};
+
+export default ListHocPhanTable;

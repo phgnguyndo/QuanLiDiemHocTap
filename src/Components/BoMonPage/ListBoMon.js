@@ -72,18 +72,20 @@ const ListBoMonTable = (props) => {
     <Box position={"relative"}>
       <Box
         color={"brown"}
-        fontSize={"35px"}
+        variant="solid"
+        fontSize={"40px"}
         fontWeight={500}
         textAlign={"center"}
       >
         Danh sách bộ môn
       </Box>
       <Button
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        left={"5%"}
+        position={"relative"}
         top={"30px"}
+        left={"172px"}
+        variant="solid"
+        bg="rgb(80,132,74)"
+        color={"white"}
         onClick={onOpen}
       >
         Thêm
@@ -142,14 +144,14 @@ const ListBoMonTable = (props) => {
           size="sm"
           position={"relative"}
           top={"50px"}
-          w={"90%"}
-          left={"5%"}
+          w={"70%"}
+          align="center"
         >
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>STT</Th>
-              <Th>Bộ môn</Th>
-              <Th>Khoa</Th>
+              <Th w={"41%"}>Bộ môn</Th>
+              <Th w={"41%"}>Khoa</Th>
               <Th textAlign={"center"}>Sửa</Th>
               <Th textAlign={"center"}>Xóa</Th>
             </Tr>

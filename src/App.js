@@ -16,7 +16,6 @@ import TKTheoKy from "./Pages/TkTheoKy";
 import TKTheoNam from "./Pages/TkTheoNam";
 import TaoTaiKhoan from "./Pages/TaoTaiKhoan";
 
-
 function App() {
   return (
     <BrowserRouter>

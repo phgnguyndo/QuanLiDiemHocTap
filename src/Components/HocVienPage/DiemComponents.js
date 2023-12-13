@@ -121,24 +121,17 @@ const DiemComponent = (props) => {
             props.DiemThiKetThucMon * 0.6
           ).toFixed(2)}
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
-          {/* <Button
-            variant="solid"
-            colorScheme="blue"
-            onClick={onOpen}
-            fontSize={"12px"}
-          >
-            Sửa
-          </Button> */}
-          <EditOutlined
-            style={{
-              fontSize: "20px",
-              position: "relative",
-              color: "blue",
-              left: "15px",
-            }}
-            onClick={onOpen}
-          />
+        <Td position={"relative"} textAlign={"right"}>
+          <Button onClick={onOpen} color={"blue.500"}>
+            <EditOutlined
+              style={{
+                fontSize: "20px",
+                left: "15px",
+              }}
+              onClick={onOpen}
+            />
+          </Button>
+
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -222,24 +215,18 @@ const DiemComponent = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
-          {/* <Button
-            colorScheme="green"
-            mr={3}
+        <Td position={"relative"} textAlign={"left"}>
+          <Button
             onClick={onSubmitDeleteModalOpen}
-            fontSize={"12px"}
+            color={"red.500"}
           >
-            Xóa
-          </Button> */}
           <DeleteOutlined
             style={{
-              color: "red",
               fontSize: "20px",
-              position: "relative",
-              left: "-15px",
             }}
-            onClick={onSubmitDeleteModalOpen}
           />
+          </Button>
+          
           <Modal
             isCentered
             onClose={onSubmitDeleteModalClose}
