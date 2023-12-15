@@ -83,8 +83,8 @@ const BoMon = (props) => {
         <Td textAlign={"center"}>{props.stt}</Td>
         <Td cursor={"pointer"}>{props.tenBM}</Td>
         <Td >{props.tenKhoa}</Td>
-        <Td textAlign={"center"}>
-          <Button onClick={onOpen} background={"blue.300"}>
+        <Td textAlign={"right"}>
+          <Button onClick={onOpen} color={"blue.500"} fontSize={"20px"}>
             <EditOutlined />
           </Button>
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
@@ -128,8 +128,8 @@ const BoMon = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td textAlign={"center"}>
-          <Button onClick={onEditModalOpen} background={"red.300"}>
+        <Td textAlign={"left"}>
+          <Button onClick={onEditModalOpen} color={"red.500"} fontSize={"20px"}>
             <DeleteOutlined />
           </Button>
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>

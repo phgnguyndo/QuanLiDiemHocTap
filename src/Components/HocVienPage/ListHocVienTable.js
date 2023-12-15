@@ -5,8 +5,6 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
   useDisclosure,
   Modal,
@@ -21,12 +19,14 @@ import {
   Select,
   Box,
   Flex,
+  Tfoot,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
+import PaginationComponent from "../Pagination/Pagenation";
 
 const ListHocVienTable = (props) => {
   const capBacData = [
@@ -114,11 +114,12 @@ const ListHocVienTable = (props) => {
   const [capBac, setCapBac] = useState("");
   const [imageHV, setImageHV] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
-      // const maHV= initialRef.current.value;
-      // const tenHV = finalRef.current.value;
       const formdata = new FormData();
       formdata.append("maHV", maHV);
       formdata.append("lopChuyenNganhId", lcnId);
@@ -144,9 +145,19 @@ const ListHocVienTable = (props) => {
     setdsHV(await hocvienAPI.get(idLop));
   };
 
+  useEffect(() => {
+    fetchDsHVPage(currentPage, pageSize);
+  }, [currentPage, pageSize]);
+
+  const fetchDsHVPage = async (page, size) => {
+    setdsHV(await hocvienAPI.getAll(page, 2));
+  };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchDsHVPage(page, pageSize);
+  };
   return (
     <Box position={"relative"}>
-      {/* <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1> */}
       <Box
         variant="solid"
         color={"brown"}
@@ -318,6 +329,14 @@ const ListHocVienTable = (props) => {
               />
             ))}
           </Tbody>
+          <br />
+          <Tfoot left={"35%"} position={"absolute"}>
+            <PaginationComponent
+              onPageChange={handlePageChange}
+            />
+          </Tfoot>
+          <br></br>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>

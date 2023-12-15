@@ -3,6 +3,7 @@ import DiemComponent from "./DiemComponents";
 import React, { useEffect, useState } from "react";
 import dtbAPI from "../../api/dtbAPI";
 import { useParams } from "react-router-dom";
+
 const DiemHocKyComponent = (props) => {
   const { idHV } = useParams();
   const hocVienId = idHV;

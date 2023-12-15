@@ -120,8 +120,6 @@ const ListAllHocVien = (props) => {
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
-      // const maHV= initialRef.current.value;
-      // const tenHV = finalRef.current.value;
       const formdata = new FormData();
       formdata.append("maHV", maHV);
       formdata.append("lopChuyenNganhId", lcnId);
@@ -153,18 +151,16 @@ const ListAllHocVien = (props) => {
   const fetchDsHV = async (page, size) => {
     setdsHV(await hocvienAPI.getAll(page, 2));
   };
-  // console.log(dsHV);
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // Implement actions when the page changes (e.g., fetching data)
     fetchDsHV(page, pageSize);
   };
 
   const handleSizeChange = (size) => {
     setPageSize(size);
-    // Implement actions when the page size changes (e.g., fetching data)
     fetchDsHV(currentPage, size);
   };
+  
   return (
     <Box position={"relative"}>
       <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
@@ -328,7 +324,7 @@ const ListAllHocVien = (props) => {
           ))}
         </Tbody>
         <br />
-        <Tfoot left={"25%"} position={"absolute"}>
+        <Tfoot left={"35%"} position={"absolute"}>
         <PaginationComponent
           onPageChange={handlePageChange}
           onSizeChange={handleSizeChange}

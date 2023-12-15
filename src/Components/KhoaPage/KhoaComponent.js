@@ -75,7 +75,7 @@ const KhoaComponent = (props) => {
           {props.tenKhoa}
         </Td>
         <Td position={"relative"} textAlign={"right"}>
-          <Button onClick={onEditModalOpen} color={"blue.500"}>
+          <Button onClick={onEditModalOpen} color={"blue.500"} fontSize={"20px"}>
             <EditOutlined />
           </Button>
           <Modal
@@ -119,7 +119,7 @@ const KhoaComponent = (props) => {
           </Modal>
         </Td>
         <Td textAlign={"left"}>
-          <Button onClick={onOpen} color={"red.500"}>
+          <Button onClick={onOpen} color={"red.500"} fontSize={"20px"}>
             <DeleteOutlined />
           </Button>
           <Modal

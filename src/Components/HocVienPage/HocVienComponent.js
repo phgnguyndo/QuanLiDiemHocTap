@@ -15,7 +15,6 @@ import {
   FormLabel,
   Input,
   Select,
-  Tbody,
   Td,
   Tr,
   useDisclosure,
@@ -158,8 +157,8 @@ const HocVien = (props) => {
         <Td>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
         <Td>{props.queQuan}</Td>
         <Td>{props.capBac}</Td>
-        <Td>
-          <Button onClick={onOpen} background={"blue.300"}>
+        <Td textAlign={"right"}>
+          <Button onClick={onOpen} color={"blue.500"}  fontSize={"20px"}>
             <EditOutlined />
           </Button>
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
@@ -250,8 +249,8 @@ const HocVien = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td textAlign={"center"}>
-          <Button onClick={onEditModalOpen} background={"red.300"}>
+        <Td textAlign={"left"}>
+          <Button onClick={onEditModalOpen} color={"red.500"} fontSize={"20px"}>
             <DeleteOutlined />
           </Button>
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>

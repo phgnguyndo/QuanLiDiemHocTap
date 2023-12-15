@@ -1,15 +1,7 @@
 import {
-  Button,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   FormControl,
   FormLabel,
-  ModalFooter,
   Box,
   TableContainer,
   Table,
@@ -17,14 +9,13 @@ import {
   Tr,
   Th,
   Tbody,
+  Select,
 } from "@chakra-ui/react";
-import { Input } from "antd";
 import dtbAPI from "../../api/dtbAPI";
 import React, { useState, useEffect } from "react";
 import TkhkComponent from "./TkhkComponent";
 
 const ListTkhk = (props) => {
-  var i = 0;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsThongKe, setDsThongKe] = useState([]);
   const initialRef = React.useRef(null);
@@ -37,6 +28,9 @@ const ListTkhk = (props) => {
     setDsThongKe(await dtbAPI.getAll());
   };
 
+  const [hocKy, setHocKy] = useState(0);
+  const hocKyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <Box position={"relative"}>
       <Box
@@ -47,6 +41,26 @@ const ListTkhk = (props) => {
         textAlign={"center"}
       >
         Thống kê theo học kỳ
+      </Box>
+      <Box>
+        <FormControl position={"relative"} top={"30px"} w={"6%"} left={"170px"}>
+          <FormLabel>Học kỳ</FormLabel>
+          <Select
+            borderColor={"blackAlpha.900"}
+            size={"sm"}
+            placeholder="Không"
+            id="hocKyInput"
+            onChange={(e) => {
+              setHocKy(e.target.value);
+            }}
+          >
+            {hocKyList.map((hocKy, index) => (
+              <option key={index} value={hocKy}>
+                {hocKy}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
       <TableContainer>
         <Table
@@ -68,18 +82,19 @@ const ListTkhk = (props) => {
               </Th> */}
               <Th textAlign={"center"}>Điểm TB</Th>
               <Th textAlign={"center"}>Học kỳ</Th>
-              <Th colSpan={"4"} textAlign={"center"}>
-                Tùy chọn
-              </Th>
+              <Th textAlign={"center"}>Ghi chú</Th>
             </Tr>
           </Thead>
           <Tbody>
             {dsThongKe?.map((item, i) => (
               <TkhkComponent
-                key={item.maHV}
+                key={item.id}
                 stt={i + 1}
-                dtb={item.dtb}
                 hocKy={item.hocKy}
+                tenHV={item.hocVien.tenHV}
+                hocVienId={item.hocVienId}
+                dtb={item.dtb}
+                ghiChu={item.ghiChu}
               />
             ))}
           </Tbody>
