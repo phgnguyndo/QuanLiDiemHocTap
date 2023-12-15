@@ -82,7 +82,7 @@ const HvGioiComponent = (props) => {
             break;
           case "2":
             for (let i = 0 ;i< len ;i++) {
-              if((9 > hv_diem[i][1]) && (hv_diem[i][1] >= 8)){
+              if((9 > hv_diem[i][2]) && (hv_diem[i][2] >= 8)){
                 gioi[j][0] = dsHV[i].maHV;
                 gioi[j][1] = dsHV[i].tenHV;
                 gioi[j][2] = dsHV[i].lopChuyenNganhId;
@@ -93,7 +93,7 @@ const HvGioiComponent = (props) => {
             break;
           case "3":
             for (let i = 0 ;i< len ;i++) {
-              if((9 > hv_diem[i][1]) && (hv_diem[i][1] >= 8)){
+              if((9 > hv_diem[i][3]) && (hv_diem[i][3] >= 8)){
                 gioi[j][0] = dsHV[i].maHV;
                 gioi[j][1] = dsHV[i].tenHV;
                 gioi[j][2] = dsHV[i].lopChuyenNganhId;
@@ -104,7 +104,7 @@ const HvGioiComponent = (props) => {
             break;
             case "4":
             for (let i = 0 ;i< len ;i++) {
-              if((9 > hv_diem[i][1]) && (hv_diem[i][1] >= 8)){
+              if((9 > hv_diem[i][4]) && (hv_diem[i][4] >= 8)){
                 gioi[j][0] = dsHV[i].maHV;
                 gioi[j][1] = dsHV[i].tenHV
                 gioi[j][2] = dsHV[i].lopChuyenNganhId
@@ -115,7 +115,7 @@ const HvGioiComponent = (props) => {
             break;
             case "5":
             for (let i = 0 ;i< len ;i++) {
-              if((9 > hv_diem[i][1]) && (hv_diem[i][1] >= 8)){
+              if((9 > hv_diem[i][5]) && (hv_diem[i][5] >= 8)){
                 gioi[j][0] = dsHV[i].maHV;
                 gioi[j][1] = dsHV[i].tenHV;
                 gioi[j][2] = dsHV[i].lopChuyenNganhId;

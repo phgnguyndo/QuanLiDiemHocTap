@@ -70,7 +70,7 @@ const HvTBComponent = (props) => {
             break;
           case "2":
             for (let i = 0 ;i< len ;i++) {
-              if((7 > hv_diem[i][1]) && (hv_diem[i][1] >= 6)){
+              if((7 > hv_diem[i][2]) && (hv_diem[i][2] >= 6)){
                 trungBinh[j][0] = dsHV[i].maHV;
                 trungBinh[j][1] = dsHV[i].tenHV;
                 trungBinh[j][2] = dsHV[i].lopChuyenNganhId;
@@ -81,7 +81,7 @@ const HvTBComponent = (props) => {
             break;
           case "3":
             for (let i = 0 ;i< len ;i++) {
-              if((7 > hv_diem[i][1]) && (hv_diem[i][1] >= 6)){
+              if((7 > hv_diem[i][3]) && (hv_diem[i][3] >= 6)){
                 trungBinh[j][0] = dsHV[i].maHV;
                 trungBinh[j][1] = dsHV[i].tenHV;
                 trungBinh[j][2] = dsHV[i].lopChuyenNganhId;
@@ -92,7 +92,7 @@ const HvTBComponent = (props) => {
             break;
             case "4":
             for (let i = 0 ;i< len ;i++) {
-              if((7 > hv_diem[i][1]) && (hv_diem[i][1] >= 6)){
+              if((7 > hv_diem[i][4]) && (hv_diem[i][4] >= 6)){
                 trungBinh[j][0] = dsHV[i].maHV;
                 trungBinh[j][1] = dsHV[i].tenHV
                 trungBinh[j][2] = dsHV[i].lopChuyenNganhId
@@ -104,7 +104,7 @@ const HvTBComponent = (props) => {
             break;
             case "5":
             for (let i = 0 ;i< len ;i++) {
-              if((7 > hv_diem[i][1]) && (hv_diem[i][1] >= 6)){
+              if((7 > hv_diem[i][5]) && (hv_diem[i][5] >= 6)){
                 trungBinh[j][0] = dsHV[i].maHV;
                 trungBinh[j][1] = dsHV[i].tenHV;
                 trungBinh[j][2] = dsHV[i].lopChuyenNganhId;

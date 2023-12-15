@@ -91,7 +91,7 @@ const HvXuatSacComponent = (props) => {
             break;
             case "4":
             for (let i = 0 ;i< len ;i++) {
-              if(hv_diem[i][1] >= 9){
+              if(hv_diem[i][4] >= 9){
                 xuatSac[j][0] = dsHV[i].maHV;
                 xuatSac[j][1] = dsHV[i].tenHV
                 xuatSac[j][2] = dsHV[i].lopChuyenNganhId
@@ -103,7 +103,7 @@ const HvXuatSacComponent = (props) => {
             break;
             case "5":
             for (let i = 0 ;i< len ;i++) {
-              if(hv_diem[i][1] >= 9){
+              if(hv_diem[i][5] >= 9){
                 xuatSac[j][0] = dsHV[i].maHV;
                 xuatSac[j][1] = dsHV[i].tenHV;
                 xuatSac[j][2] = dsHV[i].lopChuyenNganhId;

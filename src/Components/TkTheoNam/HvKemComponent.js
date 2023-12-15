@@ -69,7 +69,7 @@ const HvKemComponent = (props) => {
             break;
           case "2":
             for (let i = 0 ;i< len ;i++) {
-              if((6 > hv_diem[i][1]) && (hv_diem[i][1] >= 4)){
+              if((6 > hv_diem[i][2]) && (hv_diem[i][2] >= 4)){
                 kem[j][0] = dsHV[i].maHV;
                 kem[j][1] = dsHV[i].tenHV;
                 kem[j][2] = dsHV[i].lopChuyenNganhId;
@@ -80,7 +80,7 @@ const HvKemComponent = (props) => {
             break;
           case "3":
             for (let i = 0 ;i< len ;i++) {
-              if((6 > hv_diem[i][1]) && (hv_diem[i][1] >= 4)){
+              if((6 > hv_diem[i][3]) && (hv_diem[i][3] >= 4)){
                 kem[j][0] = dsHV[i].maHV;
                 kem[j][1] = dsHV[i].tenHV;
                 kem[j][2] = dsHV[i].lopChuyenNganhId;
@@ -91,7 +91,7 @@ const HvKemComponent = (props) => {
             break;
             case "4":
             for (let i = 0 ;i< len ;i++) {
-              if((6 > hv_diem[i][1]) && (hv_diem[i][1] >= 4)){
+              if((6 > hv_diem[i][4]) && (hv_diem[i][4] >= 4)){
                 kem[j][0] = dsHV[i].maHV;
                 kem[j][1] = dsHV[i].tenHV
                 kem[j][2] = dsHV[i].lopChuyenNganhId
@@ -103,7 +103,7 @@ const HvKemComponent = (props) => {
             break;
             case "5":
             for (let i = 0 ;i< len ;i++) {
-              if((6 > hv_diem[i][1]) && (hv_diem[i][1] >= 4)){
+              if((6 > hv_diem[i][5]) && (hv_diem[i][5] >= 4)){
                 kem[j][0] = dsHV[i].maHV;
                 kem[j][1] = dsHV[i].tenHV;
                 kem[j][2] = dsHV[i].lopChuyenNganhId;

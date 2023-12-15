@@ -68,7 +68,7 @@ const HvKhaComponent = (props) => {
             break;
           case "2":
             for (let i = 0 ;i< len ;i++) {
-              if((8 > hv_diem[i][1]) && (hv_diem[i][1] >= 7)){
+              if((8 > hv_diem[i][2]) && (hv_diem[i][2] >= 7)){
                 kha[j][0] = dsHV[i].maHV;
                 kha[j][1] = dsHV[i].tenHV;
                 kha[j][2] = dsHV[i].lopChuyenNganhId;
@@ -79,7 +79,7 @@ const HvKhaComponent = (props) => {
             break;
           case "3":
             for (let i = 0 ;i< len ;i++) {
-              if((8 > hv_diem[i][1]) && (hv_diem[i][1] >= 7)){
+              if((8 > hv_diem[i][3]) && (hv_diem[i][3] >= 7)){
                 kha[j][0] = dsHV[i].maHV;
                 kha[j][1] = dsHV[i].tenHV;
                 kha[j][2] = dsHV[i].lopChuyenNganhId;
@@ -90,7 +90,7 @@ const HvKhaComponent = (props) => {
             break;
             case "4":
             for (let i = 0 ;i< len ;i++) {
-              if((8 > hv_diem[i][1]) && (hv_diem[i][1] >= 7)){
+              if((8 > hv_diem[i][4]) && (hv_diem[i][4] >= 7)){
                 kha[j][0] = dsHV[i].maHV;
                 kha[j][1] = dsHV[i].tenHV
                 kha[j][2] = dsHV[i].lopChuyenNganhId
@@ -102,7 +102,7 @@ const HvKhaComponent = (props) => {
             break;
             case "5":
             for (let i = 0 ;i< len ;i++) {
-              if((8 > hv_diem[i][1]) && (hv_diem[i][1] >= 7)){
+              if((8 > hv_diem[i][5]) && (hv_diem[i][5] >= 7)){
                 kha[j][0] = dsHV[i].maHV;
                 kha[j][1] = dsHV[i].tenHV;
                 kha[j][2] = dsHV[i].lopChuyenNganhId;
