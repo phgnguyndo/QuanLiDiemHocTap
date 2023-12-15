@@ -56,41 +56,33 @@ const HvXuatSacComponent = (props) => {
   useEffect(() => {
     const tinhDiemTrungBinhNamHoc = () =>{
       const hv_diem = [[]];
+      let tcNam = 0;
+      let temp = 0;
+      for(let i=0; i<dsHV.length - 8; i++){
+          hv_diem[i][0] = dsHV[i].maHV;
+          for(let j=0; j < dsDTB.length; j = j + 10) {
+            temp = (dsDTB[j].DTB * dsDTB[j].TC + dsDTB[j+1].DTB * dsDTB[j+1].TC);
+            tcNam = dsDTB[j].TC + dsDTB[j+1].TC;
+            hv_diem[i][1] = temp/tcNam;
 
-      // dsHV.forEach(item => (
-      //     dsDTB.forEach(item2 => (
+            temp = (dsDTB[j+2].DTB * dsDTB[j+2].TC + dsDTB[j+3].DTB * dsDTB[j+3].TC);
+            tcNam = dsDTB[j+2].TC + dsDTB[j+3].TC;
+            hv_diem[i][2] = temp/tcNam;
 
-      //       )
-      //     )
-      //   )
-      // );
+            temp = (dsDTB[j+4].DTB * dsDTB[j+4].TC + dsDTB[j+5].DTB * dsDTB[j+5].TC);
+            tcNam = dsDTB[j+4].TC + dsDTB[j+5].TC;
+            hv_diem[i][3] = temp/tcNam;
+
+            temp = (dsDTB[j+6].DTB * dsDTB[j+6].TC + dsDTB[j+7].DTB * dsDTB[j+7].TC);
+            tcNam = dsDTB[j+6].TC + dsDTB[j+7].TC;
+            hv_diem[i][4] = temp/tcNam;
+
+            temp = (dsDTB[j+8].DTB * dsDTB[j+8].TC + dsDTB[j+9].DTB * dsDTB[j+9].TC);
+            tcNam = dsDTB[j+8].TC + dsDTB[j+9].TC;
+            hv_diem[i][5] = temp/tcNam;
+          }
+        };
       
-      
-      // dsHV.map(function (item, index) {
-      //   dsDTB
-        
-      // });
-
-      switch (props.namHoc) {
-        case 1:
-          // Code to execute if expression equals value1
-          break;
-        case 2:
-          // Code to execute if expression equals value2
-          break;
-        case 3:
-            // Code to execute if expression equals value2
-            break;
-        case 4:
-          // Code to execute if expression equals value2
-          break;
-        case 5:
-          // Code to execute if expression equals value2
-          break;
-        default:
-          // Code to execute if none of the cases match
-          break;
-      }
       
     };
   })

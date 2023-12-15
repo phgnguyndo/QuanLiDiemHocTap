@@ -67,98 +67,91 @@ const KhoaComponent = (props) => {
 
   return (
     <>
-        <Tr>
-          <Td position={"relative"} textAlign={"center"} w={"3%"}>
-            {props.stt}
-          </Td>
-          <Td
-            position={"relative"}
-            cursor={"pointer"}
-            w={"95%"}
-            // onClick={() => {
-            //   nav(`/khoa/${props.maKhoa}`);
-            // }}
+      <Tr>
+        <Td position={"relative"} textAlign={"center"} w={"3%"}>
+          {props.stt}
+        </Td>
+        <Td position={"relative"} cursor={"pointer"} w={"95%"}>
+          {props.tenKhoa}
+        </Td>
+        <Td position={"relative"} textAlign={"right"}>
+          <Button onClick={onEditModalOpen} color={"blue.500"}>
+            <EditOutlined />
+          </Button>
+          <Modal
+            isCentered
+            onClose={onEditModalClose}
+            isOpen={isEditModalOpen}
+            motionPreset="slideInBottom"
           >
-            {props.tenKhoa}
-          </Td>
-          <Td position={"relative"} textAlign={"center"}>
-            <Button onClick={onEditModalOpen} background={"blue.300"}>
-              <EditOutlined />
-            </Button>
-            <Modal
-              isCentered
-              onClose={onEditModalClose}
-              isOpen={isEditModalOpen}
-              motionPreset="slideInBottom"
-            >
-              <ModalOverlay />
-              <ModalContent fontFamily={"heading"}>
-                <ModalHeader>Sửa thông tin</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <Box>
-                    <Input
-                      type="text"
-                      defaultValue={props.tenKhoa}
-                      onChange={(e) => setTenKhoa(e.target.value)}
-                    ></Input>
-                  </Box>
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    colorScheme="blue"
-                    bg={"rgb(243,66,33)"}
-                    mr={3}
-                    onClick={onEditModalClose}
-                  >
-                    Hủy
-                  </Button>
-                  <Button
-                    colorScheme="blue"
-                    mr={3}
-                    color={"white"}
-                    onClick={handleSuaKhoa}
-                  >
-                    Lưu
-                  </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-          <Td textAlign={"center"}>
-            <Button onClick={onOpen} background={"red.300"}>
-              <DeleteOutlined />
-            </Button>
-            <Modal
-              isCentered
-              onClose={onClose}
-              isOpen={isOpen}
-              motionPreset="slideInBottom"
-            >
-              <ModalOverlay />
-              <ModalContent fontFamily={"heading"}>
-                <ModalHeader>Xóa khoa</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <Text>Bạn có chắc chắn muốn xóa không?</Text>
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onClose}>
-                    Hủy
-                  </Button>
-                  <Button
-                    colorScheme="blue"
-                    bg={"rgb(243,66,33)"}
-                    color={"white"}
-                    onClick={handleXoaKhoa}
-                  >
-                    Xóa
-                  </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Td>
-        </Tr>
+            <ModalOverlay />
+            <ModalContent fontFamily={"heading"}>
+              <ModalHeader>Sửa thông tin</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Box>
+                  <Input
+                    type="text"
+                    defaultValue={props.tenKhoa}
+                    onChange={(e) => setTenKhoa(e.target.value)}
+                  ></Input>
+                </Box>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  colorScheme="blue"
+                  bg={"rgb(243,66,33)"}
+                  mr={3}
+                  onClick={onEditModalClose}
+                >
+                  Hủy
+                </Button>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  color={"white"}
+                  onClick={handleSuaKhoa}
+                >
+                  Lưu
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+        <Td textAlign={"left"}>
+          <Button onClick={onOpen} color={"red.500"}>
+            <DeleteOutlined />
+          </Button>
+          <Modal
+            isCentered
+            onClose={onClose}
+            isOpen={isOpen}
+            motionPreset="slideInBottom"
+          >
+            <ModalOverlay />
+            <ModalContent fontFamily={"heading"}>
+              <ModalHeader>Xóa khoa</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Text>Bạn có chắc chắn muốn xóa không?</Text>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Hủy
+                </Button>
+                <Button
+                  colorScheme="blue"
+                  bg={"rgb(243,66,33)"}
+                  color={"white"}
+                  onClick={handleXoaKhoa}
+                >
+                  Xóa
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Td>
+      </Tr>
     </>
   );
 };

@@ -54,7 +54,7 @@ const ListKhoaTable = (props) => {
   return (
     <Box position={"relative"}>
       <Box
-        color={"brown"}
+        color={"rgb(91, 138, 114)"}
         variant="solid"
         fontSize={"40px"}
         fontWeight={500}
@@ -65,7 +65,7 @@ const ListKhoaTable = (props) => {
       <Button
         position={"relative"}
         top={"30px"}
-        left={"172px"}
+        left={"280px"}
         variant="solid"
         bg="rgb(80,132,74)"
         color={"white"}
@@ -110,15 +110,14 @@ const ListKhoaTable = (props) => {
           size="sm"
           position={"relative"}
           top={"50px"}
-          w={"70%"}
+          w={"50%"}
           align="center"
         >
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>STT</Th>
               <Th w={"95%"}>Khoa</Th>
-              <Th textAlign={"center"}>Sửa</Th>
-              <Th textAlign={"center"}>Xóa</Th>
+              <Th colSpan={"7"} textAlign={"center"}>Tùy chọn</Th>
             </Tr>
           </Thead>
           <Tbody>

@@ -299,11 +299,8 @@ const ListHocVienTable = (props) => {
               <Th w={"8%"}>Giới tính</Th>
               <Th w={"17%"}>Quê quán</Th>
               <Th w={"8%"}>Cấp bậc</Th>
-              <Th w={"4%"} textAlign={"center"}>
-                Sửa
-              </Th>
-              <Th w={"4%"} textAlign={"center"}>
-                Xóa
+              <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
+                Tùy chọn
               </Th>
             </Tr>
           </Thead>

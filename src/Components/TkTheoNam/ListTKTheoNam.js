@@ -31,6 +31,7 @@ import HvGioiComponent from "./HvGioiComponent.js";
 import HvKhaComponent from "./HvKhaComponent.js";
 import HvTBComponent from "./HvTBComponent.js";
 import HvKemComponent from "./HvKemComponent.js";
+import hocvienAPI from "../../api/hocvienAPI.js";
 
   const ListTKTheoNam = (props) => {
     const i = 0;
@@ -45,6 +46,8 @@ import HvKemComponent from "./HvKemComponent.js";
     const [namHoc, setNamHoc] = useState([]);
     const [dsDTB, setdsDTB] = useState([]);
     const [dsHP, setdsHP] = useState([]);
+    const [dsHV,setdsHV] = useState([]);
+
 
 
       useEffect(() => {
@@ -63,7 +66,14 @@ import HvKemComponent from "./HvKemComponent.js";
       };
       console.log(dsDTB);
       
-      
+      useEffect(() => {
+      fetchDsHV();
+      },[]);
+      const fetchDsHV = async () => {
+        setdsHV(await hocvienAPI.getAll());
+      };
+      console.log(dsHV);
+
   
     return (
       <div
@@ -103,19 +113,10 @@ import HvKemComponent from "./HvKemComponent.js";
                 <option value={3}>3</option>
                 <option value={4}>4</option>
                 <option value={5}>5</option>
-                {/* {dsBomon.map((item,index) => (
-                  <option key={index} value={item.maBM}>
-                    {item.tenBM}
-                  </option>
-                ))} */}
               </Select>
-         
-       
-
-
 
         <TableContainer w={"150vh"}>
-          <HvXuatSacComponent namHoc={namHoc} dsHP={dsHP}/>
+          <HvXuatSacComponent namHoc={namHoc} dsHP={dsHP} hv_diem={}/>
           <HvGioiComponent namHoc={namHoc} dsHP={dsHP}/>
           <HvKhaComponent namHoc={namHoc} dsHP={dsHP}/>
           <HvTBComponent namHoc={namHoc} dsHP={dsHP}/>

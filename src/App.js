@@ -14,7 +14,7 @@ import LopHocPhan from "./Pages/LopHocPhan";
 import AllHocVien from "./Pages/PageAllHocVien";
 import TKTheoKy from "./Pages/TkTheoKy";
 import TKTheoNam from "./Pages/TkTheoNam";
-
+import TaoTaiKhoan from "./Pages/TaoTaiKhoan";
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
         <Route path="/lophocphan" element={<LopHocPhan/>} />
         <Route path="/tkhk" element={<TKTheoKy/>} />
         <Route path="/tkn" element={<TKTheoNam/>} />
+        <Route path="/taotaikhoan" element={<TaoTaiKhoan/>} />
         <Route path="/*" element={<div>404 not found</div>} />
       </Routes>
     </BrowserRouter>

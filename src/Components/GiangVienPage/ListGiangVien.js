@@ -62,6 +62,7 @@ import bomonAPI from "../../api/bomonAPI";
             sdt,
             boMonId,
           };
+          console.log(formData);
           await giangVienAPI.create(formData);
           onClose();
           window.location.reload();
