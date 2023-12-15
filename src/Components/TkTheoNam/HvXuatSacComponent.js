@@ -27,12 +27,13 @@ import {
   
 
 const HvXuatSacComponent = (props) => {
-
-
+  const {hv_diem} = props;
+  // const hv_diem = props.hv_diem;
   const [dsDTB, setdsDTB] = useState([]);
   const [dsHV,setdsHV] = useState([]);
 
-
+  const namHoc = props.namHoc;
+  const [xuatSac,setDsXS] = useState([]);
 
   useEffect(() => {
     fetchDsDTB();
@@ -40,52 +41,85 @@ const HvXuatSacComponent = (props) => {
   const fetchDsDTB = async () => {
     setdsDTB(await dtbAPI.getAll());
   };
-  console.log(dsDTB);
-  console.log(props.namHoc);
 
   useEffect(() => {
     fetchDsHV();
   },[]);
   const fetchDsHV = async () => {
-    setdsHV(await hocvienAPI.getAll());
+    setdsHV(await hocvienAPI.getAll(1,100));
   };
-  console.log(dsHV);
-
-
   //xét học viên có điểm trung bình năm xuất sắc
   useEffect(() => {
-    const tinhDiemTrungBinhNamHoc = () =>{
-      const hv_diem = [[]];
-      let tcNam = 0;
-      let temp = 0;
-      for(let i=0; i<dsHV.length - 8; i++){
-          hv_diem[i][0] = dsHV[i].maHV;
-          for(let j=0; j < dsDTB.length; j = j + 10) {
-            temp = (dsDTB[j].DTB * dsDTB[j].TC + dsDTB[j+1].DTB * dsDTB[j+1].TC);
-            tcNam = dsDTB[j].TC + dsDTB[j+1].TC;
-            hv_diem[i][1] = temp/tcNam;
+    const phanLoaiHocVienXS = (hv_diem, dsHV, namHoc) => {
+      let len = dsHV.length;
+      const xuatSac = new Array(len).fill(0).map(() => new Array(6).fill());
 
-            temp = (dsDTB[j+2].DTB * dsDTB[j+2].TC + dsDTB[j+3].DTB * dsDTB[j+3].TC);
-            tcNam = dsDTB[j+2].TC + dsDTB[j+3].TC;
-            hv_diem[i][2] = temp/tcNam;
-
-            temp = (dsDTB[j+4].DTB * dsDTB[j+4].TC + dsDTB[j+5].DTB * dsDTB[j+5].TC);
-            tcNam = dsDTB[j+4].TC + dsDTB[j+5].TC;
-            hv_diem[i][3] = temp/tcNam;
-
-            temp = (dsDTB[j+6].DTB * dsDTB[j+6].TC + dsDTB[j+7].DTB * dsDTB[j+7].TC);
-            tcNam = dsDTB[j+6].TC + dsDTB[j+7].TC;
-            hv_diem[i][4] = temp/tcNam;
-
-            temp = (dsDTB[j+8].DTB * dsDTB[j+8].TC + dsDTB[j+9].DTB * dsDTB[j+9].TC);
-            tcNam = dsDTB[j+8].TC + dsDTB[j+9].TC;
-            hv_diem[i][5] = temp/tcNam;
+      let j = 0;
+        switch (namHoc) {
+          case "1":
+            for (let i = 0 ;i< len ;i++) {
+              if(hv_diem[i][1] >= 9){
+                xuatSac[j][0] = dsHV[i].maHV;
+                xuatSac[j][1] = dsHV[i].tenHV;
+                xuatSac[j][2] = dsHV[i].lopChuyenNganhId;
+                xuatSac[j][3] = hv_diem[i][1]
+                j++;
+              }
+            }
+            break;
+          case "2":
+            for (let i = 0 ;i< len ;i++) {
+              if(hv_diem[i][2] >= 9){
+                xuatSac[j][0] = dsHV[i].maHV;
+                xuatSac[j][1] = dsHV[i].tenHV;
+                xuatSac[j][2] = dsHV[i].lopChuyenNganhId;
+                xuatSac[j][3] = hv_diem[i][2]
+                j++;
+              }
+            }
+            break;
+          case "3":
+            for (let i = 0 ;i< len ;i++) {
+              if(hv_diem[i][3] >= 9){
+                xuatSac[j][0] = dsHV[i].maHV;
+                xuatSac[j][1] = dsHV[i].tenHV;
+                xuatSac[j][2] = dsHV[i].lopChuyenNganhId;
+                xuatSac[j][3] = hv_diem[i][3]
+                j++;
+              }
+            }
+            break;
+            case "4":
+            for (let i = 0 ;i< len ;i++) {
+              if(hv_diem[i][1] >= 9){
+                xuatSac[j][0] = dsHV[i].maHV;
+                xuatSac[j][1] = dsHV[i].tenHV
+                xuatSac[j][2] = dsHV[i].lopChuyenNganhId
+                ;
+                xuatSac[j][3] = hv_diem[i][4]
+                j++;
+              }
+            }
+            break;
+            case "5":
+            for (let i = 0 ;i< len ;i++) {
+              if(hv_diem[i][1] >= 9){
+                xuatSac[j][0] = dsHV[i].maHV;
+                xuatSac[j][1] = dsHV[i].tenHV;
+                xuatSac[j][2] = dsHV[i].lopChuyenNganhId;
+                xuatSac[j][3] = hv_diem[i][5]
+                j++;
+              }
+            }
+            break;
+            default:
+              console.log("It's something else.");
           }
-        };
-      
-      
+        setDsXS(xuatSac);      
     };
-  })
+    phanLoaiHocVienXS(hv_diem, dsHV, namHoc);
+  },[namHoc])
+
 
     return(
         <>
@@ -104,8 +138,11 @@ const HvXuatSacComponent = (props) => {
                 }}>Danh sách học viên xuất sắc
               </Tr>
               <Tr bg={"rgb(182, 187, 196)"}>
-                <Th w={"5%"} textAlign={"center"}>
+                <Th w={"3%"} textAlign={"center"}>
                   STT
+                </Th>
+                <Th w={"15%"} textAlign={"center"}>
+                Mã học viên
                 </Th>
                 <Th w={"15%"} textAlign={"center"}>
                 Tên học viên
@@ -114,7 +151,7 @@ const HvXuatSacComponent = (props) => {
                   Lớp chuyên ngành
                 </Th>
                 <Th w={"5%"} textAlign={"center"}>
-                Đạt học bổng
+                Điểm trung bình
                 </Th>
                 {/* <Th w={"10%"} textAlign={"center"}>
                   Thuộc học kỳ
@@ -124,17 +161,25 @@ const HvXuatSacComponent = (props) => {
               </Tr>
             </Thead>
             <Tbody>
-                {/* {dsHP.map((item,i) => (
-                <HocPhanComponent
-                key={item.maHocPhan}
-                STT={i+1}
-                tenHP={item.tenHocPhan}
-                soTC={item.soTC}
-                hocKy={item.hocKy}
-                soTiet={item.soTiet}
-                boMonId={item.boMonId}
-                />
-                ))} */}
+                {xuatSac.map((item,i) => (
+                  <Tr>
+                    <Td position={"relative"} textAlign={"center"}>
+                    {i+1}
+                    </Td>
+                    <Td position={"relative"} textAlign={"center"}>
+                    {xuatSac[i][0]}
+                    </Td>
+                    <Td position={"relative"} textAlign={"center"}>
+                    {xuatSac[i][1]}
+                    </Td>
+                    <Td position={"relative"} textAlign={"center"}>
+                    {xuatSac[i][2]}
+                    </Td>
+                    <Td position={"relative"} textAlign={"center"}>
+                    {xuatSac[i][3]}
+                    </Td>
+                  </Tr>
+                ))}
           </Tbody>
           </Table>
         </>

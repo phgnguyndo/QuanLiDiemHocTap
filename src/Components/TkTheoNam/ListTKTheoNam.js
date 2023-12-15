@@ -43,20 +43,20 @@ import hocvienAPI from "../../api/hocvienAPI.js";
 
 
 
-    const [namHoc, setNamHoc] = useState([]);
+    const [namHoc, setNamHoc] = useState(1);
     const [dsDTB, setdsDTB] = useState([]);
-    const [dsHP, setdsHP] = useState([]);
+    // const [dsHP, setdsHP] = useState([]);
     const [dsHV,setdsHV] = useState([]);
+    const [hv_diem, setHv_diem] = useState([]);
 
 
-
-      useEffect(() => {
-        fetchDsHP();
-      }, []);
-      const fetchDsHP = async () => {
-        setdsHP(await hocPhanAPI.getAll());
-      };
-      console.log(dsHP);
+      // useEffect(() => {
+      //   fetchDsHP();
+      // }, []);
+      // const fetchDsHP = async () => {
+      //   setdsHP(await hocPhanAPI.getAll());
+      // };
+      // console.log(dsHP);
       
       useEffect(() => {
         fetchDsDTB();
@@ -64,17 +64,54 @@ import hocvienAPI from "../../api/hocvienAPI.js";
       const fetchDsDTB = async () => {
         setdsDTB(await dtbAPI.getAll());
       };
-      console.log(dsDTB);
+      // console.log(dsDTB);
       
       useEffect(() => {
       fetchDsHV();
       },[]);
       const fetchDsHV = async () => {
-        setdsHV(await hocvienAPI.getAll());
+        setdsHV(await hocvienAPI.getAll(1,100));
       };
-      console.log(dsHV);
+      // console.log(dsHV);
+      
+    //xét học viên có điểm trung bình năm xuất sắc
+  useEffect(() => {
+    const tinhDiemTrungBinhNamHoc = (dsHV,dsDTB) =>{
+      let len = dsHV.length;
+      const hv_diem = new Array(len).fill(0).map(() => new Array(6).fill(0));
+      let tcNam = 5;
+      let temp = 0;
+      let j =0;
+      for(let i=0; i < dsHV.length ; i++){
+          hv_diem[i][0] = dsHV[i].maHV;
+            temp = (dsDTB[j].dtb * dsDTB[j].tongTC + dsDTB[j+1].dtb * dsDTB[j+1].tongTC );
+            tcNam = dsDTB[j].tongTC  + dsDTB[j+1].tongTC;
+            hv_diem[i][1] = tcNam > 0 ?  temp/tcNam : 0;
+            temp = (dsDTB[j+2].dtb * dsDTB[j+2].tongTC  + dsDTB[j+3].dtb * dsDTB[j+3].tongTC );
+            tcNam = dsDTB[j+2].tongTC  + dsDTB[j+3].tongTC ;
+            hv_diem[i][2] = tcNam > 0 ?  temp/tcNam : 0;
 
-  
+            temp = (dsDTB[j+4].dtb * dsDTB[j+4].tongTC  + dsDTB[j+5].dtb * dsDTB[j+5].tongTC );
+            tcNam = dsDTB[j+4].tongTC  + dsDTB[j+5].tongTC ;
+            hv_diem[i][3] = tcNam > 0 ?  temp/tcNam : 0;
+
+            temp = (dsDTB[j+6].dtb * dsDTB[j+6].tongTC  + dsDTB[j+7].dtb * dsDTB[j+7].tongTC );
+            tcNam = dsDTB[j+6].tongTC  + dsDTB[j+7].tongTC ;
+            hv_diem[i][4] = tcNam > 0 ?  temp/tcNam : 0;
+
+            temp = (dsDTB[j+8].dtb * dsDTB[j+8].tongTC  + dsDTB[j+9].dtb * dsDTB[j+9].tongTC );
+            tcNam = dsDTB[j+8].tongTC  + dsDTB[j+9].tongTC 
+            hv_diem[i][5] = tcNam > 0 ?  temp/tcNam : 0;
+          j += 10;
+      };
+        setHv_diem(hv_diem);
+    };
+    tinhDiemTrungBinhNamHoc(dsHV,dsDTB);
+
+  })
+  console.log("diemne");
+  console.log(hv_diem);
+
     return (
       <div
         style={{
@@ -116,11 +153,11 @@ import hocvienAPI from "../../api/hocvienAPI.js";
               </Select>
 
         <TableContainer w={"150vh"}>
-          <HvXuatSacComponent namHoc={namHoc} dsHP={dsHP} hv_diem={}/>
-          <HvGioiComponent namHoc={namHoc} dsHP={dsHP}/>
-          <HvKhaComponent namHoc={namHoc} dsHP={dsHP}/>
-          <HvTBComponent namHoc={namHoc} dsHP={dsHP}/>
-          <HvKemComponent namHoc={namHoc} dsHP={dsHP}/>
+          <HvXuatSacComponent namHoc={namHoc} hv_diem={hv_diem} />
+          <HvGioiComponent namHoc={namHoc}  hv_diem={hv_diem}/>
+          <HvKhaComponent namHoc={namHoc}  hv_diem={hv_diem}/>
+          <HvTBComponent namHoc={namHoc} hv_diem={hv_diem}/>
+          <HvKemComponent namHoc={namHoc} hv_diem={hv_diem}/>
         </TableContainer>
       </div>
     );
