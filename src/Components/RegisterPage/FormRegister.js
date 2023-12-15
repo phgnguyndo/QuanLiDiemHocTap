@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MTA from "../../Image/MTA.jpg";
 import {
   Button,
@@ -33,13 +33,16 @@ const Register = () => {
   const nav = useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const [maHV,setMaHV]= useState("");
   const onFinish = async (values) => {
     try {
       const dataToSend = {
         code: values.Username,
         password: values.password,
-        role: "user2",
+        maHV: maHV,
+        role: "user2"
       };
+      console.log(dataToSend );
       const action = register(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
@@ -82,11 +85,11 @@ const Register = () => {
           scrollToFirstError
         >
           <Typography.Title level={3} style={{ textAlign: "center" }}>
-            Register
+            Đăng kí tài khoản
           </Typography.Title>
           <Form.Item
             name="Username"
-            label="Username"
+            label="Tài khoản"
             rules={[
               {
                 required: true,
@@ -101,11 +104,11 @@ const Register = () => {
             <Col span={12}>
               <Form.Item
                 name="password"
-                label="Password"
+                label="Mật khẩu"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password!",
+                    message: "Vui lòng nhập mật khẩu!",
                   },
                 ]}
                 hasFeedback
@@ -116,13 +119,13 @@ const Register = () => {
             <Col span={12}>
               <Form.Item
                 name="confirm"
-                label="Confirm Password"
+                label="Nhập lại mật khẩu"
                 dependencies={["password"]}
                 hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: "Please confirm your password!",
+                    message: "Vui lòng xác nhận mật khẩu",
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
@@ -141,36 +144,38 @@ const Register = () => {
             </Col>
           </Row>
 
-          {/* <Row>
+          <Row>
             <Col span={24}>
               <Form.Item
                 name="role"
-                label="Role"
+                label="Mã HV"
+                
                 rules={[
                   {
                     required: true,
-                    message: "Please select a role!",
+                    message: "Vui lòng nhập mã học viên!",
                   },
                 ]}
               >
-                <Select
+                <Input style={{position:"relative", left:"20px"}} onChange={(e)=>{setMaHV(e.target.value)}}/>
+                {/* <Select
                   placeholder="Select a role"
                   style={{ left: "34px", width: "150px" }}
                 >
                   <Option value="admin">admin</Option>
                   <Option value="user1">user1</Option>
                   <Option value="user2">user2</Option>
-                </Select>
+                </Select> */}
               </Form.Item>
             </Col>
-          </Row> */}
+          </Row>
           <Form.Item {...tailFormItemLayout}>
             <Button
               type="primary"
               htmlType="submit"
               style={{ position: "relative", left: "55px" }}
             >
-              Register
+              Đăng kí
             </Button>
             <Button
               style={{ position: "relative", top: "40px", left: "-100px" }}
@@ -178,7 +183,7 @@ const Register = () => {
                 nav("/");
               }}
             >
-              You have an account? Login now
+              Bạn đã có tài khoản? Đăng nhập
             </Button>
           </Form.Item>
         </Form>

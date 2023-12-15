@@ -15,10 +15,13 @@ import { Dropdown, Layout, Menu, Button, theme, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import StorageKeys from "../../constance/storage-key";
 import SubMenu from "antd/es/menu/SubMenu";
-const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
+import logout from "../../Image/logout.png";
+import { Image } from "@chakra-ui/react";
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const { Header, Sider, Content } = Layout;
 
 const Head = ({ content }) => {
+  const isDaiDoi = user.role === "user1";
   const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -29,11 +32,11 @@ const Head = ({ content }) => {
     nav("/");
   };
 
-  const isAdmin = username.role === "admin";
+  const isAdmin = user.role === "admin";
 
   const menu = (
     <Menu onClick={handleLogout}>
-      <Menu.Item key="logout">Logout</Menu.Item>
+      <Menu.Item key="logout">Đăng xuất</Menu.Item>
     </Menu>
   );
 
@@ -48,18 +51,25 @@ const Head = ({ content }) => {
           defaultSelectedKeys={["1"]}
         >
           <Menu.Item key="0" icon={<UserOutlined />}>
-            {username.code}
+            {user.code}
           </Menu.Item>
           <Menu.Item
             key="1"
             icon={<HomeOutlined />}
             onClick={() => {
-              nav("/home");
+              if (user.role === "admin") {
+                nav("/daidoi");
+              } else if (user.role === "user1") {
+                nav("/home");
+              } else if (user.role === "user2") {
+                nav(`/${user.maHV}`);
+              }
             }}
           >
             Trang chủ
           </Menu.Item>
-          <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
+          {isDaiDoi && (
+            <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
             <Menu.Item
               key="2"
               icon={<RadarChartOutlined />}
@@ -118,6 +128,7 @@ const Head = ({ content }) => {
               Giảng dạy
             </Menu.Item>
           </SubMenu>
+          )}
           <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
             <Menu.Item
               key="10"
@@ -167,17 +178,16 @@ const Head = ({ content }) => {
             {username.code}
           </i> */}
           <Dropdown overlay={menu} placement="bottomRight" arrow>
-            <LogoutOutlined
-              style={{
-                position: "relative",
-                left: "80%",
-                fontSize: "20px",
-                cursor: "pointer",
-                color: "red",
-                onClick: { handleLogout },
-              }}
-            />
+            <Image
+              position={"absolute"}
+              // onClick={handleLogout}
+              w={"30px"}
+              top={"18px"}
+              left="90%"
+              src={logout}
+            ></Image>
           </Dropdown>
+          {/* <i style={{position:"relative", left:"81%"}}>Đăng xuất</i> */}
         </Header>
         <Content
           style={{

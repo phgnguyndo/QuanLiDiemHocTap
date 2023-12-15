@@ -27,8 +27,11 @@ import DiemHocKyComponent from "./DiemHocKyComponent";
 import { useParams } from "react-router-dom";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import hocPhanAPI from "../../api/hocphanAPI";
+import StorageKeys from "../../constance/storage-key";
 
 const DiemHocVien = (props) => {
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isDaiDoi = user.role === "user1";
   const { idHV } = useParams();
   const [diemCC, setDiemCC] = useState(0);
   const [diemTX, setDiemTX] = useState(0);
@@ -79,7 +82,7 @@ const DiemHocVien = (props) => {
 
   const getUniqueSemesters = () => {
     const semesters = new Set();
-    dsHocPhan.forEach(item => {
+    dsHocPhan.forEach((item) => {
       semesters.add(item.hocKy);
     });
     return Array.from(semesters);
@@ -89,6 +92,7 @@ const DiemHocVien = (props) => {
 
   return (
     <Box position={"relative"}>
+      
       <Box
         color={"brown"}
         fontSize={"35px"}
@@ -97,16 +101,18 @@ const DiemHocVien = (props) => {
       >
         Bảng điểm của học viên
       </Box>
-      <Button
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        left={"5%"}
-        top={"20px"}
-        onClick={onOpen}
-      >
-        Thêm thông tin
-      </Button>
+      {isDaiDoi && (
+        <Button
+          variant="solid"
+          bg="rgb(26,132,74)"
+          color={"white"}
+          left={"5%"}
+          top={"20px"}
+          onClick={onOpen}
+        >
+          Thêm thông tin
+        </Button>
+      )}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -192,7 +198,12 @@ const DiemHocVien = (props) => {
         </ModalContent>
       </Modal>
       {uniqueSemesters.map((semester, index) => (
-        <DiemHocKyComponent key={index} semester={semester} phieuDiem={phieuDiem} HocKy={index+1}/>
+        <DiemHocKyComponent
+          key={index}
+          semester={semester}
+          phieuDiem={phieuDiem}
+          HocKy={index + 1}
+        />
       ))}
     </Box>
   );

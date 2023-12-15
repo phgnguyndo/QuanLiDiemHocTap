@@ -22,10 +22,14 @@ import React, { useEffect, useState } from "react";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import { useParams } from "react-router-dom";
 import hocPhanAPI from "../../api/hocphanAPI";
+import StorageKeys from "../../constance/storage-key";
+import { notification } from "antd";
 const DiemComponent = (props) => {
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isDaiDoi = user.role === "user1";
   const [phieuDiem, setPhieuDiem] = useState([]);
   const [dsHocPhan, setDsHocPhan] = useState([]);
-  const [maHocPhan, setMaHocPhan] = useState("");
+  // const [maHocPhan, setMaHocPhan] = useState("");
   const { idHV } = useParams();
   const [diemCC, setDiemCC] = useState(props.DiemChuyenCan || 0);
   const [diemTX, setDiemTX] = useState(props.DiemThuongXuyen || 0);
@@ -58,7 +62,7 @@ const DiemComponent = (props) => {
   const handleSubmit = async () => {
     try {
       const phieudiemID = props.MaPhieuDiem;
-      const hocPhanId = maHocPhan;
+      const hocPhanId = props.MaHocPhan;
       const formData = {
         hocPhanId,
         hocVienId,
@@ -73,6 +77,10 @@ const DiemComponent = (props) => {
       onClose();
       window.location.reload();
     } catch (error) {
+      notification.error({
+        message: "Vui lòng điền đủ thông tin",
+        duration: 3,
+      });
       console.log(error);
     }
   };
@@ -111,25 +119,24 @@ const DiemComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {props.DiemThiKetThucMon}
         </Td>
-        <Td position={"relative"} textAlign={"center"}>
+        {/* <Td position={"relative"} textAlign={"center"}>
           {props.DiemThiLai}
-        </Td>
+        </Td> */}
         <Td position={"relative"} textAlign={"center"}>
-          {(
-            props.DiemTBM
-          )}
+          {props.DiemTBM}
         </Td>
         <Td position={"relative"} textAlign={"right"}>
-          <Button onClick={onOpen} color={"blue.500"}>
+          {isDaiDoi && (
             <EditOutlined
               style={{
                 fontSize: "20px",
-                left: "15px",
+                color: "blue",
+                position:"relative",
+                left:"-38%"
               }}
               onClick={onOpen}
             />
-          </Button>
-
+          )}
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -141,7 +148,7 @@ const DiemComponent = (props) => {
               <ModalHeader>Sửa điểm học phần</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                <FormControl mt={4}>
+                {/* <FormControl mt={4}>
                   <FormLabel>Tên học phần</FormLabel>
                   <Select
                     placeholder="Tên học phần"
@@ -155,7 +162,7 @@ const DiemComponent = (props) => {
                       </option>
                     ))}
                   </Select>
-                </FormControl>
+                </FormControl> */}
                 <FormControl>
                   <FormLabel>Điểm Chuyên cần</FormLabel>
                   <Input
@@ -214,17 +221,17 @@ const DiemComponent = (props) => {
           </Modal>
         </Td>
         <Td position={"relative"} textAlign={"left"}>
-          <Button
-            onClick={onSubmitDeleteModalOpen}
-            color={"red.500"}
-          >
-          <DeleteOutlined
-            style={{
-              fontSize: "20px",
-            }}
-          />
-          </Button>
-          
+          {isDaiDoi && (
+            <DeleteOutlined
+              onClick={onSubmitDeleteModalOpen}
+              style={{
+                fontSize: "20px",
+                color: "red",
+                position:"relative",
+                left:"-44px"
+              }}
+            />
+          )}
           <Modal
             isCentered
             onClose={onSubmitDeleteModalClose}

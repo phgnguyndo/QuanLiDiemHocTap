@@ -36,14 +36,19 @@ const FormLogin = () => {
       const action = login(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
-      if (user.role) {
+      if (user.role==="admin") {
+        nav("/daidoi");
+      } else if(user.role==="user1"){
+        nav("/home")
+      } else if(user.role==="user2"){
+        nav(`/${user.maHV}`)
       }
-      nav("/home");
+      // nav("/home");
       window.location.reload()
       // console.log("New user", user.role);
     } catch (error) {
       notification.error({
-        message: "user name or password is invalid",
+        message: "Tài khoản không tồn tại",
         duration: 3,
       });
       console.log("Fail to login", error);

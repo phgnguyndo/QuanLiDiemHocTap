@@ -3,7 +3,10 @@ import DiemComponent from "./DiemComponents";
 import React, { useEffect, useState } from "react";
 import dtbAPI from "../../api/dtbAPI";
 import { useParams } from "react-router-dom";
+import StorageKeys from "../../constance/storage-key";
 const DiemHocKyComponent = (props) => {
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isDaiDoi = user.role === "user1";
   const { idHV } = useParams();
   const hocVienId = idHV;
   const { semester, phieuDiem } = props;
@@ -62,7 +65,7 @@ const DiemHocKyComponent = (props) => {
   const handUpdateDtb = async () => {
     try {
       const dtb = diemTrungBinhHocKy;
-      const tongTC=calculateTongSoTinChi();
+      const tongTC = calculateTongSoTinChi();
       const formdata = { dtb, tongTC };
       await dtbAPI.update(semester, hocVienId, formdata);
       // alert(diemTrungBinhHocKy);
@@ -143,32 +146,34 @@ const DiemHocKyComponent = (props) => {
               STT
             </Th>
             <Th w={"15%"} textAlign={"center"}>
-              TenHocPhan
+              Tên học phần
             </Th>
             {/* <Th w={"6%"} textAlign={"center"}>
               Học Kỳ
             </Th> */}
             <Th w={"6%"} textAlign={"center"}>
-              SoTC
+              Số TC
             </Th>
             <Th w={"6%"} textAlign={"center"}>
-              DiemCC
+              Điểm CC
             </Th>
             <Th w={"6%"} textAlign={"center"}>
-              DiemTX
+              Điểm TX
             </Th>
             <Th w={"6%"} textAlign={"center"}>
-              DiemThi
+              Điểm Thi
             </Th>
-            <Th w={"6%"} textAlign={"center"}>
-              DiemThiLai
-            </Th>
+            {/* <Th w={"6%"} textAlign={"center"}>
+              Điểm thi lại
+            </Th> */}
             <Th w={"8%"} textAlign={"center"}>
-              DiemTB
+              Điểm TB
             </Th>
+            {/* {isDaiDoi && ( */}
             <Th colspan={"7"} w={"9%"} textAlign={"center"}>
-              Tùy chọn
+              {isDaiDoi ? "Tùy chọn" : "Ghi chú"}
             </Th>
+            {/* )} */}
           </Tr>
         </Thead>
         <Tbody>
@@ -178,6 +183,7 @@ const DiemHocKyComponent = (props) => {
               MaPhieuDiem={item.maPhieuDiem}
               stt={index + 1}
               HocKy={item.hocPhan.hocKy}
+              MaHocPhan={item.hocPhan.maHocPhan}
               TenHocPhan={item.hocPhan.tenHocPhan}
               SoTinChi={item.hocPhan.soTC}
               DiemChuyenCan={item.diemCC}
@@ -194,7 +200,7 @@ const DiemHocKyComponent = (props) => {
             <Th colspan={"7"} style={{ textAlign: "right" }}>
               Điểm trung bình học kỳ
             </Th>
-            <Th w={"8%"} textAlign={"center"}>
+            <Th w={"8%"} textAlign={"center"} color={"red"} position={"relative"} left={"-4%"}>
               {diemTrungBinhHocKy.toFixed(2)}
             </Th>
             {/* <Th w={"8%"} textAlign={"center"}>
