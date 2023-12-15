@@ -39,6 +39,7 @@ const FormLogin = () => {
       if (user.role) {
       }
       nav("/home");
+      window.location.reload()
       // console.log("New user", user.role);
     } catch (error) {
       notification.error({

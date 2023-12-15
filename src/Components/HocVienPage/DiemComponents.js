@@ -116,10 +116,8 @@ const DiemComponent = (props) => {
         </Td>
         <Td position={"relative"} textAlign={"center"}>
           {(
-            props.DiemChuyenCan * 0.1 +
-            props.DiemThuongXuyen * 0.3 +
-            props.DiemThiKetThucMon * 0.6
-          ).toFixed(2)}
+            props.DiemTBM
+          )}
         </Td>
         <Td position={"relative"} textAlign={"right"}>
           <Button onClick={onOpen} color={"blue.500"}>

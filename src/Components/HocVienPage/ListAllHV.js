@@ -150,8 +150,8 @@ const ListAllHocVien = (props) => {
     fetchDsHV(currentPage, pageSize);
   }, [currentPage, pageSize]);
 
-  const fetchDsHV = async (page, size) => {
-    setdsHV(await hocvienAPI.getAll(page, 2));
+  const fetchDsHV = async (page) => {
+    setdsHV(await hocvienAPI.getAll(page, 10));
   };
   // console.log(dsHV);
   const handlePageChange = (page) => {
@@ -160,11 +160,11 @@ const ListAllHocVien = (props) => {
     fetchDsHV(page, pageSize);
   };
 
-  const handleSizeChange = (size) => {
-    setPageSize(size);
-    // Implement actions when the page size changes (e.g., fetching data)
-    fetchDsHV(currentPage, size);
-  };
+  // const handleSizeChange = (size) => {
+  //   setPageSize(size);
+  //   // Implement actions when the page size changes (e.g., fetching data)
+  //   fetchDsHV(currentPage, size);
+  // };
   return (
     <Box position={"relative"}>
       <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
@@ -331,7 +331,7 @@ const ListAllHocVien = (props) => {
         <Tfoot left={"25%"} position={"absolute"}>
         <PaginationComponent
           onPageChange={handlePageChange}
-          onSizeChange={handleSizeChange}
+          // onSizeChange={handleSizeChange}
         />
         </Tfoot>
       </Table>
