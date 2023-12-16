@@ -148,8 +148,8 @@ const ListAllHocVien = (props) => {
     fetchDsHV(currentPage, pageSize);
   }, [currentPage, pageSize]);
 
-  const fetchDsHV = async (page, size) => {
-    setdsHV(await hocvienAPI.getAll(page, 2));
+  const fetchDsHV = async (page) => {
+    setdsHV(await hocvienAPI.getAll(page, 10));
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -327,7 +327,7 @@ const ListAllHocVien = (props) => {
         <Tfoot left={"35%"} position={"absolute"}>
         <PaginationComponent
           onPageChange={handlePageChange}
-          onSizeChange={handleSizeChange}
+          // onSizeChange={handleSizeChange}
         />
         </Tfoot>
       </Table>

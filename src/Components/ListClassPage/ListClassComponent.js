@@ -15,8 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ClassComponent from "./ClassComponent";
-// import anh1 from "../../Image/hinh-anh-Harry-potter-va-quan-doan-Dumbledore.jpg";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import lopcnAPI from "../../api/lopcnAPI";
 import StorageKeys from "../../constance/storage-key";
 const username = JSON.parse(localStorage.getItem(StorageKeys.USER));

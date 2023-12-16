@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { register } from "../../features/Auth/userSlice";
 import { useNavigate } from "react-router";
+
 const { Option } = Select;
 const tailFormItemLayout = {
   wrapperCol: {

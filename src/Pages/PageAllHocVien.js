@@ -5,8 +5,7 @@ import ListAllHocVien from '../Components/HocVienPage/ListAllHV';
 const AllHocVien = () => {
   return (
     <>
-    <Head content={<ListAllHocVien/>}/>
-    
+    <Head content={<ListAllHocVien/>}/>   
     </>
   );
 };

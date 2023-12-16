@@ -16,10 +16,8 @@ const DiemHocKyComponent = (props) => {
   const filteredPhieuDiem = phieuDiem?.filter(
     (item) => item.hocPhan.hocKy === semester
   );
-  // console.log(filteredPhieuDiem);
 
   useEffect(() => {
-    // Tính điểm trung bình môn và điểm trung bình học kỳ
     const tinhDiemTrungBinh = () => {
       if (phieuDiem.length === 0 || !semester) {
         setDiemTrungBinhHocKy(0);
@@ -46,10 +44,25 @@ const DiemHocKyComponent = (props) => {
     tinhDiemTrungBinh();
   }, [phieuDiem, semester]);
 
+  const calculateTongSoTinChi = () => {
+    if (filteredPhieuDiem.length === 0) {
+      return 0;
+    }
+
+    let tongSoTinChi = 0;
+
+    filteredPhieuDiem.forEach((item) => {
+      tongSoTinChi += item.hocPhan.soTC;
+    });
+
+    return tongSoTinChi;
+  };
+
   const handUpdateDtb = async () => {
     try {
       const dtb = diemTrungBinhHocKy;
-      const formdata = { dtb };
+      const tongTC=calculateTongSoTinChi();
+      const formdata = { dtb, tongTC };
       await dtbAPI.update(semester, hocVienId, formdata);
       // alert(diemTrungBinhHocKy);
     } catch (error) {
@@ -169,6 +182,7 @@ const DiemHocKyComponent = (props) => {
               DiemChuyenCan={item.diemCC}
               DiemThuongXuyen={item.diemTX}
               DiemThiKetThucMon={item.diemThi}
+              DiemTBM={item.diemTBM}
               DiemThiLai={item.diemThiLai}
               LanThi={item.lanThi}
             />
