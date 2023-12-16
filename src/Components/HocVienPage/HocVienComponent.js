@@ -23,6 +23,7 @@ import {
 import hocvienAPI from "../../api/hocvienAPI";
 import anh from "../../Image/Logo.png";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import StorageKeys from "../../constance/storage-key";
 
 const HocVien = (props) => {
   const capBacData = [
@@ -102,13 +103,14 @@ const HocVien = (props) => {
     onOpen: onEditModalOpen,
     onClose: onEditModalClose,
   } = useDisclosure();
-
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isDaiDoi = user.role === "user1";
   const [hoTen, setHoTen] = useState(props.hoTen || "");
   const [ngaySinh, setNgaySinh] = useState(props.ngaySinh || "");
   const [gioiTinh, setGioiTinh] = useState(props.gioiTinh || true);
   const [queQuan, setQueQuan] = useState(props.queQuan || "");
   const [capBac, setCapBac] = useState(props.capBac || "");
-  const [imageHV, setImageHV] = useState("");
+  // const [imageHV, setImageHV] = useState("");
 
   const { id } = useParams();
   const { idLop } = useParams();
@@ -138,7 +140,7 @@ const HocVien = (props) => {
       formdata.append("gioiTinh", gioiTinh);
       formdata.append("queQuan", queQuan);
       formdata.append("capBac", capBac);
-      formdata.append("file", imageHV);
+      // formdata.append("file", imageHV);
       await hocvienAPI.update(idHV, formdata);
       onClose();
       window.location.reload();
@@ -150,18 +152,22 @@ const HocVien = (props) => {
   return (
     <>
       <Tr>
-        <Td>{props.maHV}</Td>
-        <Td cursor={"pointer"} onClick={handleOnClick}>
+        <Td textAlign={"center"}>{props.maHV}</Td>
+        <Td cursor={"pointer"} onClick={handleOnClick} textAlign={"center"}>
           {props.hoTen}
         </Td>
-        <Td>{props.ngaySinh}</Td>
-        <Td>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
-        <Td>{props.queQuan}</Td>
-        <Td>{props.capBac}</Td>
+        <Td textAlign={"center"}>{props.ngaySinh}</Td>
+        <Td textAlign={"center"}>{props.gioiTinh ? "Nam" : "Nữ"}</Td>
+        <Td textAlign={"center"}>{props.queQuan}</Td>
+        <Td textAlign={"center"}>{props.capBac}</Td>
         <Td>
-          <Button onClick={onOpen} background={"blue.300"}>
-            <EditOutlined />
-          </Button>
+          {isDaiDoi && (
+            <EditOutlined
+              onClick={onOpen}
+              style={{ position: "relative", left: "15px", color: "blue" }}
+            />
+          )}
+
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -230,7 +236,7 @@ const HocVien = (props) => {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl mt={4}>
+                {/* <FormControl mt={4}>
                   <FormLabel>Ảnh</FormLabel>
                   <Input
                     type="file"
@@ -239,7 +245,7 @@ const HocVien = (props) => {
                       setImageHV(e.target.files[0]);
                     }}
                   />
-                </FormControl>
+                </FormControl> */}
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={handleSuaHV}>
@@ -251,9 +257,12 @@ const HocVien = (props) => {
           </Modal>
         </Td>
         <Td textAlign={"center"}>
-          <Button onClick={onEditModalOpen} background={"red.300"}>
-            <DeleteOutlined />
-          </Button>
+        {isDaiDoi && (
+          <DeleteOutlined
+            onClick={onEditModalOpen}
+            style={{ position: "relative", left: "-5px", color: "red" }}
+          />
+        )}
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
             <ModalOverlay />
             <ModalContent>

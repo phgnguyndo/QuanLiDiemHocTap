@@ -109,8 +109,6 @@ import hocvienAPI from "../../api/hocvienAPI.js";
     tinhDiemTrungBinhNamHoc(dsHV,dsDTB);
 
   })
-  console.log("diemne");
-  console.log(hv_diem);
 
     return (
       <div

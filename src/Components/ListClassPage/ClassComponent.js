@@ -25,7 +25,11 @@ import {
 import lopcnAPI from "../../api/lopcnAPI";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import StorageKeys from "../../constance/storage-key";
+
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ClassComponent = (props) => {
+  const isDaiDoi= user.role==="user1"
   const { id } = useParams();
   const idLop = props.maLCN;
   const nav = useNavigate();
@@ -87,7 +91,7 @@ const ClassComponent = (props) => {
         bg={"#f8f9fa"}
         boxShadow={"2px 2px 4px 0px rgba(190, 190, 190, 0.8)"}
         marginRight={"10px"}
-        top={"50px"}
+        top={"20px"}
         marginTop={"20px"}
         // bg={""}
       >
@@ -109,23 +113,25 @@ const ClassComponent = (props) => {
           </Stack>
         </CardBody>
         <CardFooter>
-          <ButtonGroup spacing="1">
-            <Button
-              variant="solid"
-              bg="#e74c3c"
-              color={"white"}
-              onClick={onOpen}
-            >
-              Xóa lớp
-            </Button>
-            <Button
-              variant="solid"
-              colorScheme="blue"
-              onClick={onEditModalOpen}
-            >
-              Sửa thông tin
-            </Button>
-          </ButtonGroup>
+          {isDaiDoi && (
+            <ButtonGroup spacing="1">
+              <Button
+                variant="solid"
+                bg="#e74c3c"
+                color={"white"}
+                onClick={onOpen}
+              >
+                Xóa lớp
+              </Button>
+              <Button
+                variant="solid"
+                colorScheme="blue"
+                onClick={onEditModalOpen}
+              >
+                Sửa thông tin
+              </Button>
+            </ButtonGroup>
+          )}
         </CardFooter>
       </Card>
 
@@ -136,7 +142,7 @@ const ClassComponent = (props) => {
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
-        <ModalContent >
+        <ModalContent>
           <ModalHeader>Xóa đại đội</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

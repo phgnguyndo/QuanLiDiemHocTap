@@ -36,15 +36,15 @@ const FormLogin = () => {
       const action = login(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
-      if (user.role==="admin") {
+      if (user.role === "admin") {
         nav("/daidoi");
-      } else if(user.role==="user1"){
-        nav("/home")
-      } else if(user.role==="user2"){
-        nav(`/${user.maHV}`)
+      } else if (user.role === "user1") {
+        nav("/home");
+      } else if (user.role === "user2") {
+        nav(`/${user.maHV}`);
       }
       // nav("/home");
-      window.location.reload()
+      window.location.reload();
       // console.log("New user", user.role);
     } catch (error) {
       notification.error({
@@ -67,9 +67,9 @@ const FormLogin = () => {
       bgImage={MTA}
       bgSize={"cover"}
     >
-      <Card style={{ maxWidth: 600, width: "100%" }}>
+      <Card style={{ maxWidth: 600, width: "100%", textAlign: "left" }}>
         <Typography.Title level={3} style={{ textAlign: "center" }}>
-          Login
+          Đăng nhập
         </Typography.Title>
 
         <Form
@@ -89,12 +89,13 @@ const FormLogin = () => {
           onSubmit={handleSubmit}
         >
           <Form.Item
-            label="Username:"
+            label="Tài khoản:"
             name="username"
+            style={{ position: "relative", textAlign: "left" }}
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: "Vui lòng nhập tài khoản!",
               },
             ]}
           >
@@ -102,12 +103,12 @@ const FormLogin = () => {
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label="Mật khẩu"
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Vui lòng nhập mật khẩu!",
               },
             ]}
           >
@@ -122,7 +123,7 @@ const FormLogin = () => {
               span: 16,
             }}
           >
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox>Ghi nhớ</Checkbox>
           </Form.Item>
 
           <Form.Item
@@ -136,7 +137,7 @@ const FormLogin = () => {
               htmlType="submit"
               style={{ position: "relative", left: "60px" }}
             >
-              Login
+              Đăng nhập
             </Button>
             <Button
               style={{ position: "relative", left: "-100px", top: "40px" }}
@@ -144,7 +145,7 @@ const FormLogin = () => {
                 nav("/register");
               }}
             >
-              You don't have account? Register now
+              Bạn chưa có tài khoản? Đăng kí ngay
             </Button>
           </Form.Item>
         </Form>

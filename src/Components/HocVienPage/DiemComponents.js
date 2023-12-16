@@ -4,7 +4,6 @@ import {
   Input,
   Button,
   useDisclosure,
-  Select,
   Text,
 } from "@chakra-ui/react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -27,15 +26,10 @@ import { notification } from "antd";
 const DiemComponent = (props) => {
   const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const isDaiDoi = user.role === "user1";
-  const [phieuDiem, setPhieuDiem] = useState([]);
-  const [dsHocPhan, setDsHocPhan] = useState([]);
-  // const [maHocPhan, setMaHocPhan] = useState("");
   const { idHV } = useParams();
   const [diemCC, setDiemCC] = useState(props.DiemChuyenCan || 0);
   const [diemTX, setDiemTX] = useState(props.DiemThuongXuyen || 0);
   const [diemThi, setDiemThi] = useState(props.DiemThiKetThucMon || 0);
-  const [diemThiLai, setDiemThiLai] = useState(props.DiemThiLai || 0);
-  const [lanThi, setLanThi] = useState(props.LanThi || 0);
   const hocVienId = idHV;
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -45,20 +39,6 @@ const DiemComponent = (props) => {
     onOpen: onSubmitDeleteModalOpen,
     onClose: onSubmitDeleteModalClose,
   } = useDisclosure();
-  useEffect(() => {
-    fetchPhieuDiem();
-  }, []);
-  const fetchPhieuDiem = async () => {
-    setPhieuDiem(await phieuDiemAPI.get(idHV));
-  };
-
-  useEffect(() => {
-    fetchHocPhan();
-  }, []);
-
-  const fetchHocPhan = async () => {
-    setDsHocPhan(await hocPhanAPI.getAll());
-  };
   const handleSubmit = async () => {
     try {
       const phieudiemID = props.MaPhieuDiem;
@@ -68,9 +48,7 @@ const DiemComponent = (props) => {
         hocVienId,
         diemCC,
         diemTX,
-        diemThi,
-        diemThiLai,
-        lanThi,
+        diemThi
       };
       console.log(phieudiemID);
       await phieuDiemAPI.update(phieudiemID, formData);
@@ -148,21 +126,6 @@ const DiemComponent = (props) => {
               <ModalHeader>Sửa điểm học phần</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                {/* <FormControl mt={4}>
-                  <FormLabel>Tên học phần</FormLabel>
-                  <Select
-                    placeholder="Tên học phần"
-                    onChange={(e) => {
-                      setMaHocPhan(e.target.value);
-                    }}
-                  >
-                    {dsHocPhan.map((item, index) => (
-                      <option key={index} value={item.maHocPhan}>
-                        {item.tenHocPhan}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl> */}
                 <FormControl>
                   <FormLabel>Điểm Chuyên cần</FormLabel>
                   <Input
@@ -192,7 +155,7 @@ const DiemComponent = (props) => {
                     }}
                   />
                 </FormControl>
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel>Điểm Thi Lại</FormLabel>
                   <Input
                     defaultValue={props.DiemThiLai}
@@ -209,7 +172,7 @@ const DiemComponent = (props) => {
                       setLanThi(parseFloat(e.target.value));
                     }}
                   />
-                </FormControl>
+                </FormControl> */}
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={handleSubmit}>

@@ -1,9 +1,9 @@
 import axiosClient from "./axiosClient";
 
 const bomonAPI= {
-    getAll(params) {
+    getAll() {
         const url='/BoMon';
-        return axiosClient.get(url, {params})
+        return axiosClient.get(url)
     },
     get(id) {
         const url=`/BoMon/bomonbyidkhoa/${id}`;

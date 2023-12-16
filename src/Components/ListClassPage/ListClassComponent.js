@@ -70,14 +70,13 @@ const ListClassComponent = () => {
       >
         Danh sách các lớp
       </Box>
-      {/* <ButtonGroup spacing="2"> */}
       {isDaiDoi && (
         <Button
           variant="solid"
           bg="rgb(26,132,74)"
           color={"white"}
           top={"20px"}
-          left={"80%"}
+          left={"1.5%"}
           onClick={onOpen}
         >
           Thêm lớp

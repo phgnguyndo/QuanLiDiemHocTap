@@ -144,6 +144,7 @@ const Head = ({ content }) => {
               icon={<HeatMapOutlined />}
               onClick={() => {
                 nav("/tkn");
+                window.location.reload();
               }}
             >
               Theo năm

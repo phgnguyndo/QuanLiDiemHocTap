@@ -21,12 +21,15 @@ import {
   Select,
   Box,
   Flex,
+  Tfoot,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
+import PaginationComponent from "../Pagination/Pagenation";
+import StorageKeys from "../../constance/storage-key";
 
 const ListHocVienTable = (props) => {
   const capBacData = [
@@ -112,8 +115,12 @@ const ListHocVienTable = (props) => {
   const [gioiTinh, setGioiTinh] = useState(true);
   const [queQuan, setQueQuan] = useState("");
   const [capBac, setCapBac] = useState("");
-  const [imageHV, setImageHV] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  // const [imageHV, setImageHV] = useState("");
 
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isDaiDoi = user.role === "user1";
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
@@ -127,7 +134,7 @@ const ListHocVienTable = (props) => {
       formdata.append("gioiTinh", gioiTinh);
       formdata.append("queQuan", queQuan);
       formdata.append("capBac", capBac);
-      formdata.append("file", imageHV);
+      // formdata.append("file", imageHV);
       await hocvienAPI.create(formdata);
       onClose();
       window.location.reload();
@@ -143,7 +150,11 @@ const ListHocVienTable = (props) => {
   const fetchDsHV = async () => {
     setdsHV(await hocvienAPI.get(idLop));
   };
-
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // Implement actions when the page changes (e.g., fetching data)
+    fetchDsHV(page, pageSize);
+  };
   return (
     <Box position={"relative"}>
       {/* <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1> */}
@@ -156,16 +167,18 @@ const ListHocVienTable = (props) => {
       >
         Danh sách học viên
       </Box>
-      <Button
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        left={"2%"}
-        top={"30px"}
-        onClick={onOpen}
-      >
-        Thêm
-      </Button>
+      {isDaiDoi && (
+        <Button
+          variant="solid"
+          bg="rgb(26,132,74)"
+          color={"white"}
+          left={"2%"}
+          top={"30px"}
+          onClick={onOpen}
+        >
+          Thêm
+        </Button>
+      )}
       <Modal
         size={"xl"}
         initialFocusRef={initialRef}
@@ -261,7 +274,7 @@ const ListHocVienTable = (props) => {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl mt={4}>
+                {/* <FormControl mt={4}>
                   <FormLabel>Ảnh</FormLabel>
                   <Input
                     type="file"
@@ -270,7 +283,7 @@ const ListHocVienTable = (props) => {
                       setImageHV(e.target.files[0]);
                     }}
                   />
-                </FormControl>
+                </FormControl> */}
               </Box>
             </Flex>
           </ModalBody>
@@ -293,12 +306,24 @@ const ListHocVienTable = (props) => {
         >
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
-              <Th w={"5%"}>Mã HV</Th>
-              <Th w={"20%"}>Họ tên</Th>
-              <Th w={"9%"}>Ngày sinh</Th>
-              <Th w={"8%"}>Giới tính</Th>
-              <Th w={"17%"}>Quê quán</Th>
-              <Th w={"8%"}>Cấp bậc</Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Mã HV
+              </Th>
+              <Th w={"20%"} textAlign={"center"}>
+                Họ tên
+              </Th>
+              <Th w={"9%"} textAlign={"center"}>
+                Ngày sinh
+              </Th>
+              <Th w={"8%"} textAlign={"center"}>
+                Giới tính
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Quê quán
+              </Th>
+              <Th w={"8%"} textAlign={"center"}>
+                Cấp bậc
+              </Th>
               <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
                 Tùy chọn
               </Th>
@@ -318,6 +343,11 @@ const ListHocVienTable = (props) => {
               />
             ))}
           </Tbody>
+          <br></br>
+          <Tfoot position={"absolute"} left={"35%"}>
+            <PaginationComponent onPageChange={handlePageChange} />
+          </Tfoot>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>

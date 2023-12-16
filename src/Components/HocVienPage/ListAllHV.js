@@ -18,6 +18,7 @@ import {
   Box,
   Tfoot,
   Tbody,
+  Flex,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
@@ -25,6 +26,7 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 import PaginationComponent from "../Pagination/Pagenation";
+import lopcnAPI from "../../api/lopcnAPI";
 
 const ListAllHocVien = (props) => {
   const capBacData = [
@@ -98,8 +100,6 @@ const ListAllHocVien = (props) => {
     "Vĩnh Phúc",
     "Yên Bái",
   ];
-
-  const { idLop } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -110,16 +110,16 @@ const ListAllHocVien = (props) => {
   const [gioiTinh, setGioiTinh] = useState(true);
   const [queQuan, setQueQuan] = useState("");
   const [capBac, setCapBac] = useState("");
-  const [imageHV, setImageHV] = useState("");
+  // const [imageHV, setImageHV] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  
-  
+  const [dsLCN, setDsLCN] = useState([]);
+  const [maLCN, setMaLCN] = useState("");
 
   const handleSubmit = async () => {
     try {
-      const lcnId = idLop;
+      const lcnId = maLCN;
       // const maHV= initialRef.current.value;
       // const tenHV = finalRef.current.value;
       const formdata = new FormData();
@@ -130,7 +130,7 @@ const ListAllHocVien = (props) => {
       formdata.append("gioiTinh", gioiTinh);
       formdata.append("queQuan", queQuan);
       formdata.append("capBac", capBac);
-      formdata.append("file", imageHV);
+      // formdata.append("file", imageHV);
       await hocvienAPI.create(formdata);
       onClose();
       window.location.reload();
@@ -153,6 +153,13 @@ const ListAllHocVien = (props) => {
   const fetchDsHV = async (page) => {
     setdsHV(await hocvienAPI.getAll(page, 10));
   };
+
+  useEffect(() => {
+    fetchLCN();
+  }, []);
+  const fetchLCN = async () => {
+    setDsLCN(await lopcnAPI.getAll());
+  };
   // console.log(dsHV);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -167,7 +174,6 @@ const ListAllHocVien = (props) => {
   // };
   return (
     <Box position={"relative"}>
-      <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
       <Box
         color={"brown"}
         fontSize={"35px"}
@@ -187,6 +193,139 @@ const ListAllHocVien = (props) => {
         Thêm
       </Button>
       <Modal
+        size={"xl"}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thêm học viên</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={7}>
+            <Flex justify={"space-evenly"}>
+              <Box w={"43%"}>
+                <FormControl>
+                  <FormLabel>Lớp chuyên ngành</FormLabel>
+                  <Select
+                    placeholder="Lớp chuyên ngành"
+                    size={"sm"}
+                    id="lcnInput"
+                    onChange={(e) => {
+                      setMaLCN(e.target.value);
+                    }}
+                  >
+                    {dsLCN.map((item) => (
+                      <option value={item.maLopChuyenNganh}>
+                        {item.tenLopChuyenNganh}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Mã học viên</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    type="text"
+                    placeholder="Mã HV"
+                    onChange={(e) => {
+                      setMaHV(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Tên học viên</FormLabel>
+                  <Input
+                    ref={finalRef}
+                    type="text"
+                    placeholder="Tên học viên"
+                    onChange={(e) => {
+                      setHoTen(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Ngày sinh</FormLabel>
+                  <Input
+                    placeholder="Ngày sinh"
+                    id="ngaySinhInput"
+                    onChange={(e) => {
+                      setNgaySinh(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Giới tính</FormLabel>
+                  <Select
+                    size={"sm"}
+                    id="gioiTinhInput"
+                    onChange={(e) => {
+                      setGioiTinh(e.target.value);
+                    }}
+                  >
+                    <option value={true}>Nam</option>
+                    <option value={false}>Nữ</option>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box w={"48%"} marginTop={"-16px"}>
+                <FormControl mt={4}>
+                  <FormLabel>Quê quán</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Quê quán"
+                    id="queQuanInput"
+                    onChange={(e) => {
+                      setQueQuan(e.target.value);
+                    }}
+                  >
+                    {provinceData.map((province, index) => (
+                      <option key={index} value={province}>
+                        {province}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Cấp bậc</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Cấp bậc"
+                    id="capBacInput"
+                    onChange={(e) => {
+                      setCapBac(e.target.value);
+                    }}
+                  >
+                    {capBacData.map((capbac, index) => (
+                      <option key={index} value={capbac}>
+                        {capbac}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <FormControl mt={4}>
+                  <FormLabel>Ảnh</FormLabel>
+                  <Input
+                    type="file"
+                    name="file"
+                    onChange={(e) => {
+                      setImageHV(e.target.files[0]);
+                    }}
+                  />
+                </FormControl> */}
+              </Box>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Lưu
+            </Button>
+            <Button onClick={onClose}>Hủy</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/* <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -291,7 +430,7 @@ const ListAllHocVien = (props) => {
             <Button onClick={onClose}>Hủy</Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
       {/* <TableContainer w={"150vh"}> */}
       <Table
         variant="striped"
@@ -301,18 +440,19 @@ const ListAllHocVien = (props) => {
         w={"90%"}
         left={"5%"}
       >
-        <Thead>
-          <Tr>
-            <Th w={"12%"}>Mã HV</Th>
-            <Th>Họ tên</Th>
-            <Th>Ngày sinh</Th>
-            <Th>Giới tính</Th>
-            <Th>Quê quán</Th>
-            <Th>Cấp bậc</Th>
-            <Th textAlign={"center"}>Sửa</Th>
-            <Th textAlign={"center"}>Xóa</Th>
-          </Tr>
-        </Thead>
+        <Thead background={"rgb(182, 187, 196)"}>
+            <Tr>
+              <Th w={"5%"} textAlign={"center"}>Mã HV</Th>
+              <Th w={"20%"} textAlign={"center"} >Họ tên</Th>
+              <Th w={"9%"} textAlign={"center"}>Ngày sinh</Th>
+              <Th w={"8%"} textAlign={"center"}>Giới tính</Th>
+              <Th w={"10%"} textAlign={"center"}>Quê quán</Th>
+              <Th w={"8%"} textAlign={"center"}>Cấp bậc</Th>
+              <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
+                Tùy chọn
+              </Th>
+            </Tr>
+          </Thead>
         <Tbody>
           {dsHV?.map((item) => (
             <HocVien
@@ -328,11 +468,11 @@ const ListAllHocVien = (props) => {
           ))}
         </Tbody>
         <br />
-        <Tfoot left={"25%"} position={"absolute"}>
-        <PaginationComponent
-          onPageChange={handlePageChange}
-          // onSizeChange={handleSizeChange}
-        />
+        <Tfoot position={"absolute"} left={"35%"}>
+          <PaginationComponent
+            onPageChange={handlePageChange}
+            // onSizeChange={handleSizeChange}
+          />
         </Tfoot>
       </Table>
     </Box>

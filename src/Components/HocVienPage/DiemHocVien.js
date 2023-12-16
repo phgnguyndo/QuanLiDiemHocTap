@@ -28,6 +28,7 @@ import { useParams } from "react-router-dom";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import hocPhanAPI from "../../api/hocphanAPI";
 import StorageKeys from "../../constance/storage-key";
+import { notification } from "antd";
 
 const DiemHocVien = (props) => {
   const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
@@ -36,8 +37,8 @@ const DiemHocVien = (props) => {
   const [diemCC, setDiemCC] = useState(0);
   const [diemTX, setDiemTX] = useState(0);
   const [diemThi, setDiemThi] = useState(0);
-  const [diemThiLai, setDiemThiLai] = useState(0);
-  const [lanThi, setLanThi] = useState(0);
+  // const [diemThiLai, setDiemThiLai] = useState(0);
+  // const [lanThi, setLanThi] = useState(0);
   const [maHocPhan, setMaHocPhan] = useState("");
   const [dsHocPhan, setDsHocPhan] = useState([]);
   const [phieuDiem, setPhieuDiem] = useState([]);
@@ -50,14 +51,17 @@ const DiemHocVien = (props) => {
         hocVienId,
         diemCC,
         diemTX,
-        diemThi,
-        diemThiLai,
-        lanThi,
+        diemThi
       };
+      console.log(formData);
       await phieuDiemAPI.create(formData);
       onClose();
       window.location.reload();
     } catch (error) {
+      notification.error({
+        message: "Phiếu điểm đã tồn tại",
+        duration: 3,
+      });
       console.log(error);
     }
   };
@@ -170,7 +174,7 @@ const DiemHocVien = (props) => {
                 }}
               />
             </FormControl>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>Điểm Thi Lại</FormLabel>
               <Input
                 placeholder="VD: Giải tích"
@@ -187,7 +191,7 @@ const DiemHocVien = (props) => {
                   setLanThi(parseInt(e.target.value));
                 }}
               />
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
