@@ -103,7 +103,7 @@ const ClassComponent = (props) => {
               size="md"
               _hover={{ color: "brown" }}
               onClick={() => {
-                nav(`/home/${daiDoiId}/${idLop}`);
+                nav(`/homes/${idLop}`);
               }}
               // onClick={()=>{console.log(lopId)}}
             >

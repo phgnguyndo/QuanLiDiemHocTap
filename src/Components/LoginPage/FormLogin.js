@@ -15,6 +15,8 @@ import { useNavigate } from "react-router";
 import { login } from "../../features/Auth/userSlice";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import StorageKeys from "../../constance/storage-key";
+import truyvetAPI from "../../api/truyvetAPI";
 
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
@@ -31,11 +33,17 @@ const FormLogin = () => {
         username: values.username,
         password: values.password,
       };
-      console.log(dataToSend);
-
+      // console.log(dataToSend);
       const action = login(dataToSend);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
+      
+      const dataTruyVet={
+        username: user.code,
+        role: user.role,
+        tgDangNhap: new Date().toISOString()
+      }
+      await truyvetAPI.create(dataTruyVet)
       if (user.role === "admin") {
         nav("/daidoi");
       } else if (user.role === "user1") {
@@ -43,7 +51,7 @@ const FormLogin = () => {
       } else if (user.role === "user2") {
         nav(`/${user.maHV}`);
       }
-      // nav("/home");
+      
       window.location.reload();
       // console.log("New user", user.role);
     } catch (error) {

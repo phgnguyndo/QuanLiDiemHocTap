@@ -58,7 +58,7 @@ const HvXuatSacComponent = (props) => {
       switch (namHoc) {
         case "1":
           for (let i = 0; i < len; i++) {
-            if (hv_diem[i][1] >= 9) {
+            if (hv_diem[i]?.[1] >= 9) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][1]]
               xuatSac.push(newRows);
               j++;
@@ -67,7 +67,7 @@ const HvXuatSacComponent = (props) => {
           break;
         case "2":
           for (let i = 0; i < len; i++) {
-            if (hv_diem[i][2] >= 9) {
+            if (hv_diem[i]?.[2] >= 9) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][2]]
               xuatSac.push(newRows);
               j++;
@@ -76,7 +76,7 @@ const HvXuatSacComponent = (props) => {
           break;
         case "3":
           for (let i = 0; i < len; i++) {
-            if (hv_diem[i][3] >= 9) {
+            if (hv_diem[i]?.[3] >= 9) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][3]]
               xuatSac.push(newRows);
               j++;
@@ -85,7 +85,7 @@ const HvXuatSacComponent = (props) => {
           break;
         case "4":
           for (let i = 0; i < len; i++) {
-            if (hv_diem[i][4] >= 9) {
+            if (hv_diem[i]?.[4] >= 9) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][4]]
               xuatSac.push(newRows);
               j++;
@@ -94,7 +94,7 @@ const HvXuatSacComponent = (props) => {
           break;
         case "5":
           for (let i = 0; i < len; i++) {
-            if (hv_diem[i][5] >= 9) {
+            if (hv_diem[i]?.[5] >= 9) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][5]]
               xuatSac.push(newRows);
               j++;

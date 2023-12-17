@@ -16,6 +16,7 @@ import TKTheoKy from "./Pages/TkTheoKy";
 import TKTheoNam from "./Pages/TkTheoNam";
 import TaoTaiKhoan from "./Pages/TaoTaiKhoan";
 import StorageKeys from "./constance/storage-key";
+import TruyVet from "./Pages/TruyVet";
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
         <Route path="/home/:id" element={<ListClass />} />
         <Route path="/daidoi" element={<Home />} />
         <Route path="/home/:id/:idLop" element={<HocVien />} />
+        <Route path="/homes/:idLop" element={<HocVien />} />
         <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
         <Route path="/register" element={<Register />} />
         <Route path="/:idHV" element={<Diem />} />
@@ -41,6 +43,7 @@ function App() {
         <Route path="/tkhk" element={<TKTheoKy />} />
         <Route path="/tkn" element={<TKTheoNam />} />
         <Route path="/taotaikhoan" element={<TaoTaiKhoan />} />
+        <Route path="/truyvet" element={<TruyVet />} />
         <Route path="/*" element={<div>404 not found</div>} />
       </Routes>
     </BrowserRouter>

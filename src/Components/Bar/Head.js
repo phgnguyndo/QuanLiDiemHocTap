@@ -36,18 +36,20 @@ const Head = ({ content }) => {
     searchHocVien();
   }, [searchText]);
   const searchHocVien = async () => {
-    setHocVien(await hocvienAPI.getAll(1, 10));
+    setHocVien(await hocvienAPI.get(searchText));
   };
   // const handleSearch = (e) => {
   //   searchHocVien()
   // };
 
   const handleLogout = () => {
+    
     localStorage.clear();
     nav("/");
   };
 
   const isAdmin = user.role === "admin";
+  const isAdOrDd = user.role === "admin" || user.role === "user1";
 
   const menu = (
     <Menu onClick={handleLogout}>
@@ -98,97 +100,111 @@ const Head = ({ content }) => {
             Trang chủ
           </Menu.Item>
           {isDaiDoi && (
-            <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
-              <Menu.Item
-                key="2"
-                icon={<RadarChartOutlined />}
-                onClick={() => {
-                  nav("/khoa");
-                }}
-              >
-                Khoa
-              </Menu.Item>
-              <Menu.Item
-                key="3"
-                icon={<HeatMapOutlined />}
-                onClick={() => {
-                  nav("/bomon");
-                }}
-              >
-                Bộ môn
-              </Menu.Item>
-              <Menu.Item
-                key="4"
-                icon={<UserAddOutlined />}
-                onClick={() => {
-                  nav("/giangvien");
-                }}
-              >
-                Giảng viên
-              </Menu.Item>
-              <Menu.Item
-                key="5"
-                icon={<ReadOutlined />}
-                onClick={() => {
-                  nav("/hocphan");
-                }}
-              >
-                Học phần
-              </Menu.Item>
-              <Menu.Item
-                key="6"
-                icon={<ReadOutlined />}
-                onClick={() => {
-                  nav("/lophocphan");
-                }}
-              >
-                Lớp học phần
-              </Menu.Item>
-              <Menu.Item
-                key="7"
-                icon={<ReadOutlined />}
-                onClick={() => {
-                  nav("/hocvien");
-                }}
-              >
-                Học viên
-              </Menu.Item>
-              <Menu.Item key="8" icon={<ReadOutlined />}>
-                Giảng dạy
-              </Menu.Item>
-            </SubMenu>
+            <>
+              <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
+                <Menu.Item
+                  key="2"
+                  icon={<RadarChartOutlined />}
+                  onClick={() => {
+                    nav("/khoa");
+                  }}
+                >
+                  Khoa
+                </Menu.Item>
+                <Menu.Item
+                  key="3"
+                  icon={<HeatMapOutlined />}
+                  onClick={() => {
+                    nav("/bomon");
+                  }}
+                >
+                  Bộ môn
+                </Menu.Item>
+                <Menu.Item
+                  key="4"
+                  icon={<UserAddOutlined />}
+                  onClick={() => {
+                    nav("/giangvien");
+                  }}
+                >
+                  Giảng viên
+                </Menu.Item>
+                <Menu.Item
+                  key="5"
+                  icon={<ReadOutlined />}
+                  onClick={() => {
+                    nav("/hocphan");
+                  }}
+                >
+                  Học phần
+                </Menu.Item>
+                <Menu.Item
+                  key="6"
+                  icon={<ReadOutlined />}
+                  onClick={() => {
+                    nav("/lophocphan");
+                  }}
+                >
+                  Lớp học phần
+                </Menu.Item>
+                <Menu.Item
+                  key="7"
+                  icon={<ReadOutlined />}
+                  onClick={() => {
+                    nav("/hocvien");
+                  }}
+                >
+                  Học viên
+                </Menu.Item>
+                <Menu.Item key="8" icon={<ReadOutlined />}>
+                  Giảng dạy
+                </Menu.Item>
+              </SubMenu>
+
+              <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
+                <Menu.Item
+                  key="10"
+                  icon={<RadarChartOutlined />}
+                  onClick={() => {
+                    nav("/tkhk");
+                  }}
+                >
+                  Theo học kỳ
+                </Menu.Item>
+                <Menu.Item
+                  key="11"
+                  icon={<HeatMapOutlined />}
+                  onClick={() => {
+                    nav("/tkn");
+                    window.location.reload();
+                  }}
+                >
+                  Theo năm
+                </Menu.Item>
+              </SubMenu>
+            </>
           )}
-          <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
-            <Menu.Item
-              key="10"
-              icon={<RadarChartOutlined />}
-              onClick={() => {
-                nav("/tkhk");
-              }}
-            >
-              Theo học kỳ
-            </Menu.Item>
-            <Menu.Item
-              key="11"
-              icon={<HeatMapOutlined />}
-              onClick={() => {
-                nav("/tkn");
-                window.location.reload();
-              }}
-            >
-              Theo năm
-            </Menu.Item>
-          </SubMenu>
           {isAdmin && (
-            <Menu.Item
-              key="12"
-              icon={<UserOutlined />}
-              onClick={() => {
-                nav("/taotaikhoan");
-              }}
-            >
-              Tạo tài khoản
-            </Menu.Item>
+            <>
+              <Menu.Item
+                key="12"
+                icon={<UserOutlined />}
+                onClick={() => {
+                  nav("/taotaikhoan");
+                }}
+              >
+                Tạo tài khoản
+              </Menu.Item>
+              <Menu.Item
+                key="13"
+                icon={<UserOutlined />}
+                onClick={() => {
+                  nav("/truyvet");
+                }}
+              >
+                Lịch sử đăng nhập
+              </Menu.Item>
+            </>
           )}
         </Menu>
       </Sider>
@@ -220,31 +236,35 @@ const Head = ({ content }) => {
 
           {/* <i style={{position:"relative", left:"81%"}}>Đăng xuất</i> */}
 
-          <Form
-            style={{
-              position: "relative",
-              top: "-51px",
-              left: "70%",
-              width: "200px",
-              // border: "1px solid gray",
-              borderRadius: "6px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-            }}
-          >
-            <Dropdown overlay={menu2} placement="bottomRight" arrow>
-              <InputGroup>
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  value={searchText}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    setSearchText(text);
-                  }}
-                />
-              </InputGroup>
-            </Dropdown>
-          </Form>
+          {isAdOrDd && (
+            <>
+              <Form
+                style={{
+                  position: "relative",
+                  top: "-51px",
+                  left: "70%",
+                  width: "200px",
+                  // border: "1px solid gray",
+                  borderRadius: "6px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+                }}
+              >
+                <Dropdown overlay={menu2} placement="bottomRight" arrow>
+                  <InputGroup>
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={(e) => {
+                        const text = e.target.value;
+                        setSearchText(text);
+                      }}
+                    />
+                  </InputGroup>
+                </Dropdown>
+              </Form>
+            </>
+          )}
         </Header>
         <Content
           style={{

@@ -61,7 +61,7 @@ const HvGioiComponent = (props) => {
       switch (namHoc) {
         case "1":
           for (let i = 0; i < len; i++) {
-            if (9 > hv_diem[i][1] && hv_diem[i][1] >= 8) {
+            if (9 > hv_diem[i]?.[1] && hv_diem[i]?.[1] >= 8) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][1]]
               gioi.push(newRows);
               j++;
@@ -70,7 +70,7 @@ const HvGioiComponent = (props) => {
           break;
         case "2":
           for (let i = 0; i < len; i++) {
-            if (9 > hv_diem[i][2] && hv_diem[i][2] >= 8) {
+            if (9 > hv_diem[i]?.[2] && hv_diem[i]?.[2] >= 8) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][2]]
               gioi.push(newRows);
               j++;
@@ -79,7 +79,7 @@ const HvGioiComponent = (props) => {
           break;
         case "3":
           for (let i = 0; i < len; i++) {
-            if (9 > hv_diem[i][3] && hv_diem[i][3] >= 8) {
+            if (9 > hv_diem[i]?.[3] && hv_diem[i]?.[3] >= 8) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][3]]
               gioi.push(newRows);
               j++;
@@ -88,7 +88,7 @@ const HvGioiComponent = (props) => {
           break;
         case "4":
           for (let i = 0; i < len; i++) {
-            if (9 > hv_diem[i][4] && hv_diem[i][4] >= 8) {
+            if (9 > hv_diem[i]?.[4] && hv_diem[i]?.[4] >= 8) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][4]]
               gioi.push(newRows);
               j++;
@@ -97,7 +97,7 @@ const HvGioiComponent = (props) => {
           break;
         case "5":
           for (let i = 0; i < len; i++) {
-            if (9 > hv_diem[i][5] && hv_diem[i][5] >= 8) {
+            if (9 > hv_diem[i]?.[5] && hv_diem[i]?.[5] >= 8) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][5]]
               gioi.push(newRows);
               j++;

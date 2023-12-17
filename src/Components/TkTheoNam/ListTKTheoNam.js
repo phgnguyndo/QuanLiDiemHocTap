@@ -1,23 +1,6 @@
 import {
-    Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
     TableContainer,
     useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    FormControl,
-    FormLabel,
-    ModalFooter,
     Select,
   } from "@chakra-ui/react";
   import { Input } from "antd";
@@ -34,16 +17,7 @@ import HvKemComponent from "./HvKemComponent.js";
 import hocvienAPI from "../../api/hocvienAPI.js";
 
   const ListTKTheoNam = (props) => {
-    const i = 0;
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const initialRef = React.useRef(null);
-    const finalRef = React.useRef(null);
-  
-
-
-
-    const [namHoc, setNamHoc] = useState(1);
+    const [namHoc, setNamHoc] = useState(0);
     const [dsDTB, setdsDTB] = useState([]);
     // const [dsHP, setdsHP] = useState([]);
     const [dsHV,setdsHV] = useState([]);
@@ -108,7 +82,7 @@ import hocvienAPI from "../../api/hocvienAPI.js";
     };
     tinhDiemTrungBinhNamHoc(dsHV,dsDTB);
 
-  })
+  },[namHoc])
 
     return (
       <div

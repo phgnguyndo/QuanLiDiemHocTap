@@ -57,7 +57,7 @@ const HvTBComponent = (props) => {
       switch (namHoc) {
         case "1":
           for (let i = 0; i < len; i++) {
-            if (7 > hv_diem[i][1] && hv_diem[i][1] >= 6) {
+            if (7 > hv_diem[i]?.[1] && hv_diem[i]?.[1] >= 6) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][1]];
               trungBinh.push(newRows)
               j++;
@@ -66,7 +66,7 @@ const HvTBComponent = (props) => {
           break;
         case "2":
           for (let i = 0; i < len; i++) {
-            if (7 > hv_diem[i][2] && hv_diem[i][2] >= 6) {
+            if (7 > hv_diem[i]?.[2] && hv_diem[i]?.[2] >= 6) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][2]];
               trungBinh.push(newRows)
               j++;
@@ -75,7 +75,7 @@ const HvTBComponent = (props) => {
           break;
         case "3":
           for (let i = 0; i < len; i++) {
-            if (7 > hv_diem[i][3] && hv_diem[i][3] >= 6) {
+            if (7 > hv_diem[i]?.[3] && hv_diem[i]?.[3] >= 6) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][3]];
               trungBinh.push(newRows)
               j++;
@@ -84,7 +84,7 @@ const HvTBComponent = (props) => {
           break;
         case "4":
           for (let i = 0; i < len; i++) {
-            if (7 > hv_diem[i][4] && hv_diem[i][4] >= 6) {
+            if (7 > hv_diem[i]?.[4] && hv_diem[i]?.[4] >= 6) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][4]];
               trungBinh.push(newRows)
             }
@@ -92,7 +92,7 @@ const HvTBComponent = (props) => {
           break;
         case "5":
           for (let i = 0; i < len; i++) {
-            if (7 > hv_diem[i][5] && hv_diem[i][5] >= 6) {
+            if (7 > hv_diem[i]?.[5] && hv_diem[i]?.[5] >= 6) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][5]];
               trungBinh.push(newRows)
             }
