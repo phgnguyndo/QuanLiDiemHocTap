@@ -21,11 +21,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { Input } from "antd";
-import HocVien from "./HocVienComponent";
+import HocVien from "./HocVienComponent2";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 import PaginationComponent from "../Pagination/Pagenation";
+import StorageKeys from "../../constance/storage-key";
+import lopcnAPI from "../../api/lopcnAPI";
 
 const ListAllHocVien = (props) => {
   const capBacData = [
@@ -100,8 +102,9 @@ const ListAllHocVien = (props) => {
     "Yên Bái",
   ];
 
-  const { idLop } = useParams();
+  // const { idLop } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
@@ -115,12 +118,10 @@ const ListAllHocVien = (props) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  
-  
 
   const handleSubmit = async () => {
     try {
-      const lcnId = idLop;
+      const lcnId = maLCN;
       const formdata = new FormData();
       formdata.append("maHV", maHV);
       formdata.append("lopChuyenNganhId", lcnId);
@@ -161,12 +162,24 @@ const ListAllHocVien = (props) => {
     setPageSize(size);
     fetchDsHV(currentPage, size);
   };
-  
+
+  const [maLCN, setMaLcn] = useState("");
+  const [dsLcn, setDsLcn] = useState([]);
+  useEffect(() => {
+    fetchDsLcn();
+  }, []);
+
+  const fetchDsLcn = async () => {
+    const idDaiDoi = user.maDaiDoi;
+    setDsLcn(await lopcnAPI.get(idDaiDoi));
+  };
+
   return (
     <Box position={"relative"}>
       <Box
+        variant="solid"
         color={"brown"}
-        fontSize={"35px"}
+        fontSize={"40px"}
         fontWeight={500}
         textAlign={"center"}
       >
@@ -176,7 +189,7 @@ const ListAllHocVien = (props) => {
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
-        left={"5%"}
+        left={"2%"}
         top={"30px"}
         onClick={onOpen}
       >
@@ -193,7 +206,7 @@ const ListAllHocVien = (props) => {
         <ModalContent>
           <ModalHeader>Thêm học viên</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={7}>
+          <ModalBody pb={6}>
             <Flex justify={"space-evenly"}>
               <Box w={"43%"}>
                 <FormControl>
@@ -277,6 +290,22 @@ const ListAllHocVien = (props) => {
                     ))}
                   </Select>
                 </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Lớp chuyên ngành</FormLabel>
+                  <Select
+                    placeholder="Không"
+                    id="LcnInPut"
+                    onChange={(e) => {
+                      setMaLcn(e.target.value);
+                    }}
+                  >
+                    {dsLcn.map((item, index) => (
+                      <option key={index} value={item.maLopChuyenNganh}>
+                        {item.tenLopChuyenNganh}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
                 {/* <FormControl mt={4}>
                   <FormLabel>Ảnh</FormLabel>
                   <Input
@@ -304,19 +333,20 @@ const ListAllHocVien = (props) => {
         size="sm"
         position={"relative"}
         top={"50px"}
-        w={"90%"}
-        left={"5%"}
+        w={"95%"}
+        left={"2%"}
       >
-        <Thead>
+        <Thead background={"rgb(182, 187, 196)"}>
           <Tr>
-            <Th w={"12%"} textAlign={"center"}>Mã HV</Th>
-            <Th textAlign={"center"}>Họ tên</Th>
-            <Th textAlign={"center"}>Ngày sinh</Th>
-            <Th textAlign={"center"}>Giới tính</Th>
-            <Th textAlign={"center"}>Quê quán</Th>
-            <Th textAlign={"center"}>Cấp bậc</Th>
-            <Th textAlign={"center"}>Tùy chọn</Th>
-            {/* <Th textAlign={"center"}>Xóa</Th> */}
+            <Th w={"5%"}>Mã HV</Th>
+            <Th w={"20%"} textAlign={"center"}>Họ tên</Th>
+            <Th w={"9%"}>Ngày sinh</Th>
+            <Th w={"8%"}>Giới tính</Th>
+            <Th w={"17%"}>Quê quán</Th>
+            <Th w={"8%"}>Cấp bậc</Th>
+            <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
+              Tùy chọn
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -324,6 +354,7 @@ const ListAllHocVien = (props) => {
             <HocVien
               key={item.maHV}
               maHV={item.maHV}
+              lopChuyenNganhId={item.lopChuyenNganhId}
               hoTen={item.tenHV}
               img={item.anhHV}
               ngaySinh={item.ngaySinh}
@@ -335,10 +366,10 @@ const ListAllHocVien = (props) => {
         </Tbody>
         <br />
         <Tfoot left={"35%"} position={"absolute"}>
-        <PaginationComponent
-          onPageChange={handlePageChange}
-          // onSizeChange={handleSizeChange}
-        />
+          <PaginationComponent
+            onPageChange={handlePageChange}
+            // onSizeChange={handleSizeChange}
+          />
         </Tfoot>
       </Table>
     </Box>

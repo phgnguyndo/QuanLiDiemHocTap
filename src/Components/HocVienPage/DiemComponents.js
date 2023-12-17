@@ -98,7 +98,7 @@ const DiemComponent = (props) => {
           {props.DiemThiKetThucMon}
         </Td>
         {/* <Td position={"relative"} textAlign={"center"}>
-          {props.DiemThiLai}
+{props.DiemThiLai}
         </Td> */}
         <Td position={"relative"} textAlign={"center"}>
           {props.DiemTBM}
@@ -183,7 +183,7 @@ const DiemComponent = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td position={"relative"} textAlign={"left"}>
+<Td position={"relative"} textAlign={"left"}>
           {isDaiDoi && (
             <DeleteOutlined
               onClick={onSubmitDeleteModalOpen}

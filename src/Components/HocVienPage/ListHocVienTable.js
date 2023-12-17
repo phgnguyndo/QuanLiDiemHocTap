@@ -5,8 +5,6 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
   useDisclosure,
   Modal,
@@ -29,7 +27,6 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 import PaginationComponent from "../Pagination/Pagenation";
-import StorageKeys from "../../constance/storage-key";
 
 const ListHocVienTable = (props) => {
   const capBacData = [
@@ -115,17 +112,14 @@ const ListHocVienTable = (props) => {
   const [gioiTinh, setGioiTinh] = useState(true);
   const [queQuan, setQueQuan] = useState("");
   const [capBac, setCapBac] = useState("");
+  const [imageHV, setImageHV] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  // const [imageHV, setImageHV] = useState("");
 
-  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
-  const isDaiDoi = user.role === "user1";
   const handleSubmit = async () => {
     try {
       const lcnId = idLop;
-      // const maHV= initialRef.current.value;
-      // const tenHV = finalRef.current.value;
       const formdata = new FormData();
       formdata.append("maHV", maHV);
       formdata.append("lopChuyenNganhId", lcnId);
@@ -134,7 +128,7 @@ const ListHocVienTable = (props) => {
       formdata.append("gioiTinh", gioiTinh);
       formdata.append("queQuan", queQuan);
       formdata.append("capBac", capBac);
-      // formdata.append("file", imageHV);
+      formdata.append("file", imageHV);
       await hocvienAPI.create(formdata);
       onClose();
       window.location.reload();
@@ -150,14 +144,22 @@ const ListHocVienTable = (props) => {
   const fetchDsHV = async () => {
     setdsHV(await hocvienAPI.get(idLop));
   };
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    // Implement actions when the page changes (e.g., fetching data)
-    fetchDsHV(page, pageSize);
-  };
+
+  // useEffect(() => {
+  //   fetchDsHVPage(currentPage, pageSize);
+  // }, [currentPage, pageSize]);
+
+  // const fetchDsHVPage = async (page, size) => {
+  //   setdsHV(await hocvienAPI.getAll(page, 2));
+  // };
+  
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  //   fetchDsHVPage(page, pageSize);
+  // };
+
   return (
     <Box position={"relative"}>
-      {/* <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1> */}
       <Box
         variant="solid"
         color={"brown"}
@@ -167,18 +169,16 @@ const ListHocVienTable = (props) => {
       >
         Danh sách học viên
       </Box>
-      {isDaiDoi && (
-        <Button
-          variant="solid"
-          bg="rgb(26,132,74)"
-          color={"white"}
-          left={"2%"}
-          top={"30px"}
-          onClick={onOpen}
-        >
-          Thêm
-        </Button>
-      )}
+      <Button
+        variant="solid"
+        bg="rgb(26,132,74)"
+        color={"white"}
+        left={"2%"}
+        top={"30px"}
+        onClick={onOpen}
+      >
+        Thêm
+      </Button>
       <Modal
         size={"xl"}
         initialFocusRef={initialRef}
@@ -228,14 +228,16 @@ const ListHocVienTable = (props) => {
                 <FormControl mt={4}>
                   <FormLabel>Giới tính</FormLabel>
                   <Select
-                    size={"sm"}
                     id="gioiTinhInput"
                     onChange={(e) => {
-                      setGioiTinh(e.target.value);
+                      // Chuyển đổi giá trị từ chuỗi thành boolean
+                      const gioiTinhValue =
+                        e.target.value === "true" ? true : false;
+                      setGioiTinh(gioiTinhValue);
                     }}
                   >
-                    <option value={true}>Nam</option>
-                    <option value={false}>Nữ</option>
+                    <option value="true">Nam</option>
+                    <option value="false">Nữ</option>
                   </Select>
                 </FormControl>
               </Box>
@@ -305,16 +307,17 @@ const ListHocVienTable = (props) => {
           left={"2%"}
         >
           <Thead background={"rgb(182, 187, 196)"}>
-          <Tr>
-            <Th w={"12%"} textAlign={"center"}>Mã HV</Th>
-            <Th textAlign={"center"}>Họ tên</Th>
-            <Th textAlign={"center"}>Ngày sinh</Th>
-            <Th textAlign={"center"}>Giới tính</Th>
-            <Th textAlign={"center"}>Quê quán</Th>
-            <Th textAlign={"center"}>Cấp bậc</Th>
-            <Th textAlign={"center"}>Tùy chọn</Th>
-            {/* <Th textAlign={"center"}>Xóa</Th> */}
-          </Tr>
+            <Tr>
+              <Th w={"5%"}>Mã HV</Th>
+              <Th w={"20%"} textAlign={"center"}>Họ tên</Th>
+              <Th w={"9%"}>Ngày sinh</Th>
+              <Th w={"8%"}>Giới tính</Th>
+              <Th w={"17%"}>Quê quán</Th>
+              <Th w={"8%"}>Cấp bậc</Th>
+              <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
+                Tùy chọn
+              </Th>
+            </Tr>
           </Thead>
           <Tbody>
             {dsHV?.map((item) => (
@@ -330,10 +333,11 @@ const ListHocVienTable = (props) => {
               />
             ))}
           </Tbody>
-          <br></br>
-          <Tfoot position={"absolute"} left={"35%"}>
+          <br />
+          {/* <Tfoot left={"35%"} position={"absolute"}>
             <PaginationComponent onPageChange={handlePageChange} />
-          </Tfoot>
+          </Tfoot> */}
+          <br></br>
           <br></br>
           <br></br>
           <br></br>

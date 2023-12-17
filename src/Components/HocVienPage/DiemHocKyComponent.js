@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import dtbAPI from "../../api/dtbAPI";
 import { useParams } from "react-router-dom";
 import StorageKeys from "../../constance/storage-key";
-
 const DiemHocKyComponent = (props) => {
   const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const isDaiDoi = user.role === "user1";

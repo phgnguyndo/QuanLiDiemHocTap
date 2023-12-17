@@ -1,9 +1,14 @@
 import {
+  Table,
+  TableContainer,
   Button,
   FormControl,
   FormLabel,
   Input,
   Select,
+  Text,
+  Td,
+  Tr,
   Box,
 } from "@chakra-ui/react";
 import {
@@ -91,7 +96,6 @@ const DiemHocVien = (props) => {
 
   return (
     <Box position={"relative"}>
-      
       <Box
         color={"brown"}
         fontSize={"35px"}
