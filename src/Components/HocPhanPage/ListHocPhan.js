@@ -71,7 +71,7 @@ const ListHocPhanTable = (props) => {
     
     useEffect(() => {
       fetchDsBoMon();
-    });
+    },[]);
     const fetchDsBoMon = async () => {
       setDsBomon(await bomonAPI.getAll());
     };
@@ -90,11 +90,10 @@ const ListHocPhanTable = (props) => {
     >
       <div
         style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
+          fontSize: "35px",
+          fontWeight: "500",
           marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
+          color: "brown",
         }}
       >
         Danh sách các học phần
@@ -103,7 +102,7 @@ const ListHocPhanTable = (props) => {
        <Button
           position={"relative"}
           top={"-40px"}
-          left={"-513px"}
+          left={"-38%"}
           variant="solid"
           bg="rgb(26,132,74)"
           color={"white"}
@@ -203,7 +202,7 @@ const ListHocPhanTable = (props) => {
               <Th w={"5%"} textAlign={"center"}>
                 Mã HP
               </Th>
-              <Th w={"10%"} textAlign={"center"}>
+              <Th w={"15%"} textAlign={"center"}>
                 Tên học phần
               </Th>
               <Th w={"5%"} textAlign={"center"}>
@@ -212,11 +211,11 @@ const ListHocPhanTable = (props) => {
               <Th w={"10%"} textAlign={"center"}>
                 Số tín chỉ
               </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Thuộc học kỳ
+              <Th w={"5%"} textAlign={"center"}>
+                Học kỳ
               </Th>
-              <Th w={"5%"} textAlign={"center"}>Sửa</Th>
-              <Th w={"5%"} textAlign={"center"}>Xóa</Th>
+              <Th w={"5%"} textAlign={"center"}>Tùy chọn</Th>
+              {/* <Th w={"5%"} textAlign={"center"}>Xóa</Th> */}
             </Tr>
           </Thead>
           <Tbody>

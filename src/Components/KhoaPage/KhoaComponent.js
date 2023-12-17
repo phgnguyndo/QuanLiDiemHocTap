@@ -71,13 +71,11 @@ const KhoaComponent = (props) => {
         <Td position={"relative"} textAlign={"center"} w={"3%"}>
           {props.stt}
         </Td>
-        <Td position={"relative"} cursor={"pointer"} w={"95%"}>
+        <Td position={"relative"} cursor={"pointer"} textAlign={"center"} w={"95%"}>
           {props.tenKhoa}
         </Td>
         <Td position={"relative"} textAlign={"right"}>
-          <Button onClick={onEditModalOpen} color={"blue.500"}>
-            <EditOutlined />
-          </Button>
+            <EditOutlined onClick={onEditModalOpen} style={{color:"blue"}}/>
           <Modal
             isCentered
             onClose={onEditModalClose}
@@ -119,9 +117,7 @@ const KhoaComponent = (props) => {
           </Modal>
         </Td>
         <Td textAlign={"left"}>
-          <Button onClick={onOpen} color={"red.500"}>
-            <DeleteOutlined />
-          </Button>
+            <DeleteOutlined onClick={onOpen} style={{color:"red",position:'relative', left:"-15px"}}/>
           <Modal
             isCentered
             onClose={onClose}

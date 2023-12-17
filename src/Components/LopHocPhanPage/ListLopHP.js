@@ -2,11 +2,8 @@ import {
   Button,
   Table,
   Thead,
-  Tbody,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
   useDisclosure,
   Modal,
@@ -21,20 +18,26 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Input } from "antd";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocphanAPI from "../../api/hocphanAPI";
 import lophocphanAPI from "../../api/lophocphanAPI";
 import LopHPComponent from "./LopHocPhanComponent";
+import giangVienAPI from "../../api/giangVienAPI";
+import dayhocAPI from "../../api/dayhocAPI";
 
 const ListLopHPTable = (props) => {
   const i = 0;
-  const { idHocPhan } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [soHVien, setSoHV] = useState(0);
+  const [soHV, setSoHV] = useState(0);
   const [dsLhp, setDsLhp] = useState([]);
   const [dsHocPhan, setDsHocPhan] = useState([]);
-  const [maHocPhan, setMaHocPhan] = useState("");
+  const [maLopHocPhan, setMaLHP] = useState("");
+  const [maHP, setMaHP] = useState("");
+  const [diaDiem, setDiaDiem] = useState("");
+  const [dsGV, setDsGV] = useState([]);
+  const [maGV, setMaGV] = useState("");
+
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
@@ -52,21 +55,40 @@ const ListLopHPTable = (props) => {
     setDsHocPhan(await hocphanAPI.getAll());
   };
 
+  useEffect(() => {
+    fetchGV();
+  }, []);
+  const fetchGV = async () => {
+    setDsGV(await giangVienAPI.getAll());
+  };
+
   const handleSubmit = async () => {
     try {
-      const soHV = soHVien;
-      const hocPhanId = idHocPhan;
+      const hocPhanId = maHP;
+      const giangVienId = maGV;
+      const lopHocPhanId=maLopHocPhan;
       const formdata = {
+        maLopHocPhan,
+        diaDiem,
         soHV,
+        giangVienId,
         hocPhanId,
       };
+      const formdataDayHoc = {
+        giangVienId,
+        lopHocPhanId
+      };
+
       await lophocphanAPI.create(formdata);
+      await dayhocAPI.create(formdataDayHoc);
+      console.log(formdataDayHoc);
       onClose();
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
+
 
   return (
     <div
@@ -80,11 +102,10 @@ const ListLopHPTable = (props) => {
     >
       <div
         style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
+          fontSize: "35px",
+          fontWeight: "500",
           marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
+          color: "brown",
         }}
       >
         Danh sách lớp học phần
@@ -112,11 +133,30 @@ const ListLopHPTable = (props) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl mt={4}>
-              <FormLabel>Tên học phần</FormLabel>
+              <FormLabel>Mã lớp học phần</FormLabel>
               <Input
                 ref={initialRef}
                 type="text"
-                placeholder="Tên bộ môn"
+                placeholder="Mã LHP"
+                onChange={(e) => {
+                  setMaLHP(e.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Địa điểm</FormLabel>
+              <Input
+                type="text"
+                placeholder="Địa điểm"
+                onChange={(e) => {
+                  setDiaDiem(e.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Số học viên</FormLabel>
+              <Input
+                placeholder="Số học viên"
                 onChange={(e) => {
                   setSoHV(parseInt(e.target.value));
                 }}
@@ -124,17 +164,34 @@ const ListLopHPTable = (props) => {
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Khoa</FormLabel>
+              <FormLabel>Học phần</FormLabel>
               <Select
-                placeholder="Không"
-                id="KhoaInPut"
+                placeholder="Chọn học phần"
+                id="HPInPut"
                 onChange={(e) => {
-                  setMaHocPhan(e.target.value);
+                  setMaHP(e.target.value);
                 }}
               >
                 {dsHocPhan.map((item, index) => (
                   <option key={index} value={item.maHocPhan}>
                     {item.tenHocPhan}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Học phần</FormLabel>
+              <Select
+                placeholder="Chọn giảng viên"
+                id="GVInPut"
+                onChange={(e) => {
+                  setMaGV(e.target.value);
+                }}
+              >
+                {dsGV.map((item, index) => (
+                  <option key={index} value={item.maGV}>
+                    {item.tenGV}
                   </option>
                 ))}
               </Select>
@@ -155,19 +212,19 @@ const ListLopHPTable = (props) => {
               <Th textAlign={"center"}>STT</Th>
               <Th textAlign={"center"}>Lớp học phần</Th>
               <Th textAlign={"center"}>Học phần</Th>
-              {/* <Th textAlign={"center"}>Các lớp chuyên ngành</Th>
-              <Th textAlign={"center"}>Đại đội</Th> */}
-              <Th textAlign={"center"}>Địa điểm (giảng đường)</Th>
-              <Th textAlign={"center"}>Giáo viên</Th>
-              <Th textAlign={"center"}>Sửa</Th>
-              <Th textAlign={"center"}>Xóa</Th>
+              <Th textAlign={"center"}>Địa điểm</Th>
+              <Th textAlign={"center"}>Tùy chọn</Th>
+              {/* <Th textAlign={"center"}>Xóa</Th> */}
             </Tr>
           </Thead>
           {dsLhp?.map((item, i) => (
             <LopHPComponent
               key={item.maLHP}
               stt={i + 1}
-              soHV={props.soHV}
+              diaDiem={item.diaDiem}
+              maLHP={item.maLopHocPhan}
+              tenHocPhan={item.hocPhan.tenHocPhan}
+              soHV={item.soHV}
               hocPhanId={item.hocPhanId}
             />
           ))}

@@ -19,7 +19,6 @@ function Header() {
   const nav = useNavigate();
   // const [maHV, setMaHV]= useState("")
   const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
-  console.log(username.name);
   const [hocVien, setHocVien] = useState([]);
   useEffect(() => {
     searchHocVien();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import './index.css';
 import {
   HomeOutlined,
@@ -17,16 +17,31 @@ import StorageKeys from "../../constance/storage-key";
 import SubMenu from "antd/es/menu/SubMenu";
 import logout from "../../Image/logout.png";
 import { Image } from "@chakra-ui/react";
+import { Form, InputGroup } from "react-bootstrap";
+import hocvienAPI from "../../api/hocvienAPI";
 const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const { Header, Sider, Content } = Layout;
 
 const Head = ({ content }) => {
-  const isDaiDoi = user.role === "user1";
-  const nav = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const isDaiDoi = user.role === "user1";
+  const nav = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+  const [hocVien, setHocVien] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  useEffect(() => {
+    searchHocVien();
+  }, [searchText]);
+  const searchHocVien = async () => {
+    setHocVien(await hocvienAPI.getAll(1, 10));
+  };
+  // const handleSearch = (e) => {
+  //   searchHocVien()
+  // };
+
   const handleLogout = () => {
     localStorage.clear();
     nav("/");
@@ -37,6 +52,20 @@ const Head = ({ content }) => {
   const menu = (
     <Menu onClick={handleLogout}>
       <Menu.Item key="logout">Đăng xuất</Menu.Item>
+    </Menu>
+  );
+  const menu2 = (
+    <Menu>
+      {hocVien?.map((hv) => (
+        <Menu.Item
+          key={hv.id}
+          onClick={() => {
+            nav(`/HocVien/${hv.maHV}`);
+          }}
+        >
+          {hv.tenHV}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 
@@ -70,64 +99,64 @@ const Head = ({ content }) => {
           </Menu.Item>
           {isDaiDoi && (
             <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
-            <Menu.Item
-              key="2"
-              icon={<RadarChartOutlined />}
-              onClick={() => {
-                nav("/khoa");
-              }}
-            >
-              Khoa
-            </Menu.Item>
-            <Menu.Item
-              key="3"
-              icon={<HeatMapOutlined />}
-              onClick={() => {
-                nav("/bomon");
-              }}
-            >
-              Bộ môn
-            </Menu.Item>
-            <Menu.Item
-              key="4"
-              icon={<UserAddOutlined />}
-              onClick={() => {
-                nav("/giangvien");
-              }}
-            >
-              Giảng viên
-            </Menu.Item>
-            <Menu.Item
-              key="5"
-              icon={<ReadOutlined />}
-              onClick={() => {
-                nav("/hocphan");
-              }}
-            >
-              Học phần
-            </Menu.Item>
-            <Menu.Item
-              key="6"
-              icon={<ReadOutlined />}
-              onClick={() => {
-                nav("/lophocphan");
-              }}
-            >
-              Lớp học phần
-            </Menu.Item>
-            <Menu.Item
-              key="7"
-              icon={<ReadOutlined />}
-              onClick={() => {
-                nav("/hocvien");
-              }}
-            >
-              Học viên
-            </Menu.Item>
-            <Menu.Item key="8" icon={<ReadOutlined />}>
-              Giảng dạy
-            </Menu.Item>
-          </SubMenu>
+              <Menu.Item
+                key="2"
+                icon={<RadarChartOutlined />}
+                onClick={() => {
+                  nav("/khoa");
+                }}
+              >
+                Khoa
+              </Menu.Item>
+              <Menu.Item
+                key="3"
+                icon={<HeatMapOutlined />}
+                onClick={() => {
+                  nav("/bomon");
+                }}
+              >
+                Bộ môn
+              </Menu.Item>
+              <Menu.Item
+                key="4"
+                icon={<UserAddOutlined />}
+                onClick={() => {
+                  nav("/giangvien");
+                }}
+              >
+                Giảng viên
+              </Menu.Item>
+              <Menu.Item
+                key="5"
+                icon={<ReadOutlined />}
+                onClick={() => {
+                  nav("/hocphan");
+                }}
+              >
+                Học phần
+              </Menu.Item>
+              <Menu.Item
+                key="6"
+                icon={<ReadOutlined />}
+                onClick={() => {
+                  nav("/lophocphan");
+                }}
+              >
+                Lớp học phần
+              </Menu.Item>
+              <Menu.Item
+                key="7"
+                icon={<ReadOutlined />}
+                onClick={() => {
+                  nav("/hocvien");
+                }}
+              >
+                Học viên
+              </Menu.Item>
+              <Menu.Item key="8" icon={<ReadOutlined />}>
+                Giảng dạy
+              </Menu.Item>
+            </SubMenu>
           )}
           <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
             <Menu.Item
@@ -188,7 +217,34 @@ const Head = ({ content }) => {
               src={logout}
             ></Image>
           </Dropdown>
+
           {/* <i style={{position:"relative", left:"81%"}}>Đăng xuất</i> */}
+
+          <Form
+            style={{
+              position: "relative",
+              top: "-51px",
+              left: "70%",
+              width: "200px",
+              // border: "1px solid gray",
+              borderRadius: "6px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+            }}
+          >
+            <Dropdown overlay={menu2} placement="bottomRight" arrow>
+              <InputGroup>
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  value={searchText}
+                  onChange={(e) => {
+                    const text = e.target.value;
+                    setSearchText(text);
+                  }}
+                />
+              </InputGroup>
+            </Dropdown>
+          </Form>
         </Header>
         <Content
           style={{

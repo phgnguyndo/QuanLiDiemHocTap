@@ -24,7 +24,6 @@ import KhoaComponent from "./KhoaComponent";
 import React, { useState, useEffect } from "react";
 
 const ListKhoaTable = (props) => {
-  var i = 0;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tenKhoa, setTenKhoa] = useState("");
   const [dsKhoa, setDsKhoa] = useState([]);
@@ -54,20 +53,20 @@ const ListKhoaTable = (props) => {
   return (
     <Box position={"relative"}>
       <Box
-        color={"rgb(91, 138, 114)"}
+        color={"brown"}
         variant="solid"
-        fontSize={"40px"}
+        fontSize={"35px"}
         fontWeight={500}
         textAlign={"center"}
       >
-        Danh sách Khoa
+        Danh sách các khoa
       </Box>
       <Button
         position={"relative"}
         top={"30px"}
         left={"280px"}
         variant="solid"
-        bg="rgb(80,132,74)"
+        bg="green"
         color={"white"}
         onClick={onOpen}
       >
@@ -116,7 +115,7 @@ const ListKhoaTable = (props) => {
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>STT</Th>
-              <Th w={"95%"}>Khoa</Th>
+              <Th w={"95%"} textAlign={"center"}>Khoa</Th>
               <Th colSpan={"7"} textAlign={"center"}>Tùy chọn</Th>
             </Tr>
           </Thead>

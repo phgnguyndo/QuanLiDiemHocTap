@@ -150,8 +150,8 @@ const ListBoMonTable = (props) => {
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>STT</Th>
-              <Th w={"41%"}>Bộ môn</Th>
-              <Th w={"41%"}>Khoa</Th>
+              <Th w={"30%"} textAlign={"center"}>Bộ môn</Th>
+              <Th w={"30%"} textAlign={"center"}>Khoa</Th>
               <Th textAlign={"center"}>Sửa</Th>
               <Th textAlign={"center"}>Xóa</Th>
             </Tr>

@@ -2,37 +2,31 @@ import StorageKeys from "../constance/storage-key";
 import axiosClient from "./axiosClient";
 
 const token = localStorage.getItem(StorageKeys.TOKEN);
-const phieuDiemAPI = {
+const dayhocAPI = {
   getAll() {
-    const url = "/PhieuDiem";
-    return axiosClient.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-  },
-  get(id) {
-    const url = `/PhieuDiem/${id}`;
+    const url = "/DayHoc";
     return axiosClient.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
   create(data) {
-    const url = "/PhieuDiem";
+    const url = "/DayHoc";
     return axiosClient.post(url, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
   update(id, data) {
-    const url = `/PhieuDiem/${id}`;
+    const url = `/DayHoc/${id}`;
     return axiosClient.put(url, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
   delete(id) {
-    const url = `/PhieuDiem/${id}`;
+    const url = `/DayHoc/${id}`;
     return axiosClient.delete(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
 };
 
-export default phieuDiemAPI;
+export default dayhocAPI;

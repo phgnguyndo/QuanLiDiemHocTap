@@ -8,15 +8,6 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import {
-  HomeOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserAddOutlined,
-  LogoutOutlined,
-  RadarChartOutlined,
-  HeatMapOutlined,
-  ReadOutlined,
-  UserOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
@@ -95,10 +86,8 @@ const HocPhanComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {props.hocKy}
         </Td>
-        <Td position={"relative"} textAlign={"right"}>
-          <Button onClick={onOpen} color={"blue.500"}>
-            <EditOutlined style={{fontSize:"20px"}}/>
-          </Button>
+        <Td >
+            <EditOutlined style={{fontSize:"20px",position:"relative", color:"blue", left:"22%"}} onClick={onOpen}/>
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -162,11 +151,7 @@ const HocPhanComponent = (props) => {
               </ModalFooter>
             </ModalContent>
           </Modal>
-        </Td>
-        <Td position={"relative"} textAlign={"left"}>
-          <Button onClick={onEditModalOpen} color={"red.500"}>
-            <DeleteOutlined  style={{fontSize:"20px"}}/>
-          </Button>
+            <DeleteOutlined  style={{fontSize:"20px",position:"relative", color:"red", left:"45%"}} onClick={onEditModalOpen}/>
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
             <ModalOverlay />
             <ModalContent>

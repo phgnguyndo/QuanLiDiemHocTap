@@ -1,127 +1,125 @@
 import {
-    Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    FormControl,
-    FormLabel,
-    ModalFooter,
-    Select,
-  } from "@chakra-ui/react";
-  import { Input } from "antd";
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  ModalFooter,
+  Select,
+} from "@chakra-ui/react";
+import { Input } from "antd";
 //   import HocVien from "./HocVienComponent";
-  import { useParams } from "react-router-dom";
-  import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import GiangVienComponent from "./GiangVienComponent";
 import giangVienAPI from "../../api/giangVienAPI";
 import bomonAPI from "../../api/bomonAPI";
-  const ListGiangVienTable = (props) => {
-    const capBacData = [
-      "Đại tá",
-      "Thượng tá",
-      "Trung tá",
-      "Thiếu tá",
-      "Đại úy",
-      "Thượng úy",
-      "Trung úy",
-      "Thiếu úy"
-    ];
-    const i = 0;
-  
-    const { idLop } = useParams();
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const initialRef = React.useRef(null);
-    const finalRef = React.useRef(null);
-  
-    const [maGV, setMaGV] = useState("");
-    const [tenGV, setTenGV] = useState("");
-    const [sdt, setSdt] = useState("");
-    const [gioiTinh, setGioiTinh] = useState(true);
-    const [capBac, setCapBac] = useState("");
-    const [boMonId, setBomonID] = useState("");
-    const [dsBomon, setDsBomon] = useState([]);
-    
-    const handleSubmit = async () => {
-        try {
-          const formData = {
-            tenGV,
-            gioiTinh,
-            capBac,
-            sdt,
-            boMonId,
-          };
-          console.log(formData);
-          await giangVienAPI.create(formData);
-          onClose();
-          window.location.reload();
-        } catch (error) {
-          console.error("Error submitting form:", error);
-        }
-      };
-      
-      const [dsGV, setdsGV] = useState([]);
-      useEffect(() => {
-        fetchDsGV();
-      }, []);
-      const fetchDsGV = async () => {
-        setdsGV(await giangVienAPI.getAll());
-      };
-      console.log(dsGV);
+const ListGiangVienTable = (props) => {
+  const capBacData = [
+    "Đại tá",
+    "Thượng tá",
+    "Trung tá",
+    "Thiếu tá",
+    "Đại úy",
+    "Thượng úy",
+    "Trung úy",
+    "Thiếu úy",
+  ];
+  const i = 0;
 
-      useEffect(() => {
-        fetchDsBoMon();
-      },[]);
-      const fetchDsBoMon = async () => {
-        setDsBomon(await bomonAPI.getAll());
-      };
+  const { idLop } = useParams();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
-  
-    return (
+  const [maGV, setMaGV] = useState("");
+  const [tenGV, setTenGV] = useState("");
+  const [sdt, setSdt] = useState("");
+  const [gioiTinh, setGioiTinh] = useState(true);
+  const [capBac, setCapBac] = useState("");
+  const [boMonId, setBomonID] = useState("");
+  const [dsBomon, setDsBomon] = useState([]);
+
+  const handleSubmit = async () => {
+    try {
+      const formData = {
+        tenGV,
+        gioiTinh,
+        capBac,
+        sdt,
+        boMonId,
+      };
+      console.log(formData);
+      await giangVienAPI.create(formData);
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const [dsGV, setdsGV] = useState([]);
+  useEffect(() => {
+    fetchDsGV();
+  }, []);
+  const fetchDsGV = async () => {
+    setdsGV(await giangVienAPI.getAll());
+  };
+  console.log(dsGV);
+
+  useEffect(() => {
+    fetchDsBoMon();
+  }, []);
+  const fetchDsBoMon = async () => {
+    setDsBomon(await bomonAPI.getAll());
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "40vh",
+      }}
+    >
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "40vh",
+          fontSize: "35px",
+          fontWeight: "500",
+          marginBottom: "80px",
+          color: "brown",
         }}
       >
-        <div
-          style={{
-            fontSize: "50px",
-            fontFamily: "inherit",
-            fontWeight: "bold",
-            marginBottom: "80px",
-            color: "rgb(91, 138, 114)",
-          }}
-        >
-          Danh sách giảng viên
-        </div>
-        
-        <Button
-            position={"relative"}
-            top={"-40px"}
-            left={"-513px"}
-            variant="solid"
-            bg="rgb(26,132,74)"
-            color={"white"}
-            onClick={onOpen}
-            >
-            Thêm
-        </Button>
-        <Modal
+        Danh sách giảng viên
+      </div>
+
+      <Button
+        position={"relative"}
+        top={"-40px"}
+        left={"-513px"}
+        variant="solid"
+        bg="rgb(26,132,74)"
+        color={"white"}
+        onClick={onOpen}
+      >
+        Thêm
+      </Button>
+      <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -148,7 +146,7 @@ import bomonAPI from "../../api/bomonAPI";
               <Select
                 id="gioiTinhInput"
                 onChange={(e) => {
-                  setGioiTinh(e.target.value);
+                  setGioiTinh(parseInt(e.target.value));
                 }}
               >
                 <option value={true}>Nam</option>
@@ -164,8 +162,8 @@ import bomonAPI from "../../api/bomonAPI";
                 onChange={(e) => {
                   setBomonID(e.target.value);
                 }}
-                > 
-                {dsBomon.map((item,index) => (
+              >
+                {dsBomon.map((item, index) => (
                   <option key={index} value={item.maBM}>
                     {item.tenBM}
                   </option>
@@ -210,52 +208,53 @@ import bomonAPI from "../../api/bomonAPI";
         </ModalContent>
       </Modal>
 
-
-
-
-        <TableContainer w={"150vh"} >
-          <Table variant='striped' size="sm">
-            <Thead>
-              <Tr bg={"rgb(182, 187, 196)"}>
-                <Th w={"5%"} textAlign={"center"}>
-                  STT
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Họ tên
-                </Th>
-                <Th w={"5%"} textAlign={"center"}>
-                  Giới tính
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Cấp bậc
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Số điện thoại
-                </Th>
-                <Th w={"10%"} textAlign={"center"}>
-                  Thuộc bộ môn
-                </Th>
-                <Th w={"5%"} textAlign={"center"}>Sửa</Th>
-                <Th w={"5%"} textAlign={"center"}>Xóa</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-                {dsGV.map((item, i) => (
-                <GiangVienComponent
+      <TableContainer w={"150vh"}>
+        <Table variant="striped" size="sm">
+          <Thead>
+            <Tr bg={"rgb(182, 187, 196)"}>
+              <Th w={"5%"} textAlign={"center"}>
+                STT
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Họ tên
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Giới tính
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Cấp bậc
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Số điện thoại
+              </Th>
+              <Th w={"10%"} textAlign={"center"}>
+                Thuộc bộ môn
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Sửa
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Xóa
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {dsGV.map((item, i) => (
+              <GiangVienComponent
                 maGV={item.maGV}
-                STT={i+1}
+                STT={i + 1}
                 hoTen={item.tenGV}
                 sdt={item.sdt}
                 gioiTinh={item.gioiTinh}
                 boMon={item.boMon}
                 capBac={item.capBac}
-                />
-                ))}
+              />
+            ))}
           </Tbody>
-          </Table>
-        </TableContainer>
-      </div>
-    );
-  };
-  
-  export default ListGiangVienTable;
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
+
+export default ListGiangVienTable;
