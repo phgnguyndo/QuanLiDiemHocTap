@@ -43,7 +43,6 @@ const Head = ({ content }) => {
   // };
 
   const handleLogout = () => {
-    
     localStorage.clear();
     nav("/");
   };
@@ -180,6 +179,15 @@ const Head = ({ content }) => {
                   }}
                 >
                   Theo năm
+                </Menu.Item>
+                <Menu.Item
+                  key="12"
+                  icon={<HeatMapOutlined />}
+                  onClick={() => {
+                    nav("/tktl");
+                  }}
+                >
+                  Điểm tích lũy
                 </Menu.Item>
               </SubMenu>
             </>

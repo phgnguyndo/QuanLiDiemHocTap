@@ -17,6 +17,7 @@ import TKTheoNam from "./Pages/TkTheoNam";
 import TaoTaiKhoan from "./Pages/TaoTaiKhoan";
 import StorageKeys from "./constance/storage-key";
 import TruyVet from "./Pages/TruyVet";
+import TKTichLuy from "./Pages/TkDiemTichLuy";
 
 function App() {
   
@@ -34,16 +35,20 @@ function App() {
         <Route path="/home/:id/:idLop/:idHV" element={<Diem />} />
         <Route path="/register" element={<Register />} />
         <Route path="/:idHV" element={<Diem />} />
-        <Route path="/khoa" element={<Khoa />} />
         <Route path="/bomon" element={<BoMon />} />
         <Route path="/hocvien" element={<AllHocVien />} />
         <Route path="/giangvien" element={<GiangVien />} />
-        <Route path="/hocphan" element={<HocPhan />} />
         <Route path="/lophocphan" element={<LopHocPhan />} />
         <Route path="/tkhk" element={<TKTheoKy />} />
         <Route path="/tkn" element={<TKTheoNam />} />
-        <Route path="/taotaikhoan" element={<TaoTaiKhoan />} />
         <Route path="/truyvet" element={<TruyVet />} />
+        <Route path="/HocVien/:id" element={<Diem/>} />
+        <Route path="/Diem" element={<Diem/>} />
+        <Route path="/khoa" element={<Khoa/>} />
+        {/* <Route path="/khoa/:idKhoa" element={<BoMon/>} /> */}
+        <Route path="/hocphan" element={<HocPhan/>} />
+        <Route path="/tktl" element={<TKTichLuy/>} />
+        <Route path="/taotaikhoan" element={<TaoTaiKhoan/>} />
         <Route path="/*" element={<div>404 not found</div>} />
       </Routes>
     </BrowserRouter>
