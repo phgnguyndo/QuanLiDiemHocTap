@@ -1,5 +1,7 @@
 import {
   useDisclosure,
+  FormControl,
+  FormLabel,
   Box,
   TableContainer,
   Table,
@@ -7,18 +9,17 @@ import {
   Tr,
   Th,
   Tbody,
+  Select,
 } from "@chakra-ui/react";
-import { Input } from "antd";
 import dtbAPI from "../../api/dtbAPI";
+import phieuDiemAPI from "../../api/PhieuDiem";
 import React, { useState, useEffect } from "react";
 import TkhkComponent from "./TkhkComponent";
 
 const ListTkhk = (props) => {
-  var i = 0;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const ListhocKy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [dsThongKe, setDsThongKe] = useState([]);
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+  const [dsThongKeTheoHK, setDsThongKeTheoHK] = useState([]);
 
   useEffect(() => {
     fetchThongKe();
@@ -27,59 +28,116 @@ const ListTkhk = (props) => {
     setDsThongKe(await dtbAPI.getAll());
   };
 
-  return (
-    <Box position={"relative"}>
-      <Box
-        color={"brown"}
-        variant="solid"
-        fontSize={"40px"}
-        fontWeight={500}
-        textAlign={"center"}
-      >
-        Thống kê theo học kỳ
-      </Box>
-      <TableContainer>
-        <Table
-          variant="striped"
-          size="sm"
-          position={"relative"}
-          top={"50px"}
-          w={"70%"}
-          align="center"
-        >
-          <Thead background={"rgb(182, 187, 196)"}>
-            <Tr>
-              <Th textAlign={"center"}>STT</Th>
-              <Th w={"30%"} textAlign={"center"}>
-                Tên học viên
-              </Th>
-              <Th w={"20%"} textAlign={"center"}>
-                Lớp chuyên ngành
-              </Th>
-              <Th textAlign={"center"}>Điểm TB</Th>
-              <Th textAlign={"center"}>Học kỳ</Th>
-              <Th colSpan={"4"} textAlign={"center"}>
-                Tùy chọn
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {dsThongKe?.map((item, i) => (
-              <TkhkComponent
-                key={item.maHV}
-                stt={i + 1}
-                dtb={item.dtb}
-                hocKy={item.hocKy}
-              />
-            ))}
-          </Tbody>
-          <br></br>
-          <br></br>
-          <br></br>
-        </Table>
-      </TableContainer>
-    </Box>
-  );
-};
+  const [dsPhieuDiem, setDsPhieuDiem] = useState([]);
+  useEffect(() => {
+    fetchPhieuDiem();
+  }, []);
+  const fetchPhieuDiem = async () => {
+    setDsPhieuDiem(await phieuDiemAPI.getAll());
+  };
 
+  const [hocKy, setHocKy] = useState();
+  const hocBongA = [];
+  const hocBongB = [];
+
+  const dsIdHocVien = new Set(dsThongKe?.map((item) => item.hocVienId));
+  // console.log(dsIdHocVien);
+  var dsDatTieuChi1 = [Object];
+  var xetHocVien_HocKy = [Object];
+  
+  for (let hk = 1; hk <= 10; hk++) {
+    const xetHocKy = dsPhieuDiem.filter((item) => item.hocPhan.hocKy === hk);
+    dsIdHocVien.forEach((id) => {
+      xetHocVien_HocKy = xetHocKy?.filter((item) => item.hocVienId === id);
+      // dsDatTieuChi1.push(xetHocVien_HocKy?.filter((item) => item.diemTBM >= 7.0));
+    });
+  };
+
+  console.log(dsDatTieuChi1);
+    const PhanLoai = async () => {};
+    useEffect(() => {
+      // dsIdHocVien.forEach((idHV) => {
+      //   fetchPhieuDiem(idHV);
+      // })
+      // console.log(dsPhieuDiem);
+    });
+
+    const HandleSelectedChange = (hocKy) => {
+      setDsThongKeTheoHK(dsThongKe?.filter((item) => item.hocKy === hocKy));
+      console.log(dsThongKeTheoHK);
+    };
+
+    return (
+      <Box position={"relative"}>
+        <Box
+          color={"brown"}
+          variant="solid"
+          fontSize={"40px"}
+          fontWeight={500}
+          textAlign={"center"}
+        >
+          Thống kê theo học kỳ
+        </Box>
+        <Box>
+          <FormControl position={"relative"} top={"30px"} left={"170px"}>
+            <FormLabel>Học kỳ</FormLabel>
+            <Select
+              w={"7%"}
+              borderColor={"blackAlpha.900"}
+              size={"sm"}
+              id="hocKyInput"
+              // onChange={HandleSelectedChange}
+              onChange={(e) => {
+                HandleSelectedChange(e.target.value);
+              }}
+            >
+              {ListhocKy.map((hocKy, index) => (
+                <option key={index} value={hocKy}>
+                  {hocKy}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+        <TableContainer>
+          <Table
+            variant="striped"
+            size="sm"
+            position={"relative"}
+            top={"50px"}
+            w={"70%"}
+            align="center"
+          >
+            <Thead background={"rgb(182, 187, 196)"}>
+              <Tr>
+                <Th textAlign={"center"}>STT</Th>
+                <Th w={"30%"} textAlign={"center"}>
+                  Tên học viên
+                </Th>
+                <Th textAlign={"center"}>Điểm TB</Th>
+                <Th textAlign={"center"}>Học kỳ</Th>
+                <Th textAlign={"center"}>Ghi chú</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {dsThongKeTheoHK?.map((item, i) => (
+                <TkhkComponent
+                  key={item.id}
+                  stt={i + 1}
+                  hocKy={item.hocKy}
+                  tenHV={item.hocVien.tenHV}
+                  hocVienId={item.hocVienId}
+                  dtb={item.dtb}
+                  ghiChu={item.ghiChu}
+                />
+              ))}
+            </Tbody>
+            <br></br>
+            <br></br>
+            <br></br>
+          </Table>
+        </TableContainer>
+      </Box>
+    );
+  }
 export default ListTkhk;

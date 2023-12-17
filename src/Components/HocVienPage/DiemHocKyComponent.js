@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import dtbAPI from "../../api/dtbAPI";
 import { useParams } from "react-router-dom";
 import StorageKeys from "../../constance/storage-key";
+
 const DiemHocKyComponent = (props) => {
   const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const isDaiDoi = user.role === "user1";
@@ -18,10 +19,8 @@ const DiemHocKyComponent = (props) => {
   const filteredPhieuDiem = phieuDiem?.filter(
     (item) => item.hocPhan.hocKy === semester
   );
-  // console.log(filteredPhieuDiem);
 
   useEffect(() => {
-    // Tính điểm trung bình môn và điểm trung bình học kỳ
     const tinhDiemTrungBinh = () => {
       if (phieuDiem.length === 0 || !semester) {
         setDiemTrungBinhHocKy(0);

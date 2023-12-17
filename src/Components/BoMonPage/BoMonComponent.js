@@ -25,6 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import khoaAPI from "../../api/khoaAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { notification } from "antd";
 
 const BoMon = (props) => {
   const { idKhoa } = useParams();
@@ -38,15 +39,14 @@ const BoMon = (props) => {
   const [dsKhoa, setDsKhoa] = useState([]);
   const [maKhoa, setMaKhoa] = useState("");
   const idBoMon = props.maBM;
-  const nav = useNavigate();
-  const handleOnClick = () => {
-    nav(`/khoa/${idKhoa}/${idBoMon}`);
-  };
+  // const nav = useNavigate();
+  // const handleOnClick = () => {
+  //   nav(`/khoa/${idKhoa}/${idBoMon}`);
+  // };
 
   useEffect(() => {
     fetchKhoa();
   }, []);
-  console.log(idKhoa);
   const fetchKhoa = async () => {
     setDsKhoa(await khoaAPI.getAll());
   };
@@ -63,7 +63,8 @@ const BoMon = (props) => {
 
   const handleSuaBoMon = async () => {
     try {
-      const khoaId = idKhoa;
+      const khoaId = maKhoa;
+      console.log(khoaId);
       const tenBM = TenBoMon;
       const formdata = {
         tenBM,
@@ -74,6 +75,10 @@ const BoMon = (props) => {
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
+      notification.error({
+        message: "Vui lòng nhập đầy đủ thông tin !",
+        duration: 3,
+      });
     }
   };
 
@@ -81,10 +86,12 @@ const BoMon = (props) => {
     <>
       <Tr>
         <Td textAlign={"center"}>{props.stt}</Td>
-        <Td cursor={"pointer"} textAlign={"center"}>{props.tenBM}</Td>
-        <Td textAlign={"center"}>{props.tenKhoa}</Td>
-        <Td textAlign={"center"}>
-            <EditOutlined onClick={onOpen} style={{color:'blue'}}/>
+        <Td cursor={"pointer"}>{props.tenBM}</Td>
+        <Td >{props.tenKhoa}</Td>
+        <Td textAlign={"right"}>
+          <Button onClick={onOpen} color={"blue.500"} fontSize={"20px"}>
+            <EditOutlined />
+          </Button>
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -103,7 +110,7 @@ const BoMon = (props) => {
                 <FormControl mt={4}>
               <FormLabel>Khoa</FormLabel>
               <Select
-                value={props.tenKhoa}
+                placeholder="Chọn khoa"
                 id="KhoaInPut"
                 onChange={(e) => {
                   setMaKhoa(e.target.value);
@@ -126,8 +133,10 @@ const BoMon = (props) => {
             </ModalContent>
           </Modal>
         </Td>
-        <Td textAlign={"center"}>
-            <DeleteOutlined onClick={onEditModalOpen} style={{color:"red"}}/>
+        <Td textAlign={"left"}>
+          <Button onClick={onEditModalOpen} color={"red.500"} fontSize={"20px"}>
+            <DeleteOutlined />
+          </Button>
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
             <ModalOverlay />
             <ModalContent>

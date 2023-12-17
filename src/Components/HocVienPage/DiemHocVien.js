@@ -1,14 +1,9 @@
 import {
-  Table,
-  TableContainer,
   Button,
   FormControl,
   FormLabel,
   Input,
   Select,
-  Text,
-  Td,
-  Tr,
   Box,
 } from "@chakra-ui/react";
 import {
