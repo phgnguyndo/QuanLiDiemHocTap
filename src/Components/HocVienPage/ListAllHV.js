@@ -18,6 +18,7 @@ import {
   Box,
   Tfoot,
   Tbody,
+  Flex,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import HocVien from "./HocVienComponent";
@@ -163,7 +164,6 @@ const ListAllHocVien = (props) => {
   
   return (
     <Box position={"relative"}>
-      <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
       <Box
         color={"brown"}
         fontSize={"35px"}
@@ -183,6 +183,7 @@ const ListAllHocVien = (props) => {
         Thêm
       </Button>
       <Modal
+        size={"xl"}
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -192,93 +193,102 @@ const ListAllHocVien = (props) => {
         <ModalContent>
           <ModalHeader>Thêm học viên</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Mã học viên</FormLabel>
-              <Input
-                ref={initialRef}
-                type="text"
-                placeholder="Mã HV"
-                onChange={(e) => {
-                  setMaHV(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Tên học viên</FormLabel>
-              <Input
-                ref={finalRef}
-                type="text"
-                placeholder="Tên học viên"
-                onChange={(e) => {
-                  setHoTen(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Ngày sinh</FormLabel>
-              <Input
-                placeholder="Ngày sinh"
-                id="ngaySinhInput"
-                onChange={(e) => {
-                  setNgaySinh(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Giới tính</FormLabel>
-              <Select
-                id="gioiTinhInput"
-                onChange={(e) => {
-                  setGioiTinh(e.target.value);
-                }}
-              >
-                <option value={true}>Nam</option>
-                <option value={false}>Nữ</option>
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Quê quán</FormLabel>
-              <Select
-                placeholder="Quê quán"
-                id="queQuanInput"
-                onChange={(e) => {
-                  setQueQuan(e.target.value);
-                }}
-              >
-                {provinceData.map((province, index) => (
-                  <option key={index} value={province}>
-                    {province}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Cấp bậc</FormLabel>
-              <Select
-                placeholder="Cấp bậc"
-                id="capBacInput"
-                onChange={(e) => {
-                  setCapBac(e.target.value);
-                }}
-              >
-                {capBacData.map((capbac, index) => (
-                  <option key={index} value={capbac}>
-                    {capbac}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Ảnh</FormLabel>
-              <Input
-                type="file"
-                name="file"
-                onChange={(e) => {
-                  setImageHV(e.target.files[0]);
-                }}
-              />
-            </FormControl>
+          <ModalBody pb={7}>
+            <Flex justify={"space-evenly"}>
+              <Box w={"43%"}>
+                <FormControl>
+                  <FormLabel>Mã học viên</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    type="text"
+                    placeholder="Mã HV"
+                    onChange={(e) => {
+                      setMaHV(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Tên học viên</FormLabel>
+                  <Input
+                    ref={finalRef}
+                    type="text"
+                    placeholder="Tên học viên"
+                    onChange={(e) => {
+                      setHoTen(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Ngày sinh</FormLabel>
+                  <Input
+                    placeholder="Ngày sinh"
+                    id="ngaySinhInput"
+                    onChange={(e) => {
+                      setNgaySinh(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Giới tính</FormLabel>
+                  <Select
+                    size={"sm"}
+                    id="gioiTinhInput"
+                    onChange={(e) => {
+                      setGioiTinh(e.target.value);
+                    }}
+                  >
+                    <option value={true}>Nam</option>
+                    <option value={false}>Nữ</option>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box w={"48%"} marginTop={"-16px"}>
+                <FormControl mt={4}>
+                  <FormLabel>Quê quán</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Quê quán"
+                    id="queQuanInput"
+                    onChange={(e) => {
+                      setQueQuan(e.target.value);
+                    }}
+                  >
+                    {provinceData.map((province, index) => (
+                      <option key={index} value={province}>
+                        {province}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Cấp bậc</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Cấp bậc"
+                    id="capBacInput"
+                    onChange={(e) => {
+                      setCapBac(e.target.value);
+                    }}
+                  >
+                    {capBacData.map((capbac, index) => (
+                      <option key={index} value={capbac}>
+                        {capbac}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <FormControl mt={4}>
+                  <FormLabel>Ảnh</FormLabel>
+                  <Input
+                    type="file"
+                    name="file"
+                    onChange={(e) => {
+                      setImageHV(e.target.files[0]);
+                    }}
+                  />
+                </FormControl> */}
+              </Box>
+            </Flex>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
@@ -299,14 +309,14 @@ const ListAllHocVien = (props) => {
       >
         <Thead>
           <Tr>
-            <Th w={"12%"}>Mã HV</Th>
-            <Th>Họ tên</Th>
-            <Th>Ngày sinh</Th>
-            <Th>Giới tính</Th>
-            <Th>Quê quán</Th>
-            <Th>Cấp bậc</Th>
-            <Th textAlign={"center"}>Sửa</Th>
-            <Th textAlign={"center"}>Xóa</Th>
+            <Th w={"12%"} textAlign={"center"}>Mã HV</Th>
+            <Th textAlign={"center"}>Họ tên</Th>
+            <Th textAlign={"center"}>Ngày sinh</Th>
+            <Th textAlign={"center"}>Giới tính</Th>
+            <Th textAlign={"center"}>Quê quán</Th>
+            <Th textAlign={"center"}>Cấp bậc</Th>
+            <Th textAlign={"center"}>Tùy chọn</Th>
+            {/* <Th textAlign={"center"}>Xóa</Th> */}
           </Tr>
         </Thead>
         <Tbody>

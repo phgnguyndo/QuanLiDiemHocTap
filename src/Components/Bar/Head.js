@@ -155,9 +155,6 @@ const Head = ({ content }) => {
                 >
                   Học viên
                 </Menu.Item>
-                <Menu.Item key="8" icon={<ReadOutlined />}>
-                  Giảng dạy
-                </Menu.Item>
               </SubMenu>
 
               <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">

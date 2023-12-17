@@ -164,7 +164,7 @@ const HocVien = (props) => {
           {isDaiDoi && (
             <EditOutlined
               onClick={onOpen}
-              style={{ position: "relative", left: "15px", color: "blue" }}
+              style={{ position: "relative",fontSize:"20px",left:"25px", color: "blue" }}
             />
           )}
 
@@ -255,12 +255,12 @@ const HocVien = (props) => {
               </ModalFooter>
             </ModalContent>
           </Modal>
-        </Td>
-        <Td textAlign={"center"}>
+        {/* </Td>
+        <Td textAlign={"center"}> */}
         {isDaiDoi && (
           <DeleteOutlined
             onClick={onEditModalOpen}
-            style={{ position: "relative", left: "-5px", color: "red" }}
+            style={{ position: "relative",fontSize:"20px",left:"52px", color: "red" }}
           />
         )}
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>

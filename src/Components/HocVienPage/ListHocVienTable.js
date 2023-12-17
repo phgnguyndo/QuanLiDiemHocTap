@@ -305,29 +305,16 @@ const ListHocVienTable = (props) => {
           left={"2%"}
         >
           <Thead background={"rgb(182, 187, 196)"}>
-            <Tr>
-              <Th w={"5%"} textAlign={"center"}>
-                Mã HV
-              </Th>
-              <Th w={"20%"} textAlign={"center"}>
-                Họ tên
-              </Th>
-              <Th w={"9%"} textAlign={"center"}>
-                Ngày sinh
-              </Th>
-              <Th w={"8%"} textAlign={"center"}>
-                Giới tính
-              </Th>
-              <Th w={"10%"} textAlign={"center"}>
-                Quê quán
-              </Th>
-              <Th w={"8%"} textAlign={"center"}>
-                Cấp bậc
-              </Th>
-              <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
-                Tùy chọn
-              </Th>
-            </Tr>
+          <Tr>
+            <Th w={"12%"} textAlign={"center"}>Mã HV</Th>
+            <Th textAlign={"center"}>Họ tên</Th>
+            <Th textAlign={"center"}>Ngày sinh</Th>
+            <Th textAlign={"center"}>Giới tính</Th>
+            <Th textAlign={"center"}>Quê quán</Th>
+            <Th textAlign={"center"}>Cấp bậc</Th>
+            <Th textAlign={"center"}>Tùy chọn</Th>
+            {/* <Th textAlign={"center"}>Xóa</Th> */}
+          </Tr>
           </Thead>
           <Tbody>
             {dsHV?.map((item) => (

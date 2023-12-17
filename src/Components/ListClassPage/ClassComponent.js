@@ -34,7 +34,7 @@ const ClassComponent = (props) => {
   const idLop = props.maLCN;
   const nav = useNavigate();
   // const lopId=idHV;
-  const daiDoiId = id;
+  const daiDoiId = user.maDaiDoi;
   const maLCN = props.maLCN;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
