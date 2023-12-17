@@ -19,9 +19,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { notification } from "antd";
+import StorageKeys from "../../constance/storage-key";
 // import hocPhanAPI from "../../api/hocphanAPI";
 // import hocvienAPI from "../../api/hocvienAPI";
 const BodyHomePage = (props) => {
+  const token = localStorage.getItem(StorageKeys.TOKEN);
+  console.log(token);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [dsDaiDoi, setdsDaiDoi] = useState([]);
   // const [imageDaiDoi, setImageDaiDoi] = useState("");

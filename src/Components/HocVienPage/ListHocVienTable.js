@@ -152,10 +152,12 @@ const ListHocVienTable = (props) => {
   const fetchDsHVPage = async (page, size) => {
     setdsHV(await hocvienAPI.getAll(page, 2));
   };
+  
   const handlePageChange = (page) => {
     setCurrentPage(page);
     fetchDsHVPage(page, pageSize);
   };
+
   return (
     <Box position={"relative"}>
       <Box
@@ -226,14 +228,16 @@ const ListHocVienTable = (props) => {
                 <FormControl mt={4}>
                   <FormLabel>Giới tính</FormLabel>
                   <Select
-                    size={"sm"}
                     id="gioiTinhInput"
                     onChange={(e) => {
-                      setGioiTinh(e.target.value);
+                      // Chuyển đổi giá trị từ chuỗi thành boolean
+                      const gioiTinhValue =
+                        e.target.value === "true" ? true : false;
+                      setGioiTinh(gioiTinhValue);
                     }}
                   >
-                    <option value={true}>Nam</option>
-                    <option value={false}>Nữ</option>
+                    <option value="true">Nam</option>
+                    <option value="false">Nữ</option>
                   </Select>
                 </FormControl>
               </Box>
@@ -272,7 +276,7 @@ const ListHocVienTable = (props) => {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl mt={4}>
+                {/* <FormControl mt={4}>
                   <FormLabel>Ảnh</FormLabel>
                   <Input
                     type="file"
@@ -281,7 +285,7 @@ const ListHocVienTable = (props) => {
                       setImageHV(e.target.files[0]);
                     }}
                   />
-                </FormControl>
+                </FormControl> */}
               </Box>
             </Flex>
           </ModalBody>
@@ -305,7 +309,7 @@ const ListHocVienTable = (props) => {
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th w={"5%"}>Mã HV</Th>
-              <Th w={"20%"}>Họ tên</Th>
+              <Th w={"20%"} textAlign={"center"}>Họ tên</Th>
               <Th w={"9%"}>Ngày sinh</Th>
               <Th w={"8%"}>Giới tính</Th>
               <Th w={"17%"}>Quê quán</Th>
@@ -331,9 +335,7 @@ const ListHocVienTable = (props) => {
           </Tbody>
           <br />
           <Tfoot left={"35%"} position={"absolute"}>
-            <PaginationComponent
-              onPageChange={handlePageChange}
-            />
+            <PaginationComponent onPageChange={handlePageChange} />
           </Tfoot>
           <br></br>
           <br></br>

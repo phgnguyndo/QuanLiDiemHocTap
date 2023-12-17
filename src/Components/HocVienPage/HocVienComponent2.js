@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
@@ -20,8 +20,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import hocvienAPI from "../../api/hocvienAPI";
+import lopcnAPI from "../../api/lopcnAPI";
 import anh from "../../Image/Logo.png";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import StorageKeys from "../../constance/storage-key";
 
 const HocVien = (props) => {
   const capBacData = [
@@ -95,6 +97,7 @@ const HocVien = (props) => {
     "Vĩnh Phúc",
     "Yên Bái",
   ];
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
@@ -108,9 +111,10 @@ const HocVien = (props) => {
   const [queQuan, setQueQuan] = useState(props.queQuan || "");
   const [capBac, setCapBac] = useState(props.capBac || "");
   const [imageHV, setImageHV] = useState("");
+  const [maLCN, setMaLcn] = useState("");
 
   const { id } = useParams();
-  const { idLop } = useParams();
+  const idLop = useParams();
   const idHV = props.maHV;
   const nav = useNavigate();
   const handleOnClick = () => {
@@ -127,11 +131,13 @@ const HocVien = (props) => {
       console.error("Error submitting form:", error);
     }
   };
+
   const handleSuaHV = async () => {
     try {
       const idHV = props.maHV;
+      const idLcn = maLCN;
       const formdata = new FormData();
-      formdata.append("lopChuyenNganhId", idLop);
+      formdata.append("lopChuyenNganhId", idLcn);
       formdata.append("tenHV", hoTen);
       formdata.append("ngaySinh", ngaySinh);
       formdata.append("gioiTinh", gioiTinh);
@@ -146,6 +152,16 @@ const HocVien = (props) => {
     }
   };
 
+  const [dsLcn, setDsLcn] = useState([]);
+  useEffect(() => {
+    fetchDsLcn();
+  }, []);
+
+  const fetchDsLcn = async () => {
+    const idDaiDoi = user.maDaiDoi;
+    setDsLcn(await lopcnAPI.get(idDaiDoi));
+  };
+
   return (
     <>
       <Tr>
@@ -158,9 +174,10 @@ const HocVien = (props) => {
         <Td>{props.queQuan}</Td>
         <Td>{props.capBac}</Td>
         <Td textAlign={"right"}>
-          <Button onClick={onOpen} color={"blue.500"}  fontSize={"20px"}>
-            <EditOutlined />
-          </Button>
+          <EditOutlined
+            onClick={onOpen}
+            style={{ color: "blue", fontSize:"20px"}}
+          />
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -188,7 +205,6 @@ const HocVien = (props) => {
                 <FormControl mt={4}>
                   <FormLabel>Giới tính</FormLabel>
                   <Select
-                  size={"sm"}
                     id="gioiTinhInput"
                     onChange={(e) => {
                       setGioiTinh(e.target.value);
@@ -201,7 +217,6 @@ const HocVien = (props) => {
                 <FormControl mt={4}>
                   <FormLabel>Quê quán</FormLabel>
                   <Select
-                  size={"sm"}
                     placeholder="Quê quán"
                     id="queQuanInput"
                     onChange={(e) => {
@@ -218,7 +233,6 @@ const HocVien = (props) => {
                 <FormControl mt={4}>
                   <FormLabel>Cấp bậc</FormLabel>
                   <Select
-                  size={"sm"}
                     placeholder="Cấp bậc"
                     id="capBacInput"
                     onChange={(e) => {
@@ -232,16 +246,32 @@ const HocVien = (props) => {
                     ))}
                   </Select>
                 </FormControl>
-                {/* <FormControl mt={4}>
-                  <FormLabel>Ảnh</FormLabel>
-                  <Input
-                    type="file"
-                    name="file"
+                <FormControl mt={4}>
+                  <FormLabel>Lớp chuyên ngành</FormLabel>
+                  <Select
+                    placeholder="Không"
+                    id="LcnInPut"
                     onChange={(e) => {
-                      setImageHV(e.target.files[0]);
+                      setMaLcn(e.target.value);
                     }}
-                  />
-                </FormControl> */}
+                  >
+                    {dsLcn.map((item, index) => (
+                      <option key={index} value={item.maLopChuyenNganh}>
+                        {item.tenLopChuyenNganh}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <FormControl mt={4}>
+                    <FormLabel>Ảnh</FormLabel>
+                    <Input
+                      type="file"
+                      name="file"
+                      onChange={(e) => {
+                        setImageHV(e.target.files[0]);
+                      }}
+                    />
+                  </FormControl> */}
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={handleSuaHV}>
@@ -253,9 +283,10 @@ const HocVien = (props) => {
           </Modal>
         </Td>
         <Td textAlign={"left"}>
-          <Button onClick={onEditModalOpen} color={"red.500"} fontSize={"20px"}>
-            <DeleteOutlined />
-          </Button>
+          <DeleteOutlined
+            onClick={onEditModalOpen}
+            style={{ color: "red", fontSize:"20px"}}
+          />
           <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
             <ModalOverlay />
             <ModalContent>

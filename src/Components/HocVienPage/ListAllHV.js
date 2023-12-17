@@ -18,13 +18,16 @@ import {
   Box,
   Tfoot,
   Tbody,
+  Flex,
 } from "@chakra-ui/react";
 import { Input } from "antd";
-import HocVien from "./HocVienComponent";
+import HocVien from "./HocVienComponent2";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 import PaginationComponent from "../Pagination/Pagenation";
+import StorageKeys from "../../constance/storage-key";
+import lopcnAPI from "../../api/lopcnAPI";
 
 const ListAllHocVien = (props) => {
   const capBacData = [
@@ -99,8 +102,9 @@ const ListAllHocVien = (props) => {
     "Yên Bái",
   ];
 
-  const { idLop } = useParams();
+  // const { idLop } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
@@ -114,12 +118,10 @@ const ListAllHocVien = (props) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  
-  
 
   const handleSubmit = async () => {
     try {
-      const lcnId = idLop;
+      const lcnId = maLCN;
       const formdata = new FormData();
       formdata.append("maHV", maHV);
       formdata.append("lopChuyenNganhId", lcnId);
@@ -160,13 +162,24 @@ const ListAllHocVien = (props) => {
     setPageSize(size);
     fetchDsHV(currentPage, size);
   };
-  
+
+  const [maLCN, setMaLcn] = useState("");
+  const [dsLcn, setDsLcn] = useState([]);
+  useEffect(() => {
+    fetchDsLcn();
+  }, []);
+
+  const fetchDsLcn = async () => {
+    const idDaiDoi = user.maDaiDoi;
+    setDsLcn(await lopcnAPI.get(idDaiDoi));
+  };
+
   return (
     <Box position={"relative"}>
-      <h1 style={{ color: "GrayText" }}>Lớp {props.lcnId}</h1>
       <Box
+        variant="solid"
         color={"brown"}
-        fontSize={"35px"}
+        fontSize={"40px"}
         fontWeight={500}
         textAlign={"center"}
       >
@@ -176,13 +189,14 @@ const ListAllHocVien = (props) => {
         variant="solid"
         bg="rgb(26,132,74)"
         color={"white"}
-        left={"5%"}
+        left={"2%"}
         top={"30px"}
         onClick={onOpen}
       >
         Thêm
       </Button>
       <Modal
+        size={"xl"}
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -193,92 +207,117 @@ const ListAllHocVien = (props) => {
           <ModalHeader>Thêm học viên</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Mã học viên</FormLabel>
-              <Input
-                ref={initialRef}
-                type="text"
-                placeholder="Mã HV"
-                onChange={(e) => {
-                  setMaHV(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Tên học viên</FormLabel>
-              <Input
-                ref={finalRef}
-                type="text"
-                placeholder="Tên học viên"
-                onChange={(e) => {
-                  setHoTen(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Ngày sinh</FormLabel>
-              <Input
-                placeholder="Ngày sinh"
-                id="ngaySinhInput"
-                onChange={(e) => {
-                  setNgaySinh(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Giới tính</FormLabel>
-              <Select
-                id="gioiTinhInput"
-                onChange={(e) => {
-                  setGioiTinh(e.target.value);
-                }}
-              >
-                <option value={true}>Nam</option>
-                <option value={false}>Nữ</option>
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Quê quán</FormLabel>
-              <Select
-                placeholder="Quê quán"
-                id="queQuanInput"
-                onChange={(e) => {
-                  setQueQuan(e.target.value);
-                }}
-              >
-                {provinceData.map((province, index) => (
-                  <option key={index} value={province}>
-                    {province}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Cấp bậc</FormLabel>
-              <Select
-                placeholder="Cấp bậc"
-                id="capBacInput"
-                onChange={(e) => {
-                  setCapBac(e.target.value);
-                }}
-              >
-                {capBacData.map((capbac, index) => (
-                  <option key={index} value={capbac}>
-                    {capbac}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Ảnh</FormLabel>
-              <Input
-                type="file"
-                name="file"
-                onChange={(e) => {
-                  setImageHV(e.target.files[0]);
-                }}
-              />
-            </FormControl>
+            <Flex justify={"space-evenly"}>
+              <Box w={"43%"}>
+                <FormControl>
+                  <FormLabel>Mã học viên</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    type="text"
+                    placeholder="Mã HV"
+                    onChange={(e) => {
+                      setMaHV(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Tên học viên</FormLabel>
+                  <Input
+                    ref={finalRef}
+                    type="text"
+                    placeholder="Tên học viên"
+                    onChange={(e) => {
+                      setHoTen(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Ngày sinh</FormLabel>
+                  <Input
+                    placeholder="Ngày sinh"
+                    id="ngaySinhInput"
+                    onChange={(e) => {
+                      setNgaySinh(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Giới tính</FormLabel>
+                  <Select
+                    size={"sm"}
+                    id="gioiTinhInput"
+                    onChange={(e) => {
+                      setGioiTinh(e.target.value);
+                    }}
+                  >
+                    <option value={true}>Nam</option>
+                    <option value={false}>Nữ</option>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box w={"48%"} marginTop={"-16px"}>
+                <FormControl mt={4}>
+                  <FormLabel>Quê quán</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Quê quán"
+                    id="queQuanInput"
+                    onChange={(e) => {
+                      setQueQuan(e.target.value);
+                    }}
+                  >
+                    {provinceData.map((province, index) => (
+                      <option key={index} value={province}>
+                        {province}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Cấp bậc</FormLabel>
+                  <Select
+                    size={"sm"}
+                    placeholder="Cấp bậc"
+                    id="capBacInput"
+                    onChange={(e) => {
+                      setCapBac(e.target.value);
+                    }}
+                  >
+                    {capBacData.map((capbac, index) => (
+                      <option key={index} value={capbac}>
+                        {capbac}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Lớp chuyên ngành</FormLabel>
+                  <Select
+                    placeholder="Không"
+                    id="LcnInPut"
+                    onChange={(e) => {
+                      setMaLcn(e.target.value);
+                    }}
+                  >
+                    {dsLcn.map((item, index) => (
+                      <option key={index} value={item.maLopChuyenNganh}>
+                        {item.tenLopChuyenNganh}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <FormControl mt={4}>
+                  <FormLabel>Ảnh</FormLabel>
+                  <Input
+                    type="file"
+                    name="file"
+                    onChange={(e) => {
+                      setImageHV(e.target.files[0]);
+                    }}
+                  />
+                </FormControl> */}
+              </Box>
+            </Flex>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
@@ -294,19 +333,20 @@ const ListAllHocVien = (props) => {
         size="sm"
         position={"relative"}
         top={"50px"}
-        w={"90%"}
-        left={"5%"}
+        w={"95%"}
+        left={"2%"}
       >
-        <Thead>
+        <Thead background={"rgb(182, 187, 196)"}>
           <Tr>
-            <Th w={"12%"}>Mã HV</Th>
-            <Th>Họ tên</Th>
-            <Th>Ngày sinh</Th>
-            <Th>Giới tính</Th>
-            <Th>Quê quán</Th>
-            <Th>Cấp bậc</Th>
-            <Th textAlign={"center"}>Sửa</Th>
-            <Th textAlign={"center"}>Xóa</Th>
+            <Th w={"5%"}>Mã HV</Th>
+            <Th w={"20%"} textAlign={"center"}>Họ tên</Th>
+            <Th w={"9%"}>Ngày sinh</Th>
+            <Th w={"8%"}>Giới tính</Th>
+            <Th w={"17%"}>Quê quán</Th>
+            <Th w={"8%"}>Cấp bậc</Th>
+            <Th colSpan={"6"} w={"4%"} textAlign={"center"}>
+              Tùy chọn
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -314,6 +354,7 @@ const ListAllHocVien = (props) => {
             <HocVien
               key={item.maHV}
               maHV={item.maHV}
+              lopChuyenNganhId={item.lopChuyenNganhId}
               hoTen={item.tenHV}
               img={item.anhHV}
               ngaySinh={item.ngaySinh}
@@ -325,10 +366,10 @@ const ListAllHocVien = (props) => {
         </Tbody>
         <br />
         <Tfoot left={"35%"} position={"absolute"}>
-        <PaginationComponent
-          onPageChange={handlePageChange}
-          // onSizeChange={handleSizeChange}
-        />
+          <PaginationComponent
+            onPageChange={handlePageChange}
+            // onSizeChange={handleSizeChange}
+          />
         </Tfoot>
       </Table>
     </Box>

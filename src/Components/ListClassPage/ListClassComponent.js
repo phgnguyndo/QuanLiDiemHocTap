@@ -20,6 +20,7 @@ import lopcnAPI from "../../api/lopcnAPI";
 import StorageKeys from "../../constance/storage-key";
 const username = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ListClassComponent = () => {
+  const isDaiDoi = username.role === "user1";
   // const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
@@ -70,16 +71,19 @@ const ListClassComponent = () => {
         Danh sách các lớp
       </Box>
       {/* <ButtonGroup spacing="2"> */}
-      <Button
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        top={"20px"}
-        left={"80%"}
-        onClick={onOpen}
-      >
-        Thêm lớp
-      </Button>
+      {isDaiDoi && (
+        <Button
+          variant="solid"
+          bg="rgb(26,132,74)"
+          color={"white"}
+          top={"20px"}
+          left={"80%"}
+          onClick={onOpen}
+        >
+          Thêm lớp
+        </Button>
+      )}
+
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}

@@ -148,13 +148,17 @@ const ListLopHPTable = (props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <TableContainer w={"120vh"}>
-        <Table variant="simple" size="lg">
+      <TableContainer w={"150vh"}>
+        <Table variant="simple" size="sm">
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
-              <Th textAlign={"center"}>#</Th>
-              <Th>Lớp học phần</Th>
-              <Th>Học phần</Th>
+              <Th textAlign={"center"}>STT</Th>
+              <Th textAlign={"center"}>Lớp học phần</Th>
+              <Th textAlign={"center"}>Học phần</Th>
+              {/* <Th textAlign={"center"}>Các lớp chuyên ngành</Th>
+              <Th textAlign={"center"}>Đại đội</Th> */}
+              <Th textAlign={"center"}>Địa điểm (giảng đường)</Th>
+              <Th textAlign={"center"}>Giáo viên</Th>
               <Th textAlign={"center"}>Sửa</Th>
               <Th textAlign={"center"}>Xóa</Th>
             </Tr>

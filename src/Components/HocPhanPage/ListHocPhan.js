@@ -79,24 +79,25 @@ const ListHocPhanTable = (props) => {
   return (
     <Box position={"relative"}>
       <Box
+        color={"brown"}
         variant="solid"
         fontSize={"40px"}
         fontWeight={500}
         textAlign={"center"}
-        color={"rgb(91, 138, 114)"}
       >
         Danh sách các học phần
       </Box>
+
       <Button
         position={"relative"}
         top={"30px"}
-        left={"60px"}
+        left={"172px"}
         variant="solid"
         bg="rgb(80,132,74)"
         color={"white"}
         onClick={onOpen}
       >
-        Thêm
+        Thêm học phần
       </Button>
       <Modal
         initialFocusRef={initialRef}
@@ -184,13 +185,13 @@ const ListHocPhanTable = (props) => {
           size="sm"
           position={"relative"}
           top={"50px"}
-          w={"90%"}
+          w={"70%"}
           align="center"
         >
           <Thead>
             <Tr bg={"rgb(182, 187, 196)"}>
               <Th w={"5%"} textAlign={"center"}>
-                STT
+                Mã HP
               </Th>
               <Th w={"10%"} textAlign={"center"}>
                 Tên học phần
@@ -202,15 +203,20 @@ const ListHocPhanTable = (props) => {
                 Số tín chỉ
               </Th>
               <Th w={"10%"} textAlign={"center"}>
-                Thuộc học kỳ
+                Học kỳ
               </Th>
-              <Th colSpan={"7"} textAlign={"center"} w={"3%"}>Tùy chọn</Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Sửa
+              </Th>
+              <Th w={"5%"} textAlign={"center"}>
+                Xóa
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {dsHP.map((item, i) => (
               <HocPhanComponent
-                key={item.maHocPhan}
+                maHP={item.maHocPhan}
                 STT={i + 1}
                 tenHP={item.tenHocPhan}
                 soTC={item.soTC}
@@ -220,6 +226,7 @@ const ListHocPhanTable = (props) => {
               />
             ))}
           </Tbody>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>
