@@ -26,14 +26,10 @@ import {
   import bomonAPI from "../../api/bomonAPI";
   import hocPhanAPI from "../../api/hocphanAPI.js"
 import dtbAPI from "../../api/dtbAPI.js";
-import HvXuatSacComponent from "./HvXuatSacComponent.js";
-import HvGioiComponent from "./HvGioiComponent.js";
-import HvKhaComponent from "./HvKhaComponent.js";
-import HvTBComponent from "./HvTBComponent.js";
-import HvKemComponent from "./HvKemComponent.js";
 import hocvienAPI from "../../api/hocvienAPI.js";
+import DsTichLuyComponent from "./DsTichLuyComponent.js";
 
-  const ListTKTheoNam = (props) => {
+  const ListTkDiemTichLuy = (props) => {
     const i = 0;
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,16 +42,15 @@ import hocvienAPI from "../../api/hocvienAPI.js";
     const [namHoc, setNamHoc] = useState(1);
     const [dsDTB, setdsDTB] = useState([]);
     const [dsHV,setdsHV] = useState([]);
-    const [hv_diem, setHv_diem] = useState([]);
+    const [hv_diem_TC, setHv_diem_TC] = useState([]);
+    const [dsTichLuy, setDsTichLuy] = useState([]);
 
-      
       useEffect(() => {
         fetchDsDTB();
       }, []);
       const fetchDsDTB = async () => {
         setdsDTB(await dtbAPI.getAll());
       };
-      // console.log(dsDTB);
       
       useEffect(() => {
       fetchDsHV();
@@ -65,43 +60,67 @@ import hocvienAPI from "../../api/hocvienAPI.js";
       };
       // console.log(dsHV);
       
-    //xét học viên có điểm trung bình năm xuất sắc
+    //xét học viên có điểm trung bình năm 
   useEffect(() => {
     const tinhDiemTrungBinhNamHoc = (dsHV,dsDTB) =>{
       let len = dsHV.length;
-      const hv_diem = new Array(len).fill(0).map(() => new Array(6).fill(0));
+      const hv_diem_TC = new Array(len).fill(0).map(() => new Array(6).fill(0));
       let tcNam = 5;
       let temp = 0;
       let j =0;
       for(let i=0; i < dsHV.length ; i++){
-          hv_diem[i][0] = dsHV[i].maHV;
+          hv_diem_TC[i][0] = dsHV[i].maHV;
             temp = (dsDTB[j].dtb * dsDTB[j].tongTC + dsDTB[j+1].dtb * dsDTB[j+1].tongTC );
             tcNam = dsDTB[j].tongTC  + dsDTB[j+1].tongTC;
-            hv_diem[i][1] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][1] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][2] = tcNam;
+
             temp = (dsDTB[j+2].dtb * dsDTB[j+2].tongTC  + dsDTB[j+3].dtb * dsDTB[j+3].tongTC );
             tcNam = dsDTB[j+2].tongTC  + dsDTB[j+3].tongTC ;
-            hv_diem[i][2] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][3] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][4] = tcNam;
 
             temp = (dsDTB[j+4].dtb * dsDTB[j+4].tongTC  + dsDTB[j+5].dtb * dsDTB[j+5].tongTC );
             tcNam = dsDTB[j+4].tongTC  + dsDTB[j+5].tongTC ;
-            hv_diem[i][3] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][5] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][6] = tcNam;
 
             temp = (dsDTB[j+6].dtb * dsDTB[j+6].tongTC  + dsDTB[j+7].dtb * dsDTB[j+7].tongTC );
             tcNam = dsDTB[j+6].tongTC  + dsDTB[j+7].tongTC ;
-            hv_diem[i][4] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][7] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][8] = tcNam;
 
             temp = (dsDTB[j+8].dtb * dsDTB[j+8].tongTC  + dsDTB[j+9].dtb * dsDTB[j+9].tongTC );
             tcNam = dsDTB[j+8].tongTC  + dsDTB[j+9].tongTC 
-            hv_diem[i][5] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][9] = tcNam > 0 ?  temp/tcNam : 0;
+            hv_diem_TC[i][10] = tcNam;
           j += 10;
       };
-        setHv_diem(hv_diem);
+        setHv_diem_TC(hv_diem_TC);
     };
     tinhDiemTrungBinhNamHoc(dsHV,dsDTB);
 
+    const tinhDiemTichLuy = (hv_diem_TC,dsHV) => {
+        const dsTichLuy = [];
+        let len = hv_diem_TC.length;
+        let tongTC = 0;
+        let temp = 0;
+        for(let i = 0; i < len;i++){
+            // dsTichLuy[i][0] = dsHV[i].maHV;
+            tongTC = hv_diem_TC[i][2] + hv_diem_TC[i][4] + hv_diem_TC[i][6]  + hv_diem_TC[i][8] + hv_diem_TC[i][10];
+            temp = hv_diem_TC[i][1] * hv_diem_TC[i][2] + hv_diem_TC[i][3] * hv_diem_TC[i][4] + hv_diem_TC[i][5] * hv_diem_TC[i][6] + hv_diem_TC[i][7]*hv_diem_TC[i][8] + hv_diem_TC[i][9]*hv_diem_TC[i][10] 
+            dsTichLuy.push(tongTC > 0 ? temp/tongTC : 0);
+        };
+        setDsTichLuy(dsTichLuy);
+        
+    };
+    tinhDiemTichLuy(hv_diem_TC,dsHV)
   })
+
   console.log("diemne");
-  console.log(hv_diem);
+  console.log(hv_diem_TC);
+  console.log("tich luy ne");
+console.log(dsTichLuy);
 
     return (
       <div
@@ -122,36 +141,15 @@ import hocvienAPI from "../../api/hocvienAPI.js";
             color: "rgb(91, 138, 114)",
           }}
         >
-          Thống kê điểm theo năm học
+          Thống kê điểm tích lũy
         </div>
-        <Select
-                placeholder="Chọn năm học"
-                id="boMonInput"
-                onChange={(e) => {
-                  setNamHoc(e.target.value);
-                }}
-                size={"sm"}
-                position={"relative"}
-                top={"-50px"}
-                right={"-515px"}
-                width={"20vh"}
-                > 
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </Select>
 
         <TableContainer w={"150vh"}>
-          <HvXuatSacComponent namHoc={namHoc} hv_diem={hv_diem} />
-          <HvGioiComponent namHoc={namHoc}  hv_diem={hv_diem}/>
-          <HvKhaComponent namHoc={namHoc}  hv_diem={hv_diem}/>
-          <HvTBComponent namHoc={namHoc} hv_diem={hv_diem}/>
-          <HvKemComponent namHoc={namHoc} hv_diem={hv_diem}/>
+          <DsTichLuyComponent dsTichLuy={dsTichLuy} />
+         
         </TableContainer>
       </div>
     );
   };
   
-  export default ListTKTheoNam;
+  export default ListTkDiemTichLuy;
