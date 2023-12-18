@@ -27,6 +27,7 @@ import DiemHocKyComponent from "./DiemHocKyComponent";
 import { useParams } from "react-router-dom";
 import phieuDiemAPI from "../../api/PhieuDiem";
 import hocPhanAPI from "../../api/hocphanAPI";
+import hocvienAPI from "../../api/hocvienAPI"
 import StorageKeys from "../../constance/storage-key";
 import { notification } from "antd";
 
@@ -42,6 +43,7 @@ const DiemHocVien = (props) => {
   const [maHocPhan, setMaHocPhan] = useState("");
   const [dsHocPhan, setDsHocPhan] = useState([]);
   const [phieuDiem, setPhieuDiem] = useState([]);
+  const [hV, setHV]=useState([]);
   const hocVienId = idHV;
   const handleSubmit = async () => {
     try {
@@ -74,6 +76,13 @@ const DiemHocVien = (props) => {
   };
 
   useEffect(() => {
+    fetchHV();
+  }, []);
+  const fetchHV = async () => {
+    setHV(await hocvienAPI.get(idHV));
+  };
+  console.log(hV);
+  useEffect(() => {
     fetchHocPhan();
   }, []);
 
@@ -102,7 +111,7 @@ const DiemHocVien = (props) => {
         fontWeight={500}
         textAlign={"center"}
       >
-        Bảng điểm của học viên
+        Bảng điểm của học viên {hV.tenHV}
       </Box>
       {isDaiDoi && (
         <Button
@@ -203,6 +212,7 @@ const DiemHocVien = (props) => {
       {uniqueSemesters.map((semester, index) => (
         <DiemHocKyComponent
           key={index}
+          tenHV={hV.tenHV}
           semester={semester}
           phieuDiem={phieuDiem}
           HocKy={index + 1}

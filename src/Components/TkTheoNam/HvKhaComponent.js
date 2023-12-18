@@ -69,10 +69,8 @@ const HvKhaComponent = (props) => {
         case "2":
           for (let i = 0; i < len; i++) {
             if (8 > hv_diem[i]?.[2] && hv_diem[i]?.[2] >= 7) {
-              kha[j][0] = dsHV[i].maHV;
-              kha[j][1] = dsHV[i].tenHV;
-              kha[j][2] = dsHV[i].lopChuyenNganhId;
-              kha[j][3] = hv_diem[i][2];
+              const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][2]]
+              kha.push(newRows);
               j++;
             }
           }
@@ -80,10 +78,8 @@ const HvKhaComponent = (props) => {
         case "3":
           for (let i = 0; i < len; i++) {
             if (8 > hv_diem[i]?.[3] && hv_diem[i]?.[3] >= 7) {
-              kha[j][0] = dsHV[i].maHV;
-              kha[j][1] = dsHV[i].tenHV;
-              kha[j][2] = dsHV[i].lopChuyenNganhId;
-              kha[j][3] = hv_diem[i][3];
+              const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][3]]
+              kha.push(newRows);
               j++;
             }
           }
@@ -91,10 +87,8 @@ const HvKhaComponent = (props) => {
         case "4":
           for (let i = 0; i < len; i++) {
             if (8 > hv_diem[i]?.[4] && hv_diem[i]?.[4] >= 7) {
-              kha[j][0] = dsHV[i].maHV;
-              kha[j][1] = dsHV[i].tenHV;
-              kha[j][2] = dsHV[i].lopChuyenNganhId;
-              kha[j][3] = hv_diem[i][4];
+              const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][4]]
+              kha.push(newRows);
               j++;
             }
           }
@@ -102,10 +96,8 @@ const HvKhaComponent = (props) => {
         case "5":
           for (let i = 0; i < len; i++) {
             if (8 > hv_diem[i]?.[5] && hv_diem[i]?.[5] >= 7) {
-              kha[j][0] = dsHV[i].maHV;
-              kha[j][1] = dsHV[i].tenHV;
-              kha[j][2] = dsHV[i].lopChuyenNganhId;
-              kha[j][3] = hv_diem[i][5];
+              const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][5]]
+              kha.push(newRows);
               j++;
             }
           }
@@ -114,7 +106,7 @@ const HvKhaComponent = (props) => {
           console.log("It's something else.");
       }
       setDsXS(kha);
-      // console.log(kha);
+// console.log(kha);
     };
     phanLoaiHocVienXS(hv_diem, dsHV, namHoc);
   }, [namHoc]);

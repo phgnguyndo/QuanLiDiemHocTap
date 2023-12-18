@@ -10,10 +10,10 @@ const hocvienAPI= {
           })
     },
     get(id) {
-        const url=`/HocVien/${id}`;
+        const url = `/HocVien/${id}`;
         return axiosClient.get(url, {
             headers: { Authorization: `Bearer ${token}` },
-          });
+        });
     },
     create(data){
         const url='/HocVien';

@@ -13,6 +13,7 @@ import HvXuatSacComponent from "./HvXuatSacComponent.js";
 import HvGioiComponent from "./HvGioiComponent.js";
 import HvKhaComponent from "./HvKhaComponent.js";
 import HvTBComponent from "./HvTBComponent.js";
+import HvYeuComponent from "./HvYeuComponent.js";
 import HvKemComponent from "./HvKemComponent.js";
 import hocvienAPI from "../../api/hocvienAPI.js";
 
@@ -47,11 +48,12 @@ useEffect(() => {
     let tcNam = 5;
     let temp = 0;
     let j =0;
-    for(let i=0; i < dsHV.length ; i++){
+    for(let i=0; i < len ; i++){
         hv_diem[i][0] = dsHV[i].maHV;
           temp = (dsDTB[j].dtb * dsDTB[j].tongTC + dsDTB[j+1].dtb * dsDTB[j+1].tongTC );
           tcNam = dsDTB[j].tongTC  + dsDTB[j+1].tongTC;
           hv_diem[i][1] = tcNam > 0 ?  temp/tcNam : 0;
+
           temp = (dsDTB[j+2].dtb * dsDTB[j+2].tongTC  + dsDTB[j+3].dtb * dsDTB[j+3].tongTC );
           tcNam = dsDTB[j+2].tongTC  + dsDTB[j+3].tongTC ;
           hv_diem[i][2] = tcNam > 0 ?  temp/tcNam : 0;
@@ -67,12 +69,13 @@ useEffect(() => {
           temp = (dsDTB[j+8].dtb * dsDTB[j+8].tongTC  + dsDTB[j+9].dtb * dsDTB[j+9].tongTC );
           tcNam = dsDTB[j+8].tongTC  + dsDTB[j+9].tongTC 
           hv_diem[i][5] = tcNam > 0 ?  temp/tcNam : 0;
-        j += 10;
+          j += 10;
     };
       setHv_diem(hv_diem);
+      console.log(hv_diem);
   };
   tinhDiemTrungBinhNamHoc(dsHV,dsDTB);
-
+  console.log("NamHocne"+namHoc);
 },[namHoc])
 
   return (
@@ -82,7 +85,7 @@ useEffect(() => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "40vh",
+minHeight: "40vh",
       }}
     >
       <div
@@ -119,6 +122,7 @@ useEffect(() => {
         <HvGioiComponent namHoc={namHoc}  hv_diem={hv_diem}/>
         <HvKhaComponent namHoc={namHoc}  hv_diem={hv_diem}/>
         <HvTBComponent namHoc={namHoc} hv_diem={hv_diem}/>
+        <HvYeuComponent namHoc={namHoc} hv_diem={hv_diem}/>
         <HvKemComponent namHoc={namHoc} hv_diem={hv_diem}/>
       </TableContainer>
     </div>

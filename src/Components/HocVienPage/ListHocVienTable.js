@@ -118,8 +118,8 @@ const ListHocVienTable = (props) => {
   const [capBac, setCapBac] = useState("");
   const [imageHV, setImageHV] = useState("");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [pageSize, setPageSize] = useState(10);
 
   const handleSubmit = async () => {
     try {

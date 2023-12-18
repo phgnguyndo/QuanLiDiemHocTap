@@ -98,8 +98,8 @@ const Head = ({ content }) => {
           >
             Trang chủ
           </Menu.Item>
-          {isAdOrDd && (
-            <>
+          {/* {isAdOrDd && (
+            <> */}
               <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
                 {/* {isAdmin && (
                   <> */}
@@ -164,8 +164,8 @@ const Head = ({ content }) => {
                   </>
                 )}
               </SubMenu>
-            </>
-          )}
+            {/* </>
+          )} */}
           {isDaiDoi && (
             <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
               <Menu.Item

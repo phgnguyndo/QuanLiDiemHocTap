@@ -32,7 +32,7 @@ const HvKemComponent = (props) => {
   const [dsHV, setdsHV] = useState([]);
 
   const namHoc = props.namHoc;
-  const [kem, setDsXS] = useState([]);
+  const [Kem, setDsXS] = useState([]);
 
   useEffect(() => {
     fetchDsDTB();
@@ -51,59 +51,59 @@ const HvKemComponent = (props) => {
   useEffect(() => {
     const phanLoaiHocVienXS = (hv_diem, dsHV, namHoc) => {
       let len = dsHV.length;
-      const kem = [];
+      const Kem = [];
 
       let j = 0;
       switch (namHoc) {
         case "1":
           for (let i = 0; i < len; i++) {
-            if (6 > hv_diem[i]?.[1] && hv_diem[i]?.[1] >= 4) {
+            if (4 > hv_diem[i]?.[1] && hv_diem[i]?.[1] >0) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][1]]
-              kem.push(newRows);
+              Kem.push(newRows);
               j++;
             }
           }
           break;
         case "2":
           for (let i = 0; i < len; i++) {
-            if (6 > hv_diem[i]?.[2] && hv_diem[i]?.[2] >= 4) {
+            if (4 > hv_diem[i]?.[2] && hv_diem[i]?.[2] >0) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][2]]
-              kem.push(newRows);
+              Kem.push(newRows);
               j++;
             }
           }
           break;
         case "3":
           for (let i = 0; i < len; i++) {
-            if (6 > hv_diem[i]?.[3] && hv_diem[i]?.[3] >= 4) {
+            if (4 > hv_diem[i]?.[3] && hv_diem[i]?.[3] >0 ) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][3]]
-              kem.push(newRows);
+              Kem.push(newRows);
               j++;
             }
           }
           break;
         case "4":
           for (let i = 0; i < len; i++) {
-            if (6 > hv_diem[i]?.[4] && hv_diem[i]?.[4] >= 4) {
+            if (4 > hv_diem[i]?.[4] && hv_diem[i]?.[4] >0) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][4]]
-              kem.push(newRows);
+              Kem.push(newRows);
               j++;
             }
           }
           break;
         case "5":
           for (let i = 0; i < len; i++) {
-            if (6 > hv_diem[i]?.[5] && hv_diem[i]?.[5] >= 4) {
+            if (4 > hv_diem[i]?.[5] && hv_diem[i]?.[5] >0) {
               const newRows = [dsHV[i].maHV, dsHV[i].tenHV,dsHV[i].lopChuyenNganhId, hv_diem[i][5]]
-              kem.push(newRows);
+              Kem.push(newRows);
               j++;
             }
           }
           break;
-        default:
+default:
           console.log("It's something else.");
       }
-      setDsXS(kem);
+      setDsXS(Kem);
     };
     phanLoaiHocVienXS(hv_diem, dsHV, namHoc);
   }, [namHoc]);
@@ -118,26 +118,26 @@ const HvKemComponent = (props) => {
         w={"90%"}
         left={"5%"}
       >
-        {kem.length !== 0 && (
+        {Kem.length !== 0 && (
           <>
-            <TableTK name="kém" />
+            <TableTK name="Kém" />
             <Tbody>
-              {kem.map((item, i) => (
+              {Kem.map((item, i) => (
                 <Tr>
                   <Td position={"relative"} textAlign={"center"}>
                     {i + 1}
                   </Td>
                   <Td position={"relative"} textAlign={"center"}>
-                    {kem[i][0]}
+                    {Kem[i][0]}
                   </Td>
                   <Td position={"relative"} textAlign={"center"}>
-                    {kem[i][1]}
+                    {Kem[i][1]}
                   </Td>
                   <Td position={"relative"} textAlign={"center"}>
-                    {kem[i][2]}
+                    {Kem[i][2]}
                   </Td>
                   <Td position={"relative"} textAlign={"center"}>
-                    {kem[i][3]}
+                    {Kem[i][3]}
                   </Td>
                 </Tr>
               ))}

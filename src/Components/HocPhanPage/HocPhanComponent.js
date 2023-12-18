@@ -7,10 +7,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import {
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState, React } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -25,8 +22,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import hocPhanAPI from "../../api/hocphanAPI";
+import StorageKeys from "../../constance/storage-key";
 
 const HocPhanComponent = (props) => {
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isAdmin = user.role === "admin";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isEditModalOpen,
@@ -86,52 +86,62 @@ const HocPhanComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {props.hocKy}
         </Td>
-        <Td >
-            <EditOutlined style={{fontSize:"20px",position:"relative", color:"blue", left:"22%"}} onClick={onOpen}/>
-          <Modal isCentered isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Sửa thông tin về học phần</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Tên học phần</FormLabel>
-                  <Input
-                    defaultValue={props.tenHP}
-                    onChange={(e) => {
-                      setTenHP(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Số tiết</FormLabel>
-                  <Input
-                    defaultValue={props.soTiet}
-                    onChange={(e) => {
-                      setSotiet(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Số tín chỉ</FormLabel>
-                  <Input
-                    defaultValue={props.soTC}
-                    onChange={(e) => {
-                      setTinChi(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Thuộc học kỳ</FormLabel>
-                  <Input
-                    defaultValue={props.hocKy}
-                    onChange={(e) => {
-                      setHocKy(e.target.value);
-                    }}
-                  />
-                </FormControl>
+        <Td>
+          {isAdmin && (
+            <>
+              <EditOutlined
+                style={{
+                  fontSize: "20px",
+                  position: "relative",
+                  color: "blue",
+                  left: "22%",
+                }}
+                onClick={onOpen}
+              />
+              <Modal isCentered isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Sửa thông tin về học phần</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>
+                    <FormControl>
+                      <FormLabel>Tên học phần</FormLabel>
+                      <Input
+                        defaultValue={props.tenHP}
+                        onChange={(e) => {
+                          setTenHP(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Số tiết</FormLabel>
+                      <Input
+                        defaultValue={props.soTiet}
+                        onChange={(e) => {
+                          setSotiet(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Số tín chỉ</FormLabel>
+                      <Input
+                        defaultValue={props.soTC}
+                        onChange={(e) => {
+                          setTinChi(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Thuộc học kỳ</FormLabel>
+                      <Input
+                        defaultValue={props.hocKy}
+                        onChange={(e) => {
+                          setHocKy(e.target.value);
+                        }}
+                      />
+                    </FormControl>
 
-                {/* <FormControl mt={4}>
+                    {/* <FormControl mt={4}>
                       <FormLabel>Cấp bậc</FormLabel>
                       <Select
                         placeholder="Cấp bậc"
@@ -142,30 +152,50 @@ const HocPhanComponent = (props) => {
                       >
                       </Select>
                     </FormControl> */}
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleSuaHP}>
-                  Lưu
-                </Button>
-                <Button onClick={onClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-            <DeleteOutlined  style={{fontSize:"20px",position:"relative", color:"red", left:"45%"}} onClick={onEditModalOpen}/>
-          <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Muốn xóa học phần {props.tenHP} không ?</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody></ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleXoaHP}>
-                  Xóa
-                </Button>
-                <Button onClick={onEditModalClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleSuaHP}>
+                      Lưu
+                    </Button>
+                    <Button onClick={onClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <DeleteOutlined
+                style={{
+                  fontSize: "20px",
+                  position: "relative",
+                  color: "red",
+                  left: "45%",
+                }}
+                onClick={onEditModalOpen}
+              />
+              <Modal
+                isCentered
+                onClose={onEditModalClose}
+                isOpen={isEditModalOpen}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>
+                    Muốn xóa học phần {props.tenHP} không ?
+                  </ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody></ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleXoaHP}>
+                      Xóa
+                    </Button>
+                    <Button onClick={onEditModalClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
         </Td>
       </Tr>
     </>

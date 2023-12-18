@@ -28,9 +28,11 @@ import bomonAPI from "../../api/bomonAPI";
 import hocPhanAPI from "../../api/hocphanAPI.js";
 import HocPhanComponent from "./HocPhanComponent.js";
 import PaginationComponent from "../Pagination/Pagenation.js";
+import StorageKeys from "../../constance/storage-key.js";
 
 const ListHocPhanTable = (props) => {
-  const i = 0;
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isAdmin = user.role === "admin";
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
@@ -67,7 +69,7 @@ const ListHocPhanTable = (props) => {
     fetchDsHP(currentPage, pageSize);
   }, [currentPage, pageSize]);
   const fetchDsHP = async (page) => {
-    setdsHP(await hocPhanAPI.getAll(page,10));
+    setdsHP(await hocPhanAPI.getAll(page, 10));
   };
   console.log(dsHP);
 
@@ -75,10 +77,9 @@ const ListHocPhanTable = (props) => {
     fetchDsBoMon();
   }, []);
   const fetchDsBoMon = async () => {
-    setDsBomon(await bomonAPI.getAll(1,100));
+    setDsBomon(await bomonAPI.getAll(1, 100));
   };
 
-  
   const handlePageChange = (page) => {
     setCurrentPage(page);
     fetchDsHP(page, pageSize);
@@ -103,19 +104,23 @@ const ListHocPhanTable = (props) => {
       >
         Danh sách các học phần
       </div>
+      {isAdmin && (
+        <>
+          <Button
+            position={"relative"}
+            top={"-40px"}
+            left={"-38%"}
+            variant="solid"
+            bg="rgb(26,132,74)"
+            color={"white"}
+            onClick={onOpen}
+            // position={"absolute"}
+          >
+            Thêm học phần
+          </Button>
+        </>
+      )}
 
-      <Button
-        position={"relative"}
-        top={"-40px"}
-        left={"-38%"}
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        onClick={onOpen}
-        // position={"absolute"}
-      >
-        Thêm học phần
-      </Button>
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -235,7 +240,7 @@ const ListHocPhanTable = (props) => {
               />
             ))}
           </Tbody>
-          <br/>
+          <br />
           <Tfoot left={"45%"} position={"absolute"} bottom={"20px"}>
             <PaginationComponent
               onPageChange={handlePageChange}
