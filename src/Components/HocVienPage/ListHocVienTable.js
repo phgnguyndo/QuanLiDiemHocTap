@@ -27,8 +27,12 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import hocvienAPI from "../../api/hocvienAPI";
 import PaginationComponent from "../Pagination/Pagenation";
-
+import StorageKeys from "../../constance/storage-key";
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ListHocVienTable = (props) => {
+  const isDaiDoi = user.role === "user1";
+  const isAdmin = user.role === "admin";
+  const isAdOrDd = user.role === "admin" || user.role === "user1";
   const capBacData = [
     "Binh nhất",
     "Binh nhì",
@@ -152,7 +156,7 @@ const ListHocVienTable = (props) => {
   // const fetchDsHVPage = async (page, size) => {
   //   setdsHV(await hocvienAPI.getAll(page, 2));
   // };
-  
+
   // const handlePageChange = (page) => {
   //   setCurrentPage(page);
   //   fetchDsHVPage(page, pageSize);
@@ -169,16 +173,21 @@ const ListHocVienTable = (props) => {
       >
         Danh sách học viên
       </Box>
-      <Button
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        left={"2%"}
-        top={"30px"}
-        onClick={onOpen}
-      >
-        Thêm
-      </Button>
+      {isDaiDoi && (
+        <>
+          <Button
+            variant="solid"
+            bg="rgb(26,132,74)"
+            color={"white"}
+            left={"2%"}
+            top={"30px"}
+            onClick={onOpen}
+          >
+            Thêm
+          </Button>
+        </>
+      )}
+
       <Modal
         size={"xl"}
         initialFocusRef={initialRef}
@@ -309,7 +318,9 @@ const ListHocVienTable = (props) => {
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th w={"5%"}>Mã HV</Th>
-              <Th w={"20%"} textAlign={"center"}>Họ tên</Th>
+              <Th w={"20%"} textAlign={"center"}>
+                Họ tên
+              </Th>
               <Th w={"9%"}>Ngày sinh</Th>
               <Th w={"8%"}>Giới tính</Th>
               <Th w={"17%"}>Quê quán</Th>

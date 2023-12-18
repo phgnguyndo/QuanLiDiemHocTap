@@ -17,25 +17,33 @@ import {
   Tr,
   Th,
   Tbody,
+  Tfoot,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 import khoaAPI from "../../api/khoaAPI";
 import KhoaComponent from "./KhoaComponent";
 import React, { useState, useEffect } from "react";
-
+import PaginationComponent from "../Pagination/Pagenation";
+import StorageKeys from "../../constance/storage-key";
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ListKhoaTable = (props) => {
+  const isDaiDoi = user.role === "user1";
+  const isAdmin = user.role === "admin";
+  const isAdOrDd = user.role === "admin" || user.role === "user1";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tenKhoa, setTenKhoa] = useState("");
   const [dsKhoa, setDsKhoa] = useState([]);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  useEffect(() => {
-    fetchKhoa();
-  }, []);
-  const fetchKhoa = async () => {
-    setDsKhoa(await khoaAPI.getAll());
-  };
+  // useEffect(() => {
+  //   fetchKhoa();
+  // }, []);
+  // const fetchKhoa = async () => {
+  //   setDsKhoa(await khoaAPI.getAll());
+  // };
 
   const handleSubmit = async () => {
     try {
@@ -49,7 +57,17 @@ const ListKhoaTable = (props) => {
       console.error("Error submitting form:", error);
     }
   };
+  useEffect(() => {
+    fetchKhoa(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
+  const fetchKhoa = async (page) => {
+    setDsKhoa(await khoaAPI.getAll(page, 10));
+  };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchKhoa(page, pageSize);
+  };
   return (
     <Box position={"relative"}>
       <Box
@@ -61,17 +79,22 @@ const ListKhoaTable = (props) => {
       >
         Danh sách các khoa
       </Box>
-      <Button
-        position={"relative"}
-        top={"30px"}
-        left={"280px"}
-        variant="solid"
-        bg="green"
-        color={"white"}
-        onClick={onOpen}
-      >
-        Thêm
-      </Button>
+      {isAdmin && (
+        <>
+          <Button
+            position={"relative"}
+            top={"30px"}
+            left={"280px"}
+            variant="solid"
+            bg="green"
+            color={"white"}
+            onClick={onOpen}
+          >
+            Thêm
+          </Button>
+        </>
+      )}
+
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -115,8 +138,12 @@ const ListKhoaTable = (props) => {
           <Thead background={"rgb(182, 187, 196)"}>
             <Tr>
               <Th textAlign={"center"}>STT</Th>
-              <Th w={"95%"} textAlign={"center"}>Khoa</Th>
-              <Th colSpan={"7"} textAlign={"center"}>Tùy chọn</Th>
+              <Th w={"95%"} textAlign={"center"}>
+                Khoa
+              </Th>
+              <Th colSpan={"7"} textAlign={"center"}>
+                Tùy chọn
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -129,6 +156,15 @@ const ListKhoaTable = (props) => {
               />
             ))}
           </Tbody>
+          <br></br>
+          <Tfoot left={"28%"} position={"absolute"}>
+            <PaginationComponent
+              onPageChange={handlePageChange}
+              // onSizeChange={handleSizeChange}
+            />
+          </Tfoot>
+          <br></br>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>

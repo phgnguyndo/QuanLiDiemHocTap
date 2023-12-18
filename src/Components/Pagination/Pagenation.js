@@ -17,7 +17,7 @@ const PaginationComponent = (props) => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
       pageNumbers.push(
         <Pagination.Item
           key={i}
@@ -35,7 +35,7 @@ const PaginationComponent = (props) => {
     <Pagination
       current={currentPage}
       pageSize={pageSize}
-      total={10} // Tổng số phần tử trong danh sách
+      total={20} // Tổng số phần tử trong danh sách
       // showSizeChanger
       hideOnSinglePage
       onChange={handlePageChange}

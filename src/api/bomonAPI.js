@@ -3,8 +3,8 @@ import axiosClient from "./axiosClient";
 
 const token = localStorage.getItem(StorageKeys.TOKEN);
 const bomonAPI = {
-  getAll() {
-    const url = "/BoMon";
+  getAll(a,b) {
+    const url = `/BoMon?pageNumber=${a}&pageSize=${b}`;
     return axiosClient.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });

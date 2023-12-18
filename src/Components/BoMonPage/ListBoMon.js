@@ -27,8 +27,13 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import khoaAPI from "../../api/khoaAPI";
 import PaginationComponent from "../Pagination/Pagenation";
+import StorageKeys from "../../constance/storage-key";
 
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const ListBoMonTable = (props) => {
+  // const isDaiDoi = user.role === "user1";
+  const isAdmin = user.role === "admin";
+  // const isAdOrDd = user.role === "admin" || user.role === "user1";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tenBoMon, setTenBoMon] = useState("");
   const [dsBoMon, setDsBoMon] = useState([]);
@@ -38,15 +43,15 @@ const ListBoMonTable = (props) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const [currentPage, setCurrentPage] = useState(5);
-  const [pageSize, setPageSize] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     fetchDsBoMon(currentPage, pageSize);
   }, [currentPage, pageSize]);
 
-  const fetchDsBoMon = async (page, size) => {
-    setDsBoMon(await bomonAPI.getAll(page, 5));
+  const fetchDsBoMon = async (page) => {
+    setDsBoMon(await bomonAPI.getAll(page, 10));
   };
 
   const handlePageChange = (page) => {
@@ -64,7 +69,7 @@ const ListBoMonTable = (props) => {
   }, []);
 
   const fetchKhoa = async () => {
-    setDsKhoa(await khoaAPI.getAll());
+    setDsKhoa(await khoaAPI.getAll(1, 100));
   };
 
   const handleSubmit = async () => {
@@ -94,17 +99,21 @@ const ListBoMonTable = (props) => {
       >
         Danh sách bộ môn
       </Box>
-      <Button
-        position={"relative"}
-        top={"30px"}
-        left={"172px"}
-        variant="solid"
-        bg="rgb(80,132,74)"
-        color={"white"}
-        onClick={onOpen}
-      >
-        Thêm
-      </Button>
+      {isAdmin && (
+        <>
+          <Button
+            position={"relative"}
+            top={"30px"}
+            left={"172px"}
+            variant="solid"
+            bg="rgb(80,132,74)"
+            color={"white"}
+            onClick={onOpen}
+          >
+            Thêm
+          </Button>
+        </>
+      )}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -186,10 +195,7 @@ const ListBoMonTable = (props) => {
           </Tbody>
           <br />
           <Tfoot left={"35%"} position={"absolute"}>
-            <PaginationComponent
-              onPageChange={handlePageChange}
-              onSizeChange={handleSizeChange}
-            />
+            <PaginationComponent onPageChange={handlePageChange} />
           </Tfoot>
           <br></br>
           <br></br>

@@ -28,6 +28,9 @@ const Head = ({ content }) => {
   } = theme.useToken();
 
   const isDaiDoi = user.role === "user1";
+  const isAdmin = user.role === "admin";
+  const isAdOrDd = user.role === "admin" || user.role === "user1";
+
   const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [hocVien, setHocVien] = useState([]);
@@ -46,9 +49,6 @@ const Head = ({ content }) => {
     localStorage.clear();
     nav("/");
   };
-
-  const isAdmin = user.role === "admin";
-  const isAdOrDd = user.role === "admin" || user.role === "user1";
 
   const menu = (
     <Menu onClick={handleLogout}>
@@ -98,9 +98,11 @@ const Head = ({ content }) => {
           >
             Trang chủ
           </Menu.Item>
-          {isDaiDoi && (
+          {isAdOrDd && (
             <>
               <SubMenu key="-1" icon={<UserOutlined />} title="Cập nhật">
+                {/* {isAdmin && (
+                  <> */}
                 <Menu.Item
                   key="2"
                   icon={<RadarChartOutlined />}
@@ -137,58 +139,68 @@ const Head = ({ content }) => {
                 >
                   Học phần
                 </Menu.Item>
-                <Menu.Item
-                  key="6"
-                  icon={<ReadOutlined />}
-                  onClick={() => {
-                    nav("/lophocphan");
-                  }}
-                >
-                  Lớp học phần
-                </Menu.Item>
-                <Menu.Item
-                  key="7"
-                  icon={<ReadOutlined />}
-                  onClick={() => {
-                    nav("/hocvien");
-                  }}
-                >
-                  Học viên
-                </Menu.Item>
-              </SubMenu>
-
-              <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
-                <Menu.Item
-                  key="10"
-                  icon={<RadarChartOutlined />}
-                  onClick={() => {
-                    nav("/tkhk");
-                  }}
-                >
-                  Theo học kỳ
-                </Menu.Item>
-                <Menu.Item
-                  key="11"
-                  icon={<HeatMapOutlined />}
-                  onClick={() => {
-                    nav("/tkn");
-                    window.location.reload();
-                  }}
-                >
-                  Theo năm
-                </Menu.Item>
-                <Menu.Item
-                  key="12"
-                  icon={<HeatMapOutlined />}
-                  onClick={() => {
-                    nav("/tktl");
-                  }}
-                >
-                  Điểm tích lũy
-                </Menu.Item>
+                {/* </>
+                )} */}
+                {isDaiDoi && (
+                  <>
+                    <Menu.Item
+                      key="6"
+                      icon={<ReadOutlined />}
+                      onClick={() => {
+                        nav("/lophocphan");
+                      }}
+                    >
+                      Lớp học phần
+                    </Menu.Item>
+                    <Menu.Item
+                      key="7"
+                      icon={<ReadOutlined />}
+                      onClick={() => {
+                        nav("/hocvien");
+                      }}
+                    >
+                      Học viên
+                    </Menu.Item>
+                  </>
+                )}
               </SubMenu>
             </>
           )}
+          {isDaiDoi && (
+            <SubMenu key="-2" icon={<UserOutlined />} title="Thống kê">
+              <Menu.Item
+                key="10"
+                icon={<RadarChartOutlined />}
+                onClick={() => {
+                  nav("/tkhk");
+                }}
+              >
+                Theo học kỳ
+              </Menu.Item>
+              <Menu.Item
+                key="11"
+                icon={<HeatMapOutlined />}
+                onClick={() => {
+                  nav("/tkn");
+                  window.location.reload();
+                }}
+              >
+                Theo năm
+              </Menu.Item>
+              <Menu.Item
+                key="12"
+                icon={<HeatMapOutlined />}
+                onClick={() => {
+                  nav("/tktl");
+                }}
+              >
+                Điểm tích lũy
+              </Menu.Item>
+            </SubMenu>
+          )}
+
+          {/* </>
+          // )} */}
           {isAdmin && (
             <>
               <Menu.Item

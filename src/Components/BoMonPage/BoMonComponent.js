@@ -26,8 +26,14 @@ import { useEffect } from "react";
 import khoaAPI from "../../api/khoaAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { notification } from "antd";
+import StorageKeys from "../../constance/storage-key";
 
+const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
 const BoMon = (props) => {
+  const isDaiDoi = user.role === "user1";
+  const isAdmin = user.role === "admin";
+  const isAdOrDd = user.role === "admin" || user.role === "user1";
+
   const { idKhoa } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -48,7 +54,7 @@ const BoMon = (props) => {
     fetchKhoa();
   }, []);
   const fetchKhoa = async () => {
-    setDsKhoa(await khoaAPI.getAll());
+    setDsKhoa(await khoaAPI.getAll(1, 100));
   };
 
   const handleXoaBoMon = async () => {
@@ -87,70 +93,88 @@ const BoMon = (props) => {
       <Tr>
         <Td textAlign={"center"}>{props.stt}</Td>
         <Td cursor={"pointer"}>{props.tenBM}</Td>
-        <Td >{props.tenKhoa}</Td>
+        <Td>{props.tenKhoa}</Td>
         <Td textAlign={"right"}>
-          <Button onClick={onOpen} color={"blue.500"} fontSize={"20px"}>
-            <EditOutlined />
-          </Button>
-          <Modal isCentered isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Sửa thông tin bộ môn</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Tên bộ môn</FormLabel>
-                  <Input
-                    defaultValue={props.tenBM}
-                    onChange={(e) => {
-                      setTenBoMon(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-              <FormLabel>Khoa</FormLabel>
-              <Select
-                placeholder="Chọn khoa"
-                id="KhoaInPut"
-                onChange={(e) => {
-                  setMaKhoa(e.target.value);
-                }}
-              >
-                {dsKhoa.map((item, index) => (
-                  <option key={index} value={item.maKhoa}>
-                    {item.tenKhoa}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleSuaBoMon}>
-                  Lưu
-                </Button>
-                <Button onClick={onClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+          {isAdmin && (
+            <>
+              <Button onClick={onOpen} color={"blue.500"} fontSize={"20px"}>
+                <EditOutlined />
+              </Button>
+              <Modal isCentered isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Sửa thông tin bộ môn</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>
+                    <FormControl>
+                      <FormLabel>Tên bộ môn</FormLabel>
+                      <Input
+                        defaultValue={props.tenBM}
+                        onChange={(e) => {
+                          setTenBoMon(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Khoa</FormLabel>
+                      <Select
+                        placeholder="Chọn khoa"
+                        id="KhoaInPut"
+                        onChange={(e) => {
+                          setMaKhoa(e.target.value);
+                        }}
+                      >
+                        {dsKhoa.map((item, index) => (
+                          <option key={index} value={item.maKhoa}>
+                            {item.tenKhoa}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleSuaBoMon}>
+                      Lưu
+                    </Button>
+                    <Button onClick={onClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
         </Td>
         <Td textAlign={"left"}>
-          <Button onClick={onEditModalOpen} color={"red.500"} fontSize={"20px"}>
-            <DeleteOutlined />
-          </Button>
-          <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Muốn xóa bộ môn {props.tenBM} không ?</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody></ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleXoaBoMon}>
-                  Xóa
-                </Button>
-                <Button onClick={onEditModalClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+          {isAdmin && (
+            <>
+              <Button
+                onClick={onEditModalOpen}
+                color={"red.500"}
+                fontSize={"20px"}
+              >
+                <DeleteOutlined />
+              </Button>
+              <Modal
+                isCentered
+                onClose={onEditModalClose}
+                isOpen={isEditModalOpen}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>
+                    Muốn xóa bộ môn {props.tenBM} không ?
+                  </ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody></ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleXoaBoMon}>
+                      Xóa
+                    </Button>
+                    <Button onClick={onEditModalClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
         </Td>
       </Tr>
     </>

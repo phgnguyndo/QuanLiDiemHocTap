@@ -27,7 +27,10 @@ import React, { useState, useEffect } from "react";
 import GiangVienComponent from "./GiangVienComponent";
 import giangVienAPI from "../../api/giangVienAPI";
 import bomonAPI from "../../api/bomonAPI";
+import StorageKeys from "../../constance/storage-key";
 const ListGiangVienTable = (props) => {
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isAdmin = user.role === "admin";
   const capBacData = [
     "Đại tá",
     "Thượng tá",
@@ -84,7 +87,7 @@ const ListGiangVienTable = (props) => {
     fetchDsBoMon();
   }, []);
   const fetchDsBoMon = async () => {
-    setDsBomon(await bomonAPI.getAll());
+    setDsBomon(await bomonAPI.getAll(1, 100));
   };
 
   return (
@@ -108,17 +111,21 @@ const ListGiangVienTable = (props) => {
         Danh sách giảng viên
       </div>
 
-      <Button
-        position={"relative"}
-        top={"-40px"}
-        left={"-513px"}
-        variant="solid"
-        bg="rgb(26,132,74)"
-        color={"white"}
-        onClick={onOpen}
-      >
-        Thêm
-      </Button>
+      {isAdmin && (
+        <>
+          <Button
+            position={"relative"}
+            top={"-40px"}
+            left={"-513px"}
+            variant="solid"
+            bg="rgb(26,132,74)"
+            color={"white"}
+            onClick={onOpen}
+          >
+            Thêm
+          </Button>
+        </>
+      )}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}

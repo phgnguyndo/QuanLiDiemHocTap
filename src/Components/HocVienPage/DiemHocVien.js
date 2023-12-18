@@ -78,7 +78,7 @@ const DiemHocVien = (props) => {
   }, []);
 
   const fetchHocPhan = async () => {
-    setDsHocPhan(await hocPhanAPI.getAll());
+    setDsHocPhan(await hocPhanAPI.getAll(1,100));
   };
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);

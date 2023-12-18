@@ -22,8 +22,14 @@ import {
 } from "@chakra-ui/react";
 import giangVienAPI from "../../api/giangVienAPI";
 import bomonAPI from "../../api/bomonAPI";
+import StorageKeys from "../../constance/storage-key";
+
 
 const GiangVienComponent = (props) => {
+  // const isDaiDoi = user.role === "user1";
+  const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+  const isAdmin = user.role === "admin";
+  // const isAdOrDd = user.role === "admin" || user.role === "user1";
   const capBacData = [
     "Đại tá",
     "Thượng tá",
@@ -82,7 +88,7 @@ const GiangVienComponent = (props) => {
     fetchDsBoMon();
   }, []);
   const fetchDsBoMon = async () => {
-    setDsBomon(await bomonAPI.getAll());
+    setDsBomon(await bomonAPI.getAll(1, 100));
   };
   return (
     <>
@@ -106,52 +112,54 @@ const GiangVienComponent = (props) => {
           {props.boMon.tenBM}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button onClick={onOpen} bg="blue.500">
-            <EditOutlined />
-          </Button>
-          <Modal isCentered isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Sửa thông tin giảng viên</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Tên giảng viên</FormLabel>
-                  <Input
-                    defaultValue={props.hoTen}
-                    onChange={(e) => {
-                      setTenGV(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Số điện thoại</FormLabel>
-                  <Input
-                    defaultValue={props.sdt}
-                    onChange={(e) => {
-                      setSdt(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Thuộc bộ môn</FormLabel>
-                  <Select
-                    placeholder="Tên bộ môn"
-                    id="boMonInput"
-                    onChange={(e) => {
-                      setBomonID(e.target.value);
-                    }}
-                  >
-                    {dsBomon.map((item, index) => (
-                      <option key={index} value={item.maBM}>
-                        {item.tenBM}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Giới tính</FormLabel>
-                  {/* <Select
+          {isAdmin && (
+            <>
+              <Button onClick={onOpen} bg="blue.500">
+                <EditOutlined />
+              </Button>
+              <Modal isCentered isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Sửa thông tin giảng viên</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>
+                    <FormControl>
+                      <FormLabel>Tên giảng viên</FormLabel>
+                      <Input
+                        defaultValue={props.hoTen}
+                        onChange={(e) => {
+                          setTenGV(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Số điện thoại</FormLabel>
+                      <Input
+                        defaultValue={props.sdt}
+                        onChange={(e) => {
+                          setSdt(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Thuộc bộ môn</FormLabel>
+                      <Select
+                        placeholder="Tên bộ môn"
+                        id="boMonInput"
+                        onChange={(e) => {
+                          setBomonID(e.target.value);
+                        }}
+                      >
+                        {dsBomon.map((item, index) => (
+                          <option key={index} value={item.maBM}>
+                            {item.tenBM}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl mt={4}>
+                      <FormLabel>Giới tính</FormLabel>
+                      {/* <Select
                         id="gioiTinhInput"
                         onChange={(e) => {
                           setGioiTinh(parseInt(e.target.value));
@@ -160,66 +168,76 @@ const GiangVienComponent = (props) => {
                         <option value={true}>Nam</option>
                         <option value={false}>Nữ</option>
                       </Select> */}
-                  <Select
-                    id="gioiTinhInput"
-                    onChange={(e) => {
-                      // Chuyển đổi giá trị từ chuỗi thành boolean
-                      const gioiTinhValue =
-                        e.target.value === "true" ? true : false;
-                      setGioiTinh(gioiTinhValue);
-                    }}
-                  >
-                    <option value="true">Nam</option>
-                    <option value="false">Nữ</option>
-                  </Select>
-                </FormControl>
+                      <Select
+                        id="gioiTinhInput"
+                        onChange={(e) => {
+                          // Chuyển đổi giá trị từ chuỗi thành boolean
+                          const gioiTinhValue =
+                            e.target.value === "true" ? true : false;
+                          setGioiTinh(gioiTinhValue);
+                        }}
+                      >
+                        <option value="true">Nam</option>
+                        <option value="false">Nữ</option>
+                      </Select>
+                    </FormControl>
 
-                <FormControl mt={4}>
-                  <FormLabel>Cấp bậc</FormLabel>
-                  <Select
-                    placeholder="Cấp bậc"
-                    id="capBacInput"
-                    onChange={(e) => {
-                      setCapBac(e.target.value);
-                    }}
-                  >
-                    {capBacData.map((capbac, index) => (
-                      <option key={index} value={capbac}>
-                        {capbac}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleSuaGV}>
-                  Lưu
-                </Button>
-                <Button onClick={onClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+                    <FormControl mt={4}>
+                      <FormLabel>Cấp bậc</FormLabel>
+                      <Select
+                        placeholder="Cấp bậc"
+                        id="capBacInput"
+                        onChange={(e) => {
+                          setCapBac(e.target.value);
+                        }}
+                      >
+                        {capBacData.map((capbac, index) => (
+                          <option key={index} value={capbac}>
+                            {capbac}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleSuaGV}>
+                      Lưu
+                    </Button>
+                    <Button onClick={onClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
         </Td>
         <Td position={"relative"} textAlign={"center"}>
-          <Button onClick={onEditModalOpen} bg={"red.500"}>
-            <DeleteOutlined />
-          </Button>
-          <Modal isCentered onClose={onEditModalClose} isOpen={isEditModalOpen}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>
-                Muốn xóa giảng viên {props.hoTen} không ?
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody></ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleXoaGV}>
-                  Xóa
-                </Button>
-                <Button onClick={onEditModalClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+          {isAdmin && (
+            <>
+              <Button onClick={onEditModalOpen} bg={"red.500"}>
+                <DeleteOutlined />
+              </Button>
+              <Modal
+                isCentered
+                onClose={onEditModalClose}
+                isOpen={isEditModalOpen}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>
+                    Muốn xóa giảng viên {props.hoTen} không ?
+                  </ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody></ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleXoaGV}>
+                      Xóa
+                    </Button>
+                    <Button onClick={onEditModalClose}>Hủy</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
         </Td>
       </Tr>
     </>

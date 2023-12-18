@@ -3,8 +3,8 @@ import axiosClient, { axiosFormData } from "./axiosClient";
 
 const token = localStorage.getItem(StorageKeys.TOKEN);
 const khoaAPI= {
-    getAll() {
-        const url='/Khoa';
+    getAll(a, b) {
+        const url=`/Khoa?pageNumber=${a}&pageSize=${b}`;
         return axiosClient.get(url, {
             headers: { Authorization: `Bearer ${token}` },
           })

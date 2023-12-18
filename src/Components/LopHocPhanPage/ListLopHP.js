@@ -52,7 +52,7 @@ const ListLopHPTable = (props) => {
     fetchHocPhan();
   }, []);
   const fetchHocPhan = async () => {
-    setDsHocPhan(await hocphanAPI.getAll());
+    setDsHocPhan(await hocphanAPI.getAll(1,100));
   };
 
   useEffect(() => {
