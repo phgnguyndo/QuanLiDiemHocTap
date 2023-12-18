@@ -17,7 +17,7 @@ import HvKemComponent from "./HvKemComponent.js";
 import hocvienAPI from "../../api/hocvienAPI.js";
 
 const ListTKTheoNam = (props) => {
-  const [namHoc, setNamHoc] = useState(0);
+  const [namHoc, setNamHoc] = useState(1);
   const [dsDTB, setdsDTB] = useState([]);
   const [dsHV,setdsHV] = useState([]);
   const [hv_diem, setHv_diem] = useState([]);
@@ -87,11 +87,10 @@ useEffect(() => {
     >
       <div
         style={{
-          fontSize: "50px",
-          fontFamily: "inherit",
-          fontWeight: "bold",
+          fontSize: "35px",
+          fontWeight: "500",
           marginBottom: "80px",
-          color: "rgb(91, 138, 114)",
+          color: "brown",
         }}
       >
         Thống kê điểm theo năm học

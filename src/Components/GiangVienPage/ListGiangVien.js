@@ -19,6 +19,7 @@ import {
   FormLabel,
   ModalFooter,
   Select,
+  Tfoot,
 } from "@chakra-ui/react";
 import { Input } from "antd";
 //   import HocVien from "./HocVienComponent";
@@ -28,6 +29,7 @@ import GiangVienComponent from "./GiangVienComponent";
 import giangVienAPI from "../../api/giangVienAPI";
 import bomonAPI from "../../api/bomonAPI";
 import StorageKeys from "../../constance/storage-key";
+import PaginationComponent from "../Pagination/Pagenation";
 const ListGiangVienTable = (props) => {
   const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
   const isAdmin = user.role === "admin";
@@ -55,7 +57,8 @@ const ListGiangVienTable = (props) => {
   const [capBac, setCapBac] = useState("");
   const [boMonId, setBomonID] = useState("");
   const [dsBomon, setDsBomon] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const handleSubmit = async () => {
     try {
       const formData = {
@@ -76,10 +79,10 @@ const ListGiangVienTable = (props) => {
 
   const [dsGV, setdsGV] = useState([]);
   useEffect(() => {
-    fetchDsGV();
-  }, []);
-  const fetchDsGV = async () => {
-    setdsGV(await giangVienAPI.getAll());
+    fetchDsGV(currentPage, pageSize);
+  }, [currentPage, pageSize]);
+  const fetchDsGV = async (page) => {
+    setdsGV(await giangVienAPI.getAll(page,10));
   };
   console.log(dsGV);
 
@@ -90,6 +93,15 @@ const ListGiangVienTable = (props) => {
     setDsBomon(await bomonAPI.getAll(1, 100));
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchDsBoMon(page, pageSize);
+  };
+
+  const handleSizeChange = (size) => {
+    setPageSize(size);
+    fetchDsBoMon(currentPage, size);
+  };
   return (
     <div
       style={{
@@ -115,7 +127,7 @@ const ListGiangVienTable = (props) => {
         <>
           <Button
             position={"relative"}
-            top={"-40px"}
+            top={"-50px"}
             left={"-513px"}
             variant="solid"
             bg="rgb(26,132,74)"
@@ -215,7 +227,7 @@ const ListGiangVienTable = (props) => {
         </ModalContent>
       </Modal>
 
-      <TableContainer w={"150vh"}>
+      <TableContainer w={"150vh"} position={"relative"} top={"-20px"}>
         <Table variant="striped" size="sm">
           <Thead>
             <Tr bg={"rgb(182, 187, 196)"}>
@@ -258,6 +270,13 @@ const ListGiangVienTable = (props) => {
               />
             ))}
           </Tbody>
+          <br/>
+          
+          <Tfoot left={"35%"} position={"absolute"}>
+            <PaginationComponent onPageChange={handlePageChange} />
+          </Tfoot>
+          <br/>
+          <br/><br/>
         </Table>
       </TableContainer>
     </div>

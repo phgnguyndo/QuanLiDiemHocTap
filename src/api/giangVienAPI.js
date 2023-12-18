@@ -3,8 +3,8 @@ import axiosClient from "./axiosClient";
 
 const token = localStorage.getItem(StorageKeys.TOKEN);
 const giangVienAPI= {
-    getAll() {
-        const url='/GiangVien';
+    getAll(a,b) {
+        const url= `/GiangVien?pageNumber=${a}&pageSize=${b}`;
         return axiosClient.get(url, {
             headers: { Authorization: `Bearer ${token}` },
           })

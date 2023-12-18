@@ -18,12 +18,12 @@ import {
   Select,
   Td,
   Tr,
+  position,
   useDisclosure,
 } from "@chakra-ui/react";
 import giangVienAPI from "../../api/giangVienAPI";
 import bomonAPI from "../../api/bomonAPI";
 import StorageKeys from "../../constance/storage-key";
-
 
 const GiangVienComponent = (props) => {
   // const isDaiDoi = user.role === "user1";
@@ -114,9 +114,14 @@ const GiangVienComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {isAdmin && (
             <>
-              <Button onClick={onOpen} bg="blue.500">
-                <EditOutlined />
-              </Button>
+              <EditOutlined
+                onClick={onOpen}
+                style={{
+                  position: "relative",
+                  fontSize: "20px",
+                  color: "blue",
+                }}
+              />
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
@@ -213,9 +218,10 @@ const GiangVienComponent = (props) => {
         <Td position={"relative"} textAlign={"center"}>
           {isAdmin && (
             <>
-              <Button onClick={onEditModalOpen} bg={"red.500"}>
-                <DeleteOutlined />
-              </Button>
+              <DeleteOutlined
+                onClick={onEditModalOpen}
+                style={{ position: "relative", fontSize: "20px", color: "red" }}
+              />
               <Modal
                 isCentered
                 onClose={onEditModalClose}

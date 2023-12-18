@@ -77,7 +77,7 @@ const TaoTK = () => {
       height={"100vh"}
     >
       {/* {registrationStatus !==null && noticeRegister()} */}
-      <Card style={{ maxWidth: 600, width: "100%" }}>
+      <Card style={{ maxWidth: 600, width: "100%", boxShadow:"2px 2px 4px 2px rgba(190, 190, 190, 0.5)" }}>
         <Form
           form={form}
           name="register"
@@ -92,11 +92,11 @@ const TaoTK = () => {
           scrollToFirstError
         >
           <Typography.Title level={3} style={{ textAlign: "center" }}>
-            Register
+            Tạo tài khoản
           </Typography.Title>
           <Form.Item
             name="Username"
-            label="Username"
+            label="Tài khoản"
             rules={[
               {
                 required: true,
@@ -111,7 +111,7 @@ const TaoTK = () => {
             <Col span={12}>
               <Form.Item
                 name="password"
-                label="Password"
+                label="Mật khẩu"
                 rules={[
                   {
                     required: true,
@@ -126,7 +126,7 @@ const TaoTK = () => {
             <Col span={12}>
               <Form.Item
                 name="confirm"
-                label="Confirm Password"
+                label="Nhập lại mật khẩu"
                 dependencies={["password"]}
                 hasFeedback
                 rules={[
@@ -154,7 +154,7 @@ const TaoTK = () => {
             <Col span={24}>
               <Form.Item
                 name="role"
-                label="Role"
+                label="Quyền"
                 rules={[
                   {
                     required: true,
@@ -182,16 +182,16 @@ const TaoTK = () => {
               htmlType="submit"
               style={{ position: "relative", left: "55px" }}
             >
-              Register
+              Đăng kí
             </Button>
-            <Button
+            {/* <Button
               style={{ position: "relative", top: "40px", left: "-100px" }}
               onClick={() => {
                 nav("/");
               }}
             >
               You have an account? Login now
-            </Button>
+            </Button> */}
           </Form.Item>
         </Form>
       </Card>
